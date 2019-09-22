@@ -14,7 +14,15 @@ void symbolsCount(char string[], int amountOfSymbols[])
 
 bool isEqual(int amountOfSymbolsInString1[], int amountOfSymbolsInString2[])
 {
-    return false;
+    for (int i = 0; i < 256; i++)
+    {
+        if (amountOfSymbolsInString1[i] != amountOfSymbolsInString2[i])
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 int main()
