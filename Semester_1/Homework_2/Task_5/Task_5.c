@@ -46,6 +46,6 @@ int main()
         return 0;
     }
 
-    printf("From the first line you CANNOT get the second :(");
+    printf("From the string line you CANNOT get the second :(");
     return 0;
 }
