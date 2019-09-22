@@ -6,7 +6,10 @@ const int maxSize = 256;
 
 void symbolsCount(char string[], int amountOfSymbols[])
 {
-    return;
+    for (int i = 0; i < strlen(string); i++)
+    {
+        amountOfSymbols[(int)string[i]]++;
+    }
 }
 
 bool isEqual(int amountOfSymbolsInString1[], int amountOfSymbolsInString2[])
@@ -36,4 +39,5 @@ int main()
     }
 
     printf("From the first line you CANNOT get the second :(");
+    return 0;
 }
