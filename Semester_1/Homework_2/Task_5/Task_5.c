@@ -30,10 +30,10 @@ int main()
     int amountOfSymbolsInString1[256] = {0};
     int amountOfSymbolsInString2[256] = {0};
 
-    char inputString1[256] = "";
+    char inputString1[maxSize] = "";
     printf("Enter the string #1: ");
     scanf("%s", &inputString1);
-    char inputString2[256] = "";
+    char inputString2[maxSize] = "";
     printf("Enter the string #2: ");
     scanf("%s", &inputString2);
 
