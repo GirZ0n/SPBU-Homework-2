@@ -15,9 +15,12 @@ void numberToDigits(int * digits, int number)
     }
 }
 
-int countOfDigits(int * count, int digits[])
+void countOfDigits(int * count, int digits[4])
 {
-    return 0;
+    for (int i = 0; i < 4; i++)
+    {
+        count[digits[i]]++;
+    }
 }
 
 int numberOfCows(int randomNumber, int inputNumber)
@@ -39,7 +42,7 @@ int numberOfCows(int randomNumber, int inputNumber)
     {
         if (countOfRandomNumberDigits[i] == countOfInputNumberDigits[i])
         {
-            count++;
+            count += countOfRandomNumberDigits[i];
         }
     }
 
@@ -73,7 +76,6 @@ int main()
     srand(time(NULL));
     int randomNumber = rand() % 10000;
     int inputNumber = 0;
-    printf("%d", randomNumber);
 
     int moves = 1;
     while (true)
