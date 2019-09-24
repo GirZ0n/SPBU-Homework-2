@@ -4,15 +4,15 @@
 #include <stdbool.h>
 #include <string.h>
 
-int indexOfDigitToInt(int number, int index)
+void numberToDigits(int * Digits, int number)
 {
-    int digits[4] = {0};
-    digits[0] = number / 1000;
-    digits[1] = number % 1000 / 100;
-    digits[2] = number % 100 / 10;
-    digits[3] = number % 10;
-
-    return digits[index];
+    int i = 0;
+    while(number > 0)
+    {
+        Digits[i] = number % 10;
+        number /= 10;
+        i++;
+    }
 }
 
 int numberOfCows()
@@ -22,10 +22,16 @@ int numberOfCows()
 
 int numberOfBulls(int randomNumber, int inputNumber)
 {
+    int randomNumberDigits[4] = {0};
+    int inputNumberDigits[4] = {0};
+
+    numberToDigits(randomNumberDigits, randomNumber);
+    numberToDigits(inputNumberDigits, inputNumber);
+    
     int count = 0;
     for (int i = 0; i < 4; i++)
     {
-        if (indexOfDigitToInt(randomNumber, i) == indexOfDigitToInt(inputNumber, i))
+        if (randomNumberDigits[i] == inputNumberDigits[i])
         {
             count++;
         }
@@ -41,7 +47,7 @@ int main()
     srand(time(NULL));
     int randomNumber = rand() % 10000;
     int inputNumber = 0;
-    //printf("%d", randomNumber);
+    printf("%d", randomNumber);
 
     int moves = 1;
     while (true)
