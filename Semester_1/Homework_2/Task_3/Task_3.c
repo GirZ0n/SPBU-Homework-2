@@ -4,20 +4,46 @@
 #include <stdbool.h>
 #include <string.h>
 
-void numberToDigits(int * Digits, int number)
+void numberToDigits(int * digits, int number)
 {
     int i = 0;
     while(number > 0)
     {
-        Digits[i] = number % 10;
+        digits[i] = number % 10;
         number /= 10;
         i++;
     }
 }
 
-int numberOfCows()
+int countOfDigits(int * count, int digits[])
 {
     return 0;
+}
+
+int numberOfCows(int randomNumber, int inputNumber)
+{
+    int randomNumberDigits[4] = {0};
+    int inputNumberDigits[4] = {0};
+
+    numberToDigits(randomNumberDigits, randomNumber);
+    numberToDigits(inputNumberDigits, inputNumber);
+
+    int countOfRandomNumberDigits[10] = {0};
+    int countOfInputNumberDigits[10] = {0};
+
+    countOfDigits(countOfRandomNumberDigits, randomNumberDigits);
+    countOfDigits(countOfInputNumberDigits, inputNumberDigits);
+
+    int count = 0;
+    for (int i = 0; i < 10; i++)
+    {
+        if (countOfRandomNumberDigits[i] == countOfInputNumberDigits[i])
+        {
+            count++;
+        }
+    }
+
+    return count;
 }
 
 int numberOfBulls(int randomNumber, int inputNumber)
@@ -27,7 +53,7 @@ int numberOfBulls(int randomNumber, int inputNumber)
 
     numberToDigits(randomNumberDigits, randomNumber);
     numberToDigits(inputNumberDigits, inputNumber);
-    
+
     int count = 0;
     for (int i = 0; i < 4; i++)
     {
@@ -61,7 +87,7 @@ int main()
             return 0;
         }
 
-        printf("Number of cows: %d \n", numberOfCows());
+        printf("Number of cows: %d \n", numberOfCows(randomNumber, inputNumber));
         printf("Number of bulls: %d \n", numberOfBulls(randomNumber, inputNumber));
         moves++;
     }
