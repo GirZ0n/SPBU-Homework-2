@@ -23,14 +23,8 @@ void countOfDigits(int * count, int digits[4])
     }
 }
 
-int numberOfCows(int randomNumber, int inputNumber)
+int numberOfCows(int randomNumberDigits[], int inputNumberDigits[])
 {
-    int randomNumberDigits[4] = {0};
-    int inputNumberDigits[4] = {0};
-
-    numberToDigits(randomNumberDigits, randomNumber);
-    numberToDigits(inputNumberDigits, inputNumber);
-
     int countOfRandomNumberDigits[10] = {0};
     int countOfInputNumberDigits[10] = {0};
 
@@ -49,14 +43,8 @@ int numberOfCows(int randomNumber, int inputNumber)
     return count;
 }
 
-int numberOfBulls(int randomNumber, int inputNumber)
+int numberOfBulls(int randomNumberDigits[], int inputNumberDigits[])
 {
-    int randomNumberDigits[4] = {0};
-    int inputNumberDigits[4] = {0};
-
-    numberToDigits(randomNumberDigits, randomNumber);
-    numberToDigits(inputNumberDigits, inputNumber);
-
     int count = 0;
     for (int i = 0; i < 4; i++)
     {
@@ -75,9 +63,12 @@ int main()
 
     srand(time(NULL));
     int randomNumber = rand() % 10000;
-    int inputNumber = 0;
+    int randomNumberDigits[4] = {0};
+    numberToDigits(randomNumberDigits, randomNumber);
 
     int moves = 1;
+    int inputNumber = 0;
+    int inputNumberDigits[4] = {0};
     while (true)
     {
         printf("Enter the estimated number:");
@@ -89,8 +80,10 @@ int main()
             return 0;
         }
 
-        printf("Number of cows: %d \n", numberOfCows(randomNumber, inputNumber));
-        printf("Number of bulls: %d \n", numberOfBulls(randomNumber, inputNumber));
+        numberToDigits(inputNumberDigits, inputNumber);
+
+        printf("Number of cows: %d \n", numberOfCows(randomNumberDigits, inputNumberDigits));
+        printf("Number of bulls: %d \n", numberOfBulls(randomNumberDigits, inputNumberDigits));
         moves++;
     }
 }
