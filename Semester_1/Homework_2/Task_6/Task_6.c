@@ -14,7 +14,8 @@ int main() {
     printf("Enter the number: ");
     scanf("%s", &number);
 
-    for (int i = 0; i < strlen(number); i++)
+    int numberLength = strlen(number);
+    for (int i = 0; i < numberLength; i++)
     {
         amountOfNumbers[charToInt(number[i])]++;
     }
