@@ -26,10 +26,12 @@ int main()
         if (arrayOfNumbers[i] == arrayOfNumbers[i - 1])
         {
             printf("Desired element: %d", arrayOfNumbers[i]);
+            free(arrayOfNumbers);
             return 0;
         }
     }
 
     printf("Element doesnt exists :(");
+    free(arrayOfNumbers);
     return 0;
 }
