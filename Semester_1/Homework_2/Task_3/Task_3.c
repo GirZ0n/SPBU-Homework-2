@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-void numberToDigits(int * digits, int number)
+void numberToDigits(int digits[], int number)
 {
     int i = 0;
     while(number > 0)
@@ -15,7 +15,7 @@ void numberToDigits(int * digits, int number)
     }
 }
 
-void countOfDigits(int * count, int digits[4])
+void countOfDigits(int count[], int digits[])
 {
     for (int i = 0; i < 4; i++)
     {
