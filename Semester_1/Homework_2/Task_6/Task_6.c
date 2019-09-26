@@ -9,7 +9,7 @@ int charToInt(char input)
 }
 
 int main() {
-    int amountOfNumbers[10] = {0};
+    int amountOfDigits[10] = {0};
     char number[maxSize] = "";
     printf("Enter the number: ");
     scanf("%s", &number);
@@ -17,26 +17,26 @@ int main() {
     int numberLength = strlen(number);
     for (int i = 0; i < numberLength; i++)
     {
-        amountOfNumbers[charToInt(number[i])]++;
+        amountOfDigits[charToInt(number[i])]++;
     }
 
     printf("Smallest number: ");
     for (int i = 1; i < 10; i++)
     {
-        if (amountOfNumbers[i] > 0)
+        if (amountOfDigits[i] > 0)
         {
             printf("%d", i);
-            amountOfNumbers[i]--;
+            amountOfDigits[i]--;
             break;
         }
     }
 
     for (int i = 0; i < 10; i++)
     {
-        while (amountOfNumbers[i] > 0)
+        while (amountOfDigits[i] > 0)
         {
             printf("%d", i);
-            amountOfNumbers[i]--;
+            amountOfDigits[i]--;
         }
     }
 
