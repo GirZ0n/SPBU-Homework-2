@@ -6,6 +6,15 @@ struct Fraction
     int denominator;
 };
 
+struct Fraction createFraction(int numerator, int denominator)
+{
+    struct Fraction currentFraction;
+    currentFraction.numerator = numerator;
+    currentFraction.denominator = denominator;
+
+    return currentFraction;
+}
+
 int getGreatestCommonDivisor(int firstNumber, int secondNumber)
 {
     int remainder = firstNumber % secondNumber;
@@ -22,11 +31,7 @@ struct Fraction getIrreducibleFraction(int numerator, int denominator)
 {
     int greatestCommonDivisor = getGreatestCommonDivisor(numerator, denominator);
 
-    struct Fraction irreducibleFraction;
-    irreducibleFraction.numerator = numerator / greatestCommonDivisor;
-    irreducibleFraction.denominator = denominator / greatestCommonDivisor;
-
-    return irreducibleFraction;
+    return createFraction(numerator / greatestCommonDivisor, denominator / greatestCommonDivisor);
 }
 
 
@@ -36,9 +41,7 @@ int main() {
     scanf("%d", &inputDenominator);
 
     printf("All simple irreducible fractions in the interval (0, 1): ");
-    struct Fraction currentIrreducibleFraction;
-    currentIrreducibleFraction.numerator = 0;
-    currentIrreducibleFraction.denominator = 0;
+    struct Fraction currentIrreducibleFraction = createFraction(0, 0);
     for (int i = 0; i < inputDenominator - 1; i++)
     {
         currentIrreducibleFraction = getIrreducibleFraction(i + 1, inputDenominator);
