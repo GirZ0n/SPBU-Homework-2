@@ -1,10 +1,10 @@
 #include <stdio.h>
+
 struct Fraction
 {
     int numerator;
     int denominator;
 };
-
 
 int getGreatestCommonDivisor(int firstNumber, int secondNumber)
 {
@@ -17,7 +17,6 @@ int getGreatestCommonDivisor(int firstNumber, int secondNumber)
 
     return getGreatestCommonDivisor(secondNumber, remainder);
 }
-
 
 struct Fraction getIrreducibleFraction(int numerator, int denominator)
 {
