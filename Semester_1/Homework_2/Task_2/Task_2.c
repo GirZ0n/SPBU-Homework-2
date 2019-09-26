@@ -10,7 +10,8 @@ int getGreatestCommonDivisor(int firstNumber, int secondNumber)
 {
     int remainder = firstNumber % secondNumber;
 
-    if (remainder == 0) {
+    if (remainder == 0) 
+    {
         return secondNumber;
     }
 
@@ -42,7 +43,6 @@ int main() {
     for (int i = 0; i < inputDenominator - 1; i++)
     {
         currentIrreducibleFraction = getIrreducibleFraction(i + 1, inputDenominator);
-
         printf("%d/%d ; ", currentIrreducibleFraction.numerator, currentIrreducibleFraction.denominator);
     }
 
