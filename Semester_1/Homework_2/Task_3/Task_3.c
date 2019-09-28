@@ -15,7 +15,7 @@ void numberToDigits(int digits[], int number)
     }
 }
 
-void digitsCount(int *count, int *digits, int *digitsForCompare)
+void digitsCount(int count[], int digits[], int digitsForCompare[])
 {
     for (int i = 0; i < 4; i++)
     {
@@ -26,7 +26,7 @@ void digitsCount(int *count, int *digits, int *digitsForCompare)
     }
 }
 
-int cowsCount(int *randomNumberDigits, int *inputNumberDigits)
+int cowsCount(int randomNumberDigits[], int inputNumberDigits[])
 {
     int countOfRandomNumberDigits[10] = {0};
     int countOfInputNumberDigits[10] = {0};
@@ -46,7 +46,7 @@ int cowsCount(int *randomNumberDigits, int *inputNumberDigits)
     return count;
 }
 
-int bullsCount(int *randomNumberDigits, int *inputNumberDigits)
+int bullsCount(int randomNumberDigits[], int inputNumberDigits[])
 {
     int count = 0;
     for (int i = 0; i < 4; i++)
