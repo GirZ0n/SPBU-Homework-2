@@ -2,7 +2,8 @@
 #include <string.h>
 #include <stdbool.h>
 
-const int maxSize = 512;
+const int maxSize = 256;
+const int maxNumberOfSymbols = 256;
 
 void symbolsCount(char string[], int amountOfSymbols[])
 {
@@ -28,8 +29,8 @@ bool areEqual(int amountOfSymbolsInString1[], int amountOfSymbolsInString2[])
 
 int main()
 {
-    int amountOfSymbolsInString1[256] = {0};
-    int amountOfSymbolsInString2[256] = {0};
+    int numberOfSymbolsInString1[maxNumberOfSymbols] = {0};
+    int numberOfSymbolsInString2[maxNumberOfSymbols] = {0};
 
     char inputString1[maxSize] = "";
     printf("Enter the string #1: ");
@@ -38,10 +39,10 @@ int main()
     printf("Enter the string #2: ");
     scanf("%s", &inputString2);
 
-    symbolsCount(inputString1, amountOfSymbolsInString1);
-    symbolsCount(inputString2, amountOfSymbolsInString2);
+    symbolsCount(inputString1, numberOfSymbolsInString1);
+    symbolsCount(inputString2, numberOfSymbolsInString2);
 
-    if (areEqual(amountOfSymbolsInString1, amountOfSymbolsInString2))
+    if (areEqual(numberOfSymbolsInString1, numberOfSymbolsInString2))
     {
         printf("From the first string you CAN get the second!");
         return 0;
