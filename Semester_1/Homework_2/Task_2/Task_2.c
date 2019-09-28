@@ -42,9 +42,9 @@ int main() {
 
     printf("All simple irreducible fractions in the interval (0, 1): ");
     struct Fraction currentIrreducibleFraction = createFraction(0, 0);
-    for (int i = 0; i < inputDenominator - 1; i++)
+    for (int i = 1; i < inputDenominator; i++)
     {
-        currentIrreducibleFraction = getIrreducibleFraction(i + 1, inputDenominator);
+        currentIrreducibleFraction = getIrreducibleFraction(i, inputDenominator);
         printf("%d/%d ; ", currentIrreducibleFraction.numerator, currentIrreducibleFraction.denominator);
     }
 
