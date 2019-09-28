@@ -15,7 +15,7 @@ void numberToDigits(int digits[], int number)
     }
 }
 
-void countOfDigits(int count[], int digits[], int digitsForCompare[])
+void digitsCount(int *count, int *digits, int *digitsForCompare)
 {
     for (int i = 0; i < 4; i++)
     {
@@ -26,13 +26,13 @@ void countOfDigits(int count[], int digits[], int digitsForCompare[])
     }
 }
 
-int numberOfCows(int randomNumberDigits[], int inputNumberDigits[])
+int cowsCount(int *randomNumberDigits, int *inputNumberDigits)
 {
     int countOfRandomNumberDigits[10] = {0};
     int countOfInputNumberDigits[10] = {0};
 
-    countOfDigits(countOfRandomNumberDigits, randomNumberDigits, inputNumberDigits);
-    countOfDigits(countOfInputNumberDigits, inputNumberDigits, randomNumberDigits);
+    digitsCount(countOfRandomNumberDigits, randomNumberDigits, inputNumberDigits);
+    digitsCount(countOfInputNumberDigits, inputNumberDigits, randomNumberDigits);
 
     int count = 0;
     for (int i = 0; i < 10; i++)
@@ -46,7 +46,7 @@ int numberOfCows(int randomNumberDigits[], int inputNumberDigits[])
     return count;
 }
 
-int numberOfBulls(int randomNumberDigits[], int inputNumberDigits[])
+int bullsCount(int *randomNumberDigits, int *inputNumberDigits)
 {
     int count = 0;
     for (int i = 0; i < 4; i++)
@@ -85,8 +85,8 @@ int main()
 
         numberToDigits(inputNumberDigits, inputNumber);
 
-        printf("Number of cows: %d \n", numberOfCows(randomNumberDigits, inputNumberDigits));
-        printf("Number of bulls: %d \n", numberOfBulls(randomNumberDigits, inputNumberDigits));
+        printf("Number of cows: %d \n", cowsCount(randomNumberDigits, inputNumberDigits));
+        printf("Number of bulls: %d \n", bullsCount(randomNumberDigits, inputNumberDigits));
         moves++;
     }
 }
