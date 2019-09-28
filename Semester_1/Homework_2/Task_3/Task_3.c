@@ -15,11 +15,14 @@ void numberToDigits(int digits[], int number)
     }
 }
 
-void countOfDigits(int count[], int digits[])
+void countOfDigits(int count[], int digits[], int digitsForCompare[])
 {
     for (int i = 0; i < 4; i++)
     {
-        count[digits[i]]++;
+        if (digits[i] != digitsForCompare[i])
+        {
+            count[digits[i]]++;
+        }
     }
 }
 
@@ -28,8 +31,8 @@ int numberOfCows(int randomNumberDigits[], int inputNumberDigits[])
     int countOfRandomNumberDigits[10] = {0};
     int countOfInputNumberDigits[10] = {0};
 
-    countOfDigits(countOfRandomNumberDigits, randomNumberDigits);
-    countOfDigits(countOfInputNumberDigits, inputNumberDigits);
+    countOfDigits(countOfRandomNumberDigits, randomNumberDigits, inputNumberDigits);
+    countOfDigits(countOfInputNumberDigits, inputNumberDigits, randomNumberDigits);
 
     int count = 0;
     for (int i = 0; i < 10; i++)
