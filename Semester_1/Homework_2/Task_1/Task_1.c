@@ -27,7 +27,7 @@ void printCompositions(int needToAdd, int maxTerm, int *composition, int index)
     for (int i = maxTerm; i > 0; i--)
     {
         composition[index] = i;
-        printCompositions(needToAdd - i, i, composition,index + 1);
+        printCompositions(needToAdd - i, i, composition, index + 1);
     }
 }
 
