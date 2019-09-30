@@ -65,7 +65,7 @@ int main()
     printf("I made up a four-digit number. Try to guess it ;) \n");
 
     srand(time(NULL));
-    int randomNumber = rand() % 10000;
+    int randomNumber = 1000 + rand() % 9000;
     int randomNumberDigits[4] = {0};
     numberToDigits(randomNumberDigits, randomNumber);
 
