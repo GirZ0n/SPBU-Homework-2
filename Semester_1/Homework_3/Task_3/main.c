@@ -15,15 +15,15 @@ int main()
     printf("Enter the size of array:");
     scanf("%d", &size);
 
-    int *array = malloc(sizeof(int) * size);
+    int *arrayOfNumbers = malloc(sizeof(int) * size);
     for (int i = 0; i < size; i++)
     {
-        array[i] = 0;
+        arrayOfNumbers[i] = 0;
     }
     printf("Enter the array:");
     for (int i = 0; i < size; i++)
     {
-        scanf("%d", &array[i]);
+        scanf("%d", &arrayOfNumbers[i]);
     }
 
 
@@ -31,12 +31,12 @@ int main()
     int j = size - 1;
     while(true)
     {
-        while(array[i] == 0)
+        while(arrayOfNumbers[i] == 0)
         {
             i++;
         }
 
-        while(array[j] != 0)
+        while(arrayOfNumbers[j] != 0)
         {
             j--;
         }
@@ -46,11 +46,11 @@ int main()
             break;
         }
 
-        swap(&array[i++], &array[j--]);
+        swap(&arrayOfNumbers[i++], &arrayOfNumbers[j--]);
     }
 
     for (int i = 0; i < size; i++)
     {
-        printf("%d ", array[i]);
+        printf("%d ", arrayOfNumbers[i]);
     }
 }
