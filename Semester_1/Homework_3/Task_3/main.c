@@ -26,7 +26,6 @@ int main()
         scanf("%d", &arrayOfNumbers[i]);
     }
 
-
     int i = 0;
     int j = size - 1;
     while(true)
