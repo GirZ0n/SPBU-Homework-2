@@ -1,9 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
 struct Fraction
 {
     int numerator;
     int denominator;
+    double value;
 };
 
 struct Fraction createFraction(int numerator, int denominator)
@@ -11,7 +14,7 @@ struct Fraction createFraction(int numerator, int denominator)
     struct Fraction currentFraction;
     currentFraction.numerator = numerator;
     currentFraction.denominator = denominator;
-
+    currentFraction.value= (double) numerator / denominator;
     return currentFraction;
 }
 
@@ -27,11 +30,14 @@ int getGreatestCommonDivisor(int firstNumber, int secondNumber)
     return getGreatestCommonDivisor(secondNumber, remainder);
 }
 
-struct Fraction getIrreducibleFraction(int numerator, int denominator)
+bool areMutuallyPrime(int numerator, int denominator)
 {
-    int greatestCommonDivisor = getGreatestCommonDivisor(numerator, denominator);
+    return getGreatestCommonDivisor(numerator, denominator) == 1;
+}
 
-    return createFraction(numerator / greatestCommonDivisor, denominator / greatestCommonDivisor);
+int comparator (const struct Fraction *leftFraction, const struct Fraction *rightFraction)
+{
+    return leftFraction->value > rightFraction->value;
 }
 
 
@@ -40,12 +46,35 @@ int main() {
     printf("Enter the denominator:");
     scanf("%d", &inputDenominator);
 
-    printf("All simple irreducible fractions in the interval (0, 1): ");
-    struct Fraction currentIrreducibleFraction = createFraction(0, 0);
-    for (int i = 1; i < inputDenominator; i++)
+    int capacity = 1;
+    int size = 0;
+    struct Fraction *arrayOfFractions = malloc(sizeof(struct Fraction) * capacity);
+    arrayOfFractions[0] = createFraction(0, 0);
+
+    for (int currentDenominator = 2; currentDenominator <= inputDenominator; currentDenominator++)
     {
-        currentIrreducibleFraction = getIrreducibleFraction(i, inputDenominator);
-        printf("%d/%d ; ", currentIrreducibleFraction.numerator, currentIrreducibleFraction.denominator);
+        for (int currentNumerator = 1; currentNumerator < currentDenominator; currentNumerator++)
+        {
+            if (areMutuallyPrime(currentDenominator, currentNumerator))
+            {
+                if (size + 1 > capacity)
+                {
+                    capacity *= 2;
+                    arrayOfFractions = realloc(arrayOfFractions, sizeof(struct Fraction) * capacity);
+                }
+
+                arrayOfFractions[size] = createFraction(currentNumerator, currentDenominator);
+                size++;
+            }
+        }
+    }
+
+    qsort(arrayOfFractions, size, sizeof(struct Fraction), comparator);
+
+    printf("All simple irreducible fractions in the interval (0, 1):\n");
+    for (int i = 0; i < size; i++)
+    {
+        printf("%d/%d ; ", arrayOfFractions[i].numerator, arrayOfFractions[i].denominator);
     }
 
     return 0;
