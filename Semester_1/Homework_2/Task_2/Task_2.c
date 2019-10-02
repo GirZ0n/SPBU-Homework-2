@@ -35,7 +35,7 @@ bool areMutuallyPrime(int numerator, int denominator)
     return getGreatestCommonDivisor(numerator, denominator) == 1;
 }
 
-int comparator (const struct Fraction *leftFraction, const struct Fraction *rightFraction)
+int comparator(const struct Fraction *leftFraction, const struct Fraction *rightFraction)
 {
     return leftFraction->value > rightFraction->value;
 }
