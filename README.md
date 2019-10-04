@@ -3,10 +3,10 @@ Here you can find the conditions and solutions for the tasks
 ## Navigation menu
 Semester №1 |
 ----------- |
-[Homework №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-1) |
-[Homework №2](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-2) |
-[Homework №3](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-2) |
-[Homework №4](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-4) |
+[Homework №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-1-arrow_up) |
+[Homework №2](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-2-arrow_up) |
+[Homework №3](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-2-arrow_up) |
+[Homework №4](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-4-arrow_up) |
 
 ## Semester №1
 
