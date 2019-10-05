@@ -77,5 +77,6 @@ int main() {
         printf("%d/%d ; ", arrayOfFractions[i].numerator, arrayOfFractions[i].denominator);
     }
 
+    free(arrayOfFractions);
     return 0;
 }
