@@ -35,7 +35,7 @@ int main() {
     }
     else
     {
-        while (feof(input) == 0)
+        while (feof(input) == false)
         {
             fgets(inputString, stringMaxSize, input);
             if (!isEmpty(inputString))
