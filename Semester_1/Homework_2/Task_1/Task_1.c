@@ -39,5 +39,7 @@ int main() {
     printf("The compositions of %d are:\n", number);
     int *numberComposition = malloc(number * sizeof(int));
     printCompositions(number, number, numberComposition, 0);
+    
+    free(numberComposition);
     return 0;
 }
