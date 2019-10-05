@@ -28,6 +28,7 @@ int main() {
 
     int numberOfNonEmptyStrings = 0;
     char *inputString = malloc(sizeof(char) * stringMaxSize);
+    inputString = "";
     if (input == NULL)
     {
         printf("Cant open the file");
