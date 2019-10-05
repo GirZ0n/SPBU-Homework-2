@@ -48,8 +48,13 @@ int main()
         swap(&arrayOfNumbers[i++], &arrayOfNumbers[j--]);
     }
 
+
+    printf("Desired array: ");
     for (int i = 0; i < size; i++)
     {
         printf("%d ", arrayOfNumbers[i]);
     }
+
+    free(arrayOfNumbers);
+    return 0;
 }
