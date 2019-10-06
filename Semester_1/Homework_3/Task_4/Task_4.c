@@ -31,6 +31,6 @@ int main() {
     }
 
     printf("Total committed %d action(-s) in the last %d minute(-s): %d user(-s)",
-            numberOfActions, timePeriod,answer);
+            numberOfActions, timePeriod, answer);
     return 0;
 }
