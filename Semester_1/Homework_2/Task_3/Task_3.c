@@ -101,12 +101,9 @@ int main()
 {
     printf("I made up a four-digit number. Try to guess it ;) \n");
 
-    int randomNumber = getRandomNumber();
-
-    printf("%d\n", randomNumber);
-
     int moves = 1;
     int inputNumber = 0;
+    int randomNumber = getRandomNumber();
     while (true)
     {
         printf("Enter the estimated number:");
