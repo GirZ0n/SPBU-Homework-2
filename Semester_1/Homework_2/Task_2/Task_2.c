@@ -6,7 +6,6 @@ struct Fraction
 {
     int numerator;
     int denominator;
-    double value;
 };
 
 struct Fraction createFraction(int numerator, int denominator)
@@ -14,7 +13,6 @@ struct Fraction createFraction(int numerator, int denominator)
     struct Fraction currentFraction;
     currentFraction.numerator = numerator;
     currentFraction.denominator = denominator;
-    currentFraction.value= (double) numerator / denominator;
     return currentFraction;
 }
 
@@ -30,14 +28,14 @@ int getGreatestCommonDivisor(int firstNumber, int secondNumber)
     return getGreatestCommonDivisor(secondNumber, remainder);
 }
 
-bool areMutuallyPrime(int numerator, int denominator)
+bool areCoprime(int numerator, int denominator)
 {
     return getGreatestCommonDivisor(numerator, denominator) == 1;
 }
 
 int comparator(const struct Fraction *leftFraction, const struct Fraction *rightFraction)
 {
-    return leftFraction->value > rightFraction->value;
+    return leftFraction->numerator * rightFraction->denominator - leftFraction->denominator * rightFraction->numerator;
 }
 
 
@@ -46,23 +44,20 @@ int main() {
     printf("Enter the denominator:");
     scanf("%d", &inputDenominator);
 
-    int capacity = 1;
+    int capacity = (inputDenominator) * (inputDenominator - 1) / 2;
     int size = 0;
     struct Fraction *arrayOfFractions = malloc(sizeof(struct Fraction) * capacity);
-    arrayOfFractions[0] = createFraction(0, 0);
+    for (int i = 0; i < capacity; i++)
+    {
+        arrayOfFractions[i] = createFraction(0, 0);
+    }
 
     for (int currentDenominator = 2; currentDenominator <= inputDenominator; currentDenominator++)
     {
         for (int currentNumerator = 1; currentNumerator < currentDenominator; currentNumerator++)
         {
-            if (areMutuallyPrime(currentDenominator, currentNumerator))
+            if (areCoprime(currentDenominator, currentNumerator))
             {
-                if (size + 1 > capacity)
-                {
-                    capacity *= 2;
-                    arrayOfFractions = realloc(arrayOfFractions, sizeof(struct Fraction) * capacity);
-                }
-
                 arrayOfFractions[size] = createFraction(currentNumerator, currentDenominator);
                 size++;
             }
