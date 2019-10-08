@@ -61,6 +61,6 @@ int main() {
 
     free(result);
     free(petyaNotes);
-    free(vasyaNotes)
+    free(vasyaNotes);
     return 0;
 }
