@@ -53,6 +53,7 @@ int main() {
         }
     }
 
+    printf("Desired array: ");
     for (int i = 0; i < sizeOfPetyaNotesSet + sizeOfVasyaNotesSet; i++)
     {
         printf("%d ", result[i]);
