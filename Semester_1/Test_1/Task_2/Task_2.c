@@ -79,5 +79,6 @@ int main() {
         printf("%d ", array[i]);
     }
 
+    free(array);
     return 0;
 }
