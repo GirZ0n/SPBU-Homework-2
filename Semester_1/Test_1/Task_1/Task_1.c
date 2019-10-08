@@ -59,5 +59,8 @@ int main() {
         printf("%d ", result[i]);
     }
 
+    free(result);
+    free(petyaNotes);
+    free(vasyaNotes)
     return 0;
 }
