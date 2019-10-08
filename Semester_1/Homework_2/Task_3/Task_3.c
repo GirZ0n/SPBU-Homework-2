@@ -7,7 +7,7 @@
 void numberToDigits(int digits[], int number)
 {
     int i = 0;
-    while(number > 0)
+    while (number > 0)
     {
         digits[i] = number % 10;
         number /= 10;
@@ -15,39 +15,42 @@ void numberToDigits(int digits[], int number)
     }
 }
 
-void digitsCount(int count[], int digits[], int digitsForCompare[])
+int cowsCount(int randomNumber, int inputNumber)
 {
+    int randomNumberDigits[4] = {0};
+    numberToDigits(randomNumberDigits, randomNumber);
+    int inputNumberDigits[4] = {0};
+    numberToDigits(inputNumberDigits, inputNumber);
+
+    int countOfDigits[10] = {0};
     for (int i = 0; i < 4; i++)
     {
-        if (digits[i] != digitsForCompare[i])
+        if (randomNumberDigits[i] != inputNumberDigits[i])
         {
-            count[digits[i]]++;
+            countOfDigits[randomNumberDigits[i]]++;
+            countOfDigits[inputNumberDigits[i]]++;
         }
     }
-}
-
-int cowsCount(int randomNumberDigits[], int inputNumberDigits[])
-{
-    int countOfRandomNumberDigits[10] = {0};
-    int countOfInputNumberDigits[10] = {0};
-
-    digitsCount(countOfRandomNumberDigits, randomNumberDigits, inputNumberDigits);
-    digitsCount(countOfInputNumberDigits, inputNumberDigits, randomNumberDigits);
 
     int count = 0;
     for (int i = 0; i < 10; i++)
     {
-        if (countOfRandomNumberDigits[i] == countOfInputNumberDigits[i])
+        if(countOfDigits[i] == 2)
         {
-            count += countOfRandomNumberDigits[i];
+            count++;
         }
     }
 
     return count;
 }
 
-int bullsCount(int randomNumberDigits[], int inputNumberDigits[])
+int bullsCount(int randomNumber, int inputNumber)
 {
+    int randomNumberDigits[4] = {0};
+    numberToDigits(randomNumberDigits, randomNumber);
+    int inputNumberDigits[4] = {0};
+    numberToDigits(inputNumberDigits, inputNumber);
+
     int count = 0;
     for (int i = 0; i < 4; i++)
     {
@@ -59,19 +62,51 @@ int bullsCount(int randomNumberDigits[], int inputNumberDigits[])
     return count;
 }
 
+int integerPow(int base, int exponent)
+{
+    int result = 1;
+    for (int i = 0; i < exponent; i++)
+    {
+        result *= base;
+    }
+
+    return result;
+}
+
+int getRandomNumber()
+{
+    srand(time(NULL));
+    int randomDigit = 1 + rand() % 9;
+    int randomNumber = randomDigit * 1000;
+
+    bool isUsed[10] = {false};
+    isUsed[randomDigit] = true;
+
+    int needToGenerate = 3;
+    while (needToGenerate > 0)
+    {
+        randomDigit = rand() % 10;
+        if (isUsed[randomDigit] == false)
+        {
+            randomNumber += randomDigit * integerPow(10, needToGenerate - 1);
+            isUsed[randomDigit] = true;
+            needToGenerate--;
+        }
+    }
+
+    return randomNumber;
+}
+
 int main()
 {
-
     printf("I made up a four-digit number. Try to guess it ;) \n");
 
-    srand(time(NULL));
-    int randomNumber = 1000 + rand() % 9000;
-    int randomNumberDigits[4] = {0};
-    numberToDigits(randomNumberDigits, randomNumber);
+    int randomNumber = getRandomNumber();
+
+    printf("%d\n", randomNumber);
 
     int moves = 1;
     int inputNumber = 0;
-    int inputNumberDigits[4] = {0};
     while (true)
     {
         printf("Enter the estimated number:");
@@ -83,10 +118,8 @@ int main()
             return 0;
         }
 
-        numberToDigits(inputNumberDigits, inputNumber);
-
-        printf("Number of cows: %d \n", cowsCount(randomNumberDigits, inputNumberDigits));
-        printf("Number of bulls: %d \n", bullsCount(randomNumberDigits, inputNumberDigits));
+        printf("Number of cows: %d \n", cowsCount(randomNumber, inputNumber));
+        printf("Number of bulls: %d \n", bullsCount(randomNumber, inputNumber));
         moves++;
     }
 }
