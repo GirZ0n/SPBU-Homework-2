@@ -31,7 +31,7 @@ int main()
         }
     }
 
-    printf("Element doesn't exists :(");
+    printf("Element doesn't exist :(");
     free(arrayOfNumbers);
     return 0;
 }
