@@ -30,19 +30,19 @@ int main()
     int j = size - 1;
     while(true)
     {
-        while(arrayOfNumbers[i] == 0)
+        while(i < size && arrayOfNumbers[i] == 0)
         {
             i++;
-        }
-
-        while(arrayOfNumbers[j] != 0)
-        {
-            j--;
         }
 
         if (i >= j)
         {
             break;
+        }
+
+        while(j < size && arrayOfNumbers[j] != 0)
+        {
+            j--;
         }
 
         swap(&arrayOfNumbers[i++], &arrayOfNumbers[j--]);
