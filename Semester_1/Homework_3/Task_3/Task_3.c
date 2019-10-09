@@ -28,9 +28,9 @@ int main()
 
     int i = 0;
     int j = size - 1;
-    while(true)
+    while (true)
     {
-        while(i < size && arrayOfNumbers[i] == 0)
+        while (i < size && arrayOfNumbers[i] == 0)
         {
             i++;
         }
@@ -40,7 +40,7 @@ int main()
             break;
         }
 
-        while(j < size && arrayOfNumbers[j] != 0)
+        while (j < size && arrayOfNumbers[j] != 0)
         {
             j--;
         }
