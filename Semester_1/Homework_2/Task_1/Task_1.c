@@ -1,33 +1,38 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void printCompositions(int needToAdd, int maxTerm, int *composition, int index)
+int min(int numberA, int numberB)
 {
-    if (needToAdd < 0 || maxTerm < 0)
+    return (numberA < numberB ? numberA : numberB);
+}
+
+void printCompositions(int needToAdd, int *composition, int numberOfTerms)
+{
+    if (needToAdd == 0)
     {
+        for (int i = 0; i < numberOfTerms; i++)
+        {
+            printf("%d", composition[i]);
+            printf("%s", (i + 1 == numberOfTerms ? ";\n" : " + "));
+        }
+
         return;
     }
 
-    if (needToAdd == 0)
+    int maxTerm = 0;
+    if (numberOfTerms > 0)
     {
-        for (int i = 0; i < index; i++)
-        {
-            if (i + 1 == index)
-            {
-                printf("%d; \n", composition[i]);
-                return;
-            }
-            else
-            {
-                printf("%d + ", composition[i]);
-            }
-        }
+        maxTerm = min(needToAdd, composition[numberOfTerms - 1]);
+    }
+    else
+    {
+        maxTerm = needToAdd;
     }
 
-    for (int i = maxTerm; i > 0; i--)
+    for (int term = maxTerm; term > 0; term--)
     {
-        composition[index] = i;
-        printCompositions(needToAdd - i, i, composition, index + 1);
+        composition[numberOfTerms] = term;
+        printCompositions(needToAdd - term, composition, numberOfTerms + 1);
     }
 }
 
@@ -38,7 +43,7 @@ int main() {
 
     printf("The compositions of %d are:\n", number);
     int *numberComposition = malloc(number * sizeof(int));
-    printCompositions(number, number, numberComposition, 0);
+    printCompositions(number, numberComposition, 0);
     
     free(numberComposition);
     return 0;
