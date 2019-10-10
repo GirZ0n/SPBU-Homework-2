@@ -39,8 +39,8 @@ int main() {
         for (int j = 0; j < currentPathLength; j++)
         {
             printf("%d ", matrix[coordinateY][coordinateX]);
-            coordinateX += movementX[i];
-            coordinateY += movementY[i];
+            coordinateX += currentMovementX;
+            coordinateY += currentMovementY;
         }
     }
 
