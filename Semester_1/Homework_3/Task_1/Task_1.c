@@ -8,51 +8,81 @@ void swap(int *elementA, int *elementB)
     *elementB = temp;
 }
 
-void buildHeap(int *array)
+void heapify(int *array, int heapSize, int rootIndex)
 {
-    return;
-}
+    int indexOfLargestElement = rootIndex;
+    int indexOfLeftChild = 2 * rootIndex + 1;
+    int indexOfRightChild = 2 * rootIndex + 2;
 
-void siftDown()
-{
-    return;
-}
-
-void heapSort(int *heap)
-{
-    buildHeap(heap);
-    int heapSize = sizeof(heap) / sizeof(heap[0]);
-    for (int i = 0; i < heapSize - 2; i++)
+    if (indexOfLeftChild < heapSize && array[indexOfLeftChild] > array[indexOfLargestElement])
     {
-        swap(&heap[0], &heap[heapSize - 1 - i]);
-        heapSize--;
-        siftDown(heap, 0, heapSize);
+        indexOfLargestElement = indexOfLeftChild;
+    }
+
+    if (indexOfRightChild < heapSize && array[indexOfRightChild] > array[indexOfLargestElement])
+    {
+        indexOfLargestElement = indexOfRightChild;
+    }
+
+    if (indexOfLargestElement != rootIndex)
+    {
+        swap(&array[rootIndex], &array[indexOfLargestElement]);
+        heapify(array, heapSize, indexOfLargestElement);
     }
 }
 
-int main() {
-    int size = 0;
+void createHeap(int *array, int heapSize)
+{
+    for (int i = heapSize / 2 - 1; i >= 0; i--)
+    {
+        heapify(array, heapSize, i);
+    }
+}
+
+void heapSort(int *heap, int heapSize)
+{
+    for (int i = heapSize - 1; i >= 0; i--)
+    {
+        swap(&heap[0], &heap[i]);
+        heapify(heap, i, 0);
+    }
+}
+
+int *createArray(int arraySize)
+{
+    int *array = malloc(sizeof(int) * arraySize);
+    for (int i = 0; i < arraySize; i++)
+    {
+        array[i] = 0;
+    }
+
+    return array;
+}
+
+void printArray(int *array, int arraySize)
+{
+    for (int i = 0; i < arraySize; i++)
+    {
+        printf("%d ", array[i]);
+    }
+}
+
+int main()
+{
+    int arraySize = 0;
     printf("Enter the size of the array: ");
-    scanf("%d", &size);
+    scanf("%d", &arraySize);
 
-    int *inputArray = malloc(sizeof(int) * size);
-    for (int i = 0; i < size; i++)
-    {
-        inputArray[i] = 0;
-    }
+    int *inputArray = createArray(arraySize);
     printf("Enter the array: ");
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < arraySize; i++)
     {
         scanf("%d", &inputArray[i]);
     }
 
-    heapSort(inputArray);
+    createHeap(inputArray, arraySize);
+    heapSort(inputArray, arraySize);
 
     printf("Sorted array: ");
-    for (int i = 0; i < size; i++)
-    {
-        printf("%d ", inputArray[i]);
-    }
-
-    return 0;
+    printArray(inputArray, arraySize);
 }
