@@ -85,4 +85,7 @@ int main()
 
     printf("Sorted array: ");
     printArray(inputArray, arraySize);
+    
+    free(inputArray);
+    return 0;
 }
