@@ -28,7 +28,7 @@ int main() {
 
     int numberOfNonEmptyStrings = 0;
     char *inputString = malloc(sizeof(char) * stringMaxSize);
-    for (int i = 0; i < tringMaxSize; i++)
+    for (int i = 0; i < stringMaxSize; i++)
     {
         inputString[i] = ' ';
     }
