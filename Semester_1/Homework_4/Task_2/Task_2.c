@@ -13,28 +13,32 @@ struct Pair
 
 typedef struct Pair Pair;
 
-void createPair(Pair* pair, char *name, char *phone)
+void createPair(Pair* pair, char* name, char* phone)
 {
     strcpy(pair->name, name);
     strcpy(pair->phone, phone);
 }
 
-void databaseInit(Pair* database, int* size, int* capacity) {
+void databaseInit(Pair* database, int* databaseSize, int* databaseCapacity)
+{
     FILE *input = fopen("Telephone_directory.txt", "r");
-    if (input != NULL) {
+    if (input != NULL)
+    {
         char *inputString = malloc(sizeof(char) * maxSize);
         char *name = malloc(sizeof(char) * maxSize);
         char *phone = malloc(sizeof(char) * maxSize);
-        while (feof(input) == false) {
-            if (size == capacity) {
-                *capacity *= 2;
-                database = realloc(database, *capacity);
+        while (feof(input) == false)
+        {
+            if (databaseSize == databaseCapacity)
+            {
+                *databaseCapacity *= 2;
+                database = realloc(database, *databaseCapacity);
             }
 
             fgets(inputString, maxSize, input);
             sscanf(inputString, "%s %[^\n]", phone, name);
-            createPair(&database[*size], name, phone);
-            (*size)++;
+            createPair(&database[*databaseSize], name, phone);
+            (*databaseSize)++;
         }
 
         free(inputString);
@@ -129,7 +133,7 @@ int main()
                 }
                 else
                 {
-                    printf("The phone number is not in the phone book.\n");
+                    printf("The phone number is not in the telephone directory.\n");
                 }
 
                 break;
