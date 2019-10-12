@@ -3,31 +3,26 @@
 #include <stdlib.h>
 #include <string.h>
 
-const int maxSize = 256;
+#define maxSize 256
 
 struct Pair
 {
-    char name[256];
-    char phone[256];
+    char name[maxSize];
+    char phone[maxSize];
 };
 
 typedef struct Pair Pair;
 
-Pair createPair(char* name, char* phone)
+void createPair(Pair* pair, char* name, char* phone)
 {
-    Pair currentPair;
-    strcpy(currentPair.name, name);
-    strcpy(currentPair.phone, phone);
-    return currentPair;
+    strcpy(pair->name, name);
+    strcpy(pair->phone, phone);
 }
 
-int main()
+void databaseInit(Pair* database, int* size, int* capacity)
 {
-    int capacity = 2;
-    int size = 0;
-    Pair* database = malloc(sizeof(Pair) * capacity);
-
-    FILE *input = fopen("Telephone_directory.txt", "r");
+    FILE *input = NULL;
+    input = fopen("Telephone_directory.txt", "r");
     if (input != NULL)
     {
         char* inputString = malloc(sizeof(char) * maxSize);
@@ -37,22 +32,35 @@ int main()
         {
             if (size == capacity)
             {
-                capacity *= 2;
-                database = realloc(database, capacity);
+                *capacity *= 2;
+                database = realloc(database, *capacity);
             }
 
             fgets(inputString, maxSize, input);
-
-            sscanf(inputString, "%s - %s", name, phone);
-
-            database[size] = createPair(name, phone);
-            size++;
+            sscanf(inputString, "%s %[^\n]", phone, name);
+            createPair(&database[*size], name, phone);
+            (*size)++;
         }
 
         free(inputString);
         free(name);
         free(phone);
+        fclose(input);
     }
+}
 
+int main()
+{
+    int capacity = 2;
+    int size = 0;
+    Pair* database = malloc(sizeof(Pair) * capacity);
+    databaseInit(database, &size, &capacity);
+
+    /*
+    for (int i = 0; i < size; i++)
+    {
+        printf("%s - %s\n", database[i].name, database[i].phone);
+    }
+    */
     return 0;
 }
