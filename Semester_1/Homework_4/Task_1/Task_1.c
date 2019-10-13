@@ -27,7 +27,7 @@ int main()
     }
 
     printf("Answer: ");
-    print(1, list);
+    printList(1, list);
 
     free(list);
     return 0;

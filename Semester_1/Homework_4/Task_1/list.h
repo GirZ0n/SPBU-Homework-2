@@ -11,6 +11,6 @@ ListElement* createListElement(int value);
 void pushBack(int value, List* list);
 void nextElement(List* list);
 void pop(List* list);
-void print(int size, List* list);
+void printList(int size, List* list);
 
 #endif

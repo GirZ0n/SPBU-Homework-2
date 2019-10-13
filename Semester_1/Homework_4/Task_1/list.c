@@ -69,7 +69,7 @@ void pop(List* list)
     list->current = rightListElement;
 }
 
-void print(int size, List* list)
+void printList(int size, List* list)
 {
     ListElement* currentListElement = list->current;
     for (int i = 0; i < size; i++)
