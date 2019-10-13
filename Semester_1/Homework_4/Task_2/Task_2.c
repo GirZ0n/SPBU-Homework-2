@@ -187,7 +187,7 @@ int main()
                 }
                 else
                 {
-                    printf("The phone number number is not in the telephone directory.\n");
+                    printf("The phone number is not in the telephone directory.\n");
                 }
 
                 break;
