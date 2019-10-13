@@ -9,7 +9,8 @@ typedef struct ListElement ListElement;
 List* createList();
 ListElement* createListElement(int value);
 void pushBack(int value, List* list);
-void pop(ListElement* listElement ,List* list);
+void nextElement(List* list);
+void pop(List* list);
 void print(int size, List* list);
 
 #endif

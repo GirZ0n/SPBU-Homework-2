@@ -4,7 +4,7 @@
 
 struct List
 {
-    ListElement* first;
+    ListElement* current;
 };
 
 struct ListElement
@@ -17,7 +17,7 @@ struct ListElement
 List* createList()
 {
     List* list = malloc(sizeof(struct List));
-    list->first = NULL;
+    list->current = NULL;
 
     return list;
 }
@@ -34,13 +34,13 @@ ListElement* createListElement(int value)
 
 void pushBack(int value, List* list)
 {
-    ListElement* firstListElement = list->first;
+    ListElement* firstListElement = list->current;
     if(firstListElement == NULL)
     {
         firstListElement = createListElement(value);
         firstListElement->left = firstListElement;
         firstListElement->right = firstListElement;
-        list->first = firstListElement;
+        list->current = firstListElement;
     }
     else
     {
@@ -54,22 +54,24 @@ void pushBack(int value, List* list)
     }
 }
 
-void pop(ListElement* listElement, List* list)
+void nextElement(List* list)
 {
-    if (list->first = listElement)
-    {
-        list->first = listElement->right;
-    }
+    list->current = list->current->right;
+}
 
-    ListElement* leftListElement = listElement->left;
-    ListElement* rightListElement = listElement->right;
+void pop(List* list)
+{
+    ListElement* currentListElement = list->current;
+    ListElement* leftListElement = currentListElement->left;
+    ListElement* rightListElement = currentListElement->right;
     leftListElement->right = rightListElement;
     rightListElement->left = leftListElement;
+    list->current = rightListElement;
 }
 
 void print(int size, List* list)
 {
-    ListElement* currentListElement = list->first;
+    ListElement* currentListElement = list->current;
     for (int i = 0; i < size; i++)
     {
         printf("%d ", currentListElement->value);
