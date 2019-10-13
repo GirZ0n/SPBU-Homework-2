@@ -110,7 +110,7 @@ int main()
     int databaseSize = 0;
     Pair* database = malloc(sizeof(Pair) * databaseCapacity);
 
-   int numberOfEntries = databaseInit(database, &databaseSize, &databaseCapacity);
+    int numberOfEntries = databaseInit(database, &databaseSize, &databaseCapacity);
 
     printf("Select an action from the suggestions below.\n");
     printf("0 - Exit;\n");
