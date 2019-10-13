@@ -8,7 +8,7 @@
 struct Pair
 {
     char name[maxSize];
-    char phone[maxSize];
+    char phoneNumber[maxSize];
 };
 
 typedef struct Pair Pair;
@@ -16,7 +16,7 @@ typedef struct Pair Pair;
 void createPair(Pair* pair, char* name, char* phoneNumber)
 {
     strcpy(pair->name, name);
-    strcpy(pair->phone, phoneNumber);
+    strcpy(pair->phoneNumber, phoneNumber);
 }
 
 int databaseInit(Pair* database, int* databaseSize, int* databaseCapacity)
@@ -80,7 +80,7 @@ bool getNameByPhone(Pair* database, int databaseSize, char name[], char phoneNum
 {
     for (int i = 0; i < databaseSize; i++)
     {
-        if (areEqual(database[i].phone, phoneNumber))
+        if (areEqual(database[i].phoneNumber, phoneNumber))
         {
             strcpy(name, database[i].name);
             return true;
@@ -96,7 +96,7 @@ bool getPhoneByName(Pair* database, int databaseSize, char name[], char phoneNum
     {
         if (areEqual(database[i].name, name))
         {
-            strcpy(phoneNumber, database[i].phone);
+            strcpy(phoneNumber, database[i].phoneNumber);
             return true;
         }
     }
@@ -198,7 +198,7 @@ int main()
                 for (int i = numberOfEntries; i < databaseSize; i++)
                 {
                     fputs("\n", output);
-                    fputs(database[i].phone, output);
+                    fputs(database[i].phoneNumber, output);
                     fputs(" ", output);
                     fputs(database[i].name, output);
                 }
