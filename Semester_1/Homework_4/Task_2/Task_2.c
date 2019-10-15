@@ -27,7 +27,7 @@ int databaseInit(Pair* database, int* databaseSize, int* databaseCapacity)
     {
         char *inputString = malloc(sizeof(char) * maxSize);
         char *name = malloc(sizeof(char) * maxSize);
-        char *phone = malloc(sizeof(char) * maxSize);
+        char *phoneNumber = malloc(sizeof(char) * maxSize);
         while (feof(input) == false)
         {
             if (databaseSize == databaseCapacity)
@@ -37,15 +37,15 @@ int databaseInit(Pair* database, int* databaseSize, int* databaseCapacity)
             }
 
             fgets(inputString, maxSize, input);
-            sscanf(inputString, "%s %[^\n]", phone, name);
-            createPair(&database[*databaseSize], name, phone);
+            sscanf(inputString, "%s %[^\n]", phoneNumber, name);
+            createPair(&database[*databaseSize], name, phoneNumber);
             (*databaseSize)++;
             numberOfEntries++;
         }
 
         free(inputString);
         free(name);
-        free(phone);
+        free(phoneNumber);
         fclose(input);
     }
 
