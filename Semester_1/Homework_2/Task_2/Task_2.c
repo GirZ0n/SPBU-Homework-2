@@ -8,9 +8,11 @@ struct Fraction
     int denominator;
 };
 
-struct Fraction createFraction(int numerator, int denominator)
+typedef struct Fraction Fraction;
+
+Fraction createFraction(int numerator, int denominator)
 {
-    struct Fraction currentFraction;
+    Fraction currentFraction;
     currentFraction.numerator = numerator;
     currentFraction.denominator = denominator;
     return currentFraction;
@@ -33,7 +35,7 @@ bool areCoprime(int numerator, int denominator)
     return getGreatestCommonDivisor(numerator, denominator) == 1;
 }
 
-int comparator(const struct Fraction *leftFraction, const struct Fraction *rightFraction)
+int comparator(const Fraction *leftFraction, const Fraction *rightFraction)
 {
     return leftFraction->numerator * rightFraction->denominator - leftFraction->denominator * rightFraction->numerator;
 }
@@ -46,7 +48,7 @@ int main() {
 
     int capacity = (inputDenominator) * (inputDenominator - 1) / 2;
     int size = 0;
-    struct Fraction *arrayOfFractions = malloc(sizeof(struct Fraction) * capacity);
+    Fraction *arrayOfFractions = malloc(sizeof(Fraction) * capacity);
     for (int i = 0; i < capacity; i++)
     {
         arrayOfFractions[i] = createFraction(0, 0);
@@ -64,7 +66,7 @@ int main() {
         }
     }
 
-    qsort(arrayOfFractions, size, sizeof(struct Fraction), comparator);
+    qsort(arrayOfFractions, size, sizeof(Fraction), comparator);
 
     printf("All simple irreducible fractions in the interval (0, 1):\n");
     for (int i = 0; i < size; i++)
