@@ -34,23 +34,22 @@ ListElement* createListElement(int value)
 
 void pushBack(int value, List* list)
 {
-    ListElement* firstListElement = list->current;
-    if(firstListElement == NULL)
+    ListElement* newListElement = createListElement(value);
+    if (list->current == NULL)
     {
-        firstListElement = createListElement(value);
-        firstListElement->left = firstListElement;
-        firstListElement->right = firstListElement;
-        list->current = firstListElement;
+        newListElement->left = newListElement;
+        newListElement->right = newListElement;
+        list->current = newListElement;
     }
     else
     {
-        ListElement* lastListElement = firstListElement->left;
-        ListElement* listElement = createListElement(value);
+        ListElement* currentListElement = list->current;
+        ListElement* lastListElement = currentListElement->left;
 
-        listElement->left = lastListElement;
-        listElement->right = firstListElement;
-        lastListElement->right = listElement;
-        firstListElement->left = listElement;
+        lastListElement->right = newListElement;
+        currentListElement->left = newListElement;
+        newListElement->left = lastListElement;
+        newListElement->right = currentListElement;
     }
 }
 
@@ -64,16 +63,17 @@ void pop(List* list)
     ListElement* currentListElement = list->current;
     ListElement* leftListElement = currentListElement->left;
     ListElement* rightListElement = currentListElement->right;
+
     leftListElement->right = rightListElement;
     rightListElement->left = leftListElement;
     list->current = rightListElement;
+    free(currentListElement);
 }
 
 void printList(int size, List* list)
 {
     ListElement* currentListElement = list->current;
-    for (int i = 0; i < size; i++)
-    {
+    for (int i = 0; i < size; i++) {
         printf("%d ", currentListElement->value);
         currentListElement = currentListElement->right;
     }

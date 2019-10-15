@@ -7,7 +7,6 @@ typedef struct List List;
 typedef struct ListElement ListElement;
 
 List* createList();
-ListElement* createListElement(int value);
 void pushBack(int value, List* list);
 void nextElement(List* list);
 void pop(List* list);
