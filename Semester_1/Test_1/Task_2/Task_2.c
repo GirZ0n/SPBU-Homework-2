@@ -8,7 +8,7 @@ void getRandomArray(int *array, int size)
     srand(time(NULL));
     for (int i = 0; i < size; i++)
     {
-        array[i] = 11 + rand()%32;
+        array[i] = 11 + rand() % 32;
     }
 }
 
@@ -70,6 +70,12 @@ int main() {
         scanf("%d", &size);
         array = malloc(sizeof(int) * size);
         getRandomArray(array, size);
+        printf("Random array: ");
+        for (int i = 0; i < size; i++)
+        {
+            printf("%d ", array[i]);
+        }
+        printf("\n");
     }
 
     printf("Sorted array: ");
