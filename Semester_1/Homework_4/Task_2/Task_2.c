@@ -54,12 +54,7 @@ int databaseInit(Pair* database, int* databaseSize, int* databaseCapacity)
 
 int max(int elementA, int elementB)
 {
-    if (elementA > elementB)
-    {
-        return elementA;
-    }
-
-    return elementB;
+    return elementA > elementB ? elementA : elementB;
 }
 
 bool areEqual(char stringA[], char stringB[])
@@ -115,8 +110,8 @@ int main()
     printf("Select an action from the suggestions below.\n");
     printf("0 - Exit;\n");
     printf("1 - Add telephone directory entry;\n");
-    printf("2 - Find phoneNumber by name;\n");
-    printf("3 - Find name by phoneNumber;\n");
+    printf("2 - Find phone number by name;\n");
+    printf("3 - Find name by phone number;\n");
     printf("4 - Save current data to a file.\n\n");
     printf("Attention! The phone number must be entered in the international format: +12345678...\n");
 
