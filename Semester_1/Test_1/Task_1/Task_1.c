@@ -1,7 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <math.h>
+
+int* getArray(int size)
+{
+    int* array = malloc(sizeof(int) * size);
+    for (int i = 0; i < size; i++)
+    {
+        array[i] = 0;
+    }
+
+    int input = 0;
+    for (int i = 0; i < size; i++)
+    {
+        scanf("%d", &input);
+        array[i] = input;
+    }
+
+    return array;
+}
 
 int main() {
 
@@ -9,31 +26,18 @@ int main() {
     int sizeOfVasyaNotesSet = 0;
     scanf("%d", &sizeOfVasyaNotesSet);
     printf("Enter Vasya's notes set: ");
-    int *vasyaNotes = malloc(sizeof(int) * sizeOfVasyaNotesSet);
-    for (int i = 0; i < sizeOfVasyaNotesSet; i++)
-    {
-        int input = 0;
-        scanf("%d", &input);
-        vasyaNotes[i] = input;
-    }
-
+    int *vasyaNotes = getArray(sizeOfVasyaNotesSet);
 
     printf("Enter the size of Petya's notes set: ");
     int sizeOfPetyaNotesSet = 0;
     scanf("%d", &sizeOfPetyaNotesSet);
     printf("Enter Petya's notes set: ");
-    int *petyaNotes = malloc(sizeof(int) * sizeOfPetyaNotesSet);
-    for (int i = 0; i < sizeOfPetyaNotesSet; i++)
-    {
-        int input = 0;
-        scanf("%d", &input);
-        petyaNotes[i] = input;
-    }
+    int *petyaNotes = getArray(sizeOfPetyaNotesSet);
 
     int *result = malloc(sizeof(int) * (sizeOfPetyaNotesSet + sizeOfVasyaNotesSet));
     int i = 0;
     int j = 0;
-    while(true)
+    while (true)
     {
         while (i < sizeOfPetyaNotesSet && petyaNotes[i] >= vasyaNotes[j])
         {
