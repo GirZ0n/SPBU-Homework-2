@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-#include "stack.h"
 #include <stdbool.h>
+#include "stack.h"
 
 #define maxSize 256
 
