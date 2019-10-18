@@ -28,10 +28,14 @@ double getResultOfOperation(double valueA, double valueB, char operation)
     }
 }
 
-bool isOperation(char* input)
+bool isOperation(char input)
 {
-    return input[0] == '+' || input[0] == '*' || input[0] == '/' ||
-          (input[0] == '-' && (input[1] == ' ' || input[1] == '\0'));
+    return input == '+' || input == '-' || input == '*' || input == '/';
+}
+
+int charToInt (char digit)
+{
+    return digit - '0';
 }
 
 int main() {
@@ -41,33 +45,25 @@ int main() {
     char inputString[maxSize] = "\0";
     scanf("%[^\n]", inputString);
 
-    char input[maxSize] = "\0";
-    char other[maxSize] = "\0";
-    while (true)
+    int inputStringLength = strlen(inputString);
+    for (int i = 0; i < inputStringLength; i++)
     {
-        sscanf(inputString, "%s %[^\n]", input, other);
-
-        if(inputString[0] == '\0')
+        if(inputString[i] == ' ')
         {
-            break;
+            continue;
         }
 
-        if (isOperation(input))
+        if (isOperation(inputString[i]))
         {
             double operandB = pop(stack);
             double operandA = pop(stack);
-            double result = getResultOfOperation(operandA, operandB, input[0]);
+            double result = getResultOfOperation(operandA, operandB, inputString[i]);
             push(result, stack);
         }
         else
         {
-            double inputValue = 0;
-            sscanf(input, "%lf", &inputValue);
-            push(inputValue, stack);
+            push((double)charToInt(inputString[i]), stack);
         }
-
-        strcpy(inputString, other);
-        other[0] = '\0';
     }
 
     double answer = pop(stack);
@@ -77,7 +73,7 @@ int main() {
     }
     else
     {
-        printf("Something went wrong. The stack is not empty.");
+        printf("The stack is not empty. Enter the correct expression.");
     }
 
     return 0;
