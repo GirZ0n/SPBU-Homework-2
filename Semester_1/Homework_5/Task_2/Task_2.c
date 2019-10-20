@@ -67,7 +67,8 @@ double getNumber(char* input, int* index)
     return numberValue;
 }
 
-int main() {
+int main()
+{
     Stack* stack = createStack();
 
     printf("Enter an expression in the postfix notation (with spaces):\n");
