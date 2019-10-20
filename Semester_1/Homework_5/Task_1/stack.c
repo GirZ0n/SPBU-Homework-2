@@ -46,4 +46,9 @@ char pop(Stack* stack)
     char value = poppedElement->value;
     free(poppedElement);
     return value;
-} 
+}
+
+char top(Stack* stack)
+{
+    return stack->first->value;
+}
