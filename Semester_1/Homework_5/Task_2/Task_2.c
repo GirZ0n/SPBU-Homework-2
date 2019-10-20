@@ -28,14 +28,19 @@ double getResultOfOperation(double valueA, double valueB, char operation)
     }
 }
 
-bool isOperation(char* input)
+bool isOperation(char* input, int index)
 {
-    if (strlen(input) > 1)
+    if (input[index] == '-')
     {
-        return false;
+        if (index + 1 < strlen(input))
+        {
+            return input[index + 1] == ' ';
+        }
+
+        return true;
     }
 
-    return input[0] == '+' || input[0] == '-' || input[0] == '*' || input[0] == '/';
+    return input[index] == '+' || input[index] == '*' || input[index] == '/';
 }
 
 bool isDigit(char input)
@@ -43,24 +48,23 @@ bool isDigit(char input)
     return input - '0' >= 0 && input - '0' <= 9;
 }
 
-bool isNumber(char* input)
+double getNumber(char* input, int* index)
 {
-    if (input[0] == '-' && strlen(input) == 1)
-    {
-        return false;
-    }
+    char number[maxSize] = "\0";
+    number[0] = input[*index];
+    int numberLength = 1;
 
-    int startIndex = (input[0] == '-' ? 1 : 0);
     int inputLength = strlen(input);
-    for (int i = startIndex; i < inputLength; i++)
+    while (*index + 1 < inputLength && isDigit(input[*index + 1]))
     {
-        if (!isDigit(input[i]))
-        {
-            return false;
-        }
+        number[numberLength] = input[*index + 1];
+        numberLength++;
+        (*index)++;
     }
 
-    return true;
+    double numberValue = 0;
+    sscanf(number, "%lf", &numberValue);
+    return numberValue;
 }
 
 int main() {
@@ -70,38 +74,29 @@ int main() {
     char inputString[maxSize] = "\0";
     scanf("%[^\n]", inputString);
 
-    char input[maxSize] = "\0";
-    char other[maxSize] = "\0";
-    while (true)
+    int inputStringLength = strlen(inputString);
+    for (int i = 0; i < inputStringLength; i++)
     {
-        sscanf(inputString, "%s %[^\n]", input, other);
-
-        if(inputString[0] == '\0')
-        {
-            break;
-        }
-
-        if (isOperation(input) && stackSize(stack) >= 2)
+        if (isOperation(inputString, i) && stackSize(stack) >= 2)
         {
             double operandB = pop(stack);
             double operandA = pop(stack);
-            double result = getResultOfOperation(operandA, operandB, input[0]);
+            double result = getResultOfOperation(operandA, operandB, inputString[i]);
             push(result, stack);
         }
-        else if (isNumber(input))
+        else if (isDigit(inputString[i]))
         {
-            double inputValue = 0;
-            sscanf(input, "%lf", &inputValue);
-            push(inputValue, stack);
+            push(getNumber(inputString, &i), stack);
+        }
+        else if (inputString[i] == ' ')
+        {
+            continue;
         }
         else
         {
             printf("Incorrect input.");
             return 0;
         }
-
-        strcpy(inputString, other);
-        other[0] = '\0';
     }
 
     double answer = pop(stack);
