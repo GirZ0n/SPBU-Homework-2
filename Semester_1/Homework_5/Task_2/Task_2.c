@@ -28,7 +28,7 @@ double getResultOfOperation(double valueA, double valueB, char operation)
     }
 }
 
-bool isOperation(char* input, int index)
+bool isOperator(char* input, int index)
 {
     if (input[index] == '-')
     {
@@ -77,7 +77,7 @@ int main() {
     int inputStringLength = strlen(inputString);
     for (int i = 0; i < inputStringLength; i++)
     {
-        if (isOperation(inputString, i) && stackSize(stack) >= 2)
+        if (isOperator(inputString, i) && stackSize(stack) >= 2)
         {
             double operandB = pop(stack);
             double operandA = pop(stack);
@@ -106,7 +106,7 @@ int main() {
     }
     else
     {
-        printf("Something went wrong. The stack is not empty. Maybe you missed the operation.");
+        printf("Something went wrong. The stack is not empty. Maybe you missed the operator.");
     }
 
     return 0;
