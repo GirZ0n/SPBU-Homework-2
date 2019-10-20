@@ -9,6 +9,7 @@ struct StackElement
 
 struct Stack
 {
+    int size;
     StackElement* first;
 };
 
@@ -26,6 +27,7 @@ bool isEmpty(Stack* stack)
 
 bool push(double value, Stack* stack)
 {
+    stack->size++;
     StackElement* stackElement = malloc(sizeof(struct StackElement));
     stackElement->value = value;
     stackElement->next = stack->first;
@@ -41,9 +43,15 @@ double pop(Stack* stack)
         return 0;
     }
 
+    stack->size--;
     StackElement* poppedElement = stack->first;
     stack->first = poppedElement->next;
     double value = poppedElement->value;
     free(poppedElement);
     return value;
+}
+
+int stackSize(Stack* stack)
+{
+    return stack->size;
 }

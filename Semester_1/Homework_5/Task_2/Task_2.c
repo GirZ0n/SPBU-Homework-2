@@ -28,42 +28,72 @@ double getResultOfOperation(double valueA, double valueB, char operation)
     }
 }
 
-bool isOperation(char input)
+bool isOperation(char* input)
 {
-    return input == '+' || input == '-' || input == '*' || input == '/';
+    return input[0] == '+' || input[0] == '*' || input[0] == '/' ||
+           (input[0] == '-' && (input[1] == ' ' || input[1] == '\0'));
 }
 
-int charToInt (char digit)
+bool isDigit(char input)
 {
-    return digit - '0';
+    return input - '0' >= 0 && input - '0' <= 9;
+}
+
+bool isNumber(char* input)
+{
+    int startIndex = input[0] == '-' ? 1 : 0;
+
+    int inputLength = strlen(input);
+    for (int i = startIndex; i < inputLength; i++)
+    {
+        if (!isDigit(input[i]))
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 int main() {
     Stack* stack = createStack();
 
-    printf("Enter an expression in the reverse Polish notation:\n");
+    printf("Enter an expression in the infix notation (with spaces):\n");
     char inputString[maxSize] = "\0";
     scanf("%[^\n]", inputString);
 
-    int inputStringLength = strlen(inputString);
-    for (int i = 0; i < inputStringLength; i++)
+    char input[maxSize] = "\0";
+    char other[maxSize] = "\0";
+    while (true)
     {
-        if(inputString[i] == ' ')
+        sscanf(inputString, "%s %[^\n]", input, other);
+
+        if(inputString[0] == '\0')
         {
-            continue;
+            break;
         }
 
-        if (isOperation(inputString[i]))
+        if (isOperation(input) && stackSize(stack) >= 2)
         {
             double operandB = pop(stack);
             double operandA = pop(stack);
-            double result = getResultOfOperation(operandA, operandB, inputString[i]);
+            double result = getResultOfOperation(operandA, operandB, input[0]);
             push(result, stack);
+        }
+        else if (isNumber(input))
+        {
+            double inputValue = 0;
+            sscanf(input, "%lf", &inputValue);
+            push(inputValue, stack);
         }
         else
         {
-            push((double)charToInt(inputString[i]), stack);
+            printf("Incorrect input.");
+            return 0;
         }
+
+        strcpy(inputString, other);
+        other[0] = '\0';
     }
 
     double answer = pop(stack);
@@ -73,7 +103,7 @@ int main() {
     }
     else
     {
-        printf("The stack is not empty. Enter the correct expression.");
+        printf("Something went wrong. The stack is not empty. Maybe you missed the operation.");
     }
 
     return 0;
