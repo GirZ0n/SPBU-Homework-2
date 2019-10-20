@@ -5,9 +5,9 @@
 
 #define maxSize 256
 
-double getResultOfOperation(double valueA, double valueB, char operation)
+double getResultOfOperation(double valueA, double valueB, char operator)
 {
-    switch (operation)
+    switch (operator)
     {
         case '+':
         {
