@@ -30,12 +30,12 @@ double getResultOfOperation(double valueA, double valueB, char operation)
 
 bool isOperation(char* input)
 {
-    if (input[1] == ' ' || input[1] == '\0')
+    if (strlen(input) > 1)
     {
-        return input[0] == '+' || input[0] == '-' || input[0] == '*' || input[0] == '/';
+        return false;
     }
 
-    return false;
+    return input[0] == '+' || input[0] == '-' || input[0] == '*' || input[0] == '/';
 }
 
 bool isDigit(char input)
@@ -45,8 +45,12 @@ bool isDigit(char input)
 
 bool isNumber(char* input)
 {
-    int startIndex = (input[0] == '-' ? 1 : 0);
+    if (input[0] == '-' && strlen(input) == 1)
+    {
+        return false;
+    }
 
+    int startIndex = (input[0] == '-' ? 1 : 0);
     int inputLength = strlen(input);
     for (int i = startIndex; i < inputLength; i++)
     {
