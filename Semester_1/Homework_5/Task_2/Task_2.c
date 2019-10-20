@@ -62,7 +62,7 @@ bool isNumber(char* input)
 int main() {
     Stack* stack = createStack();
 
-    printf("Enter an expression in the infix notation (with spaces):\n");
+    printf("Enter an expression in the postfix notation (with spaces):\n");
     char inputString[maxSize] = "\0";
     scanf("%[^\n]", inputString);
 
