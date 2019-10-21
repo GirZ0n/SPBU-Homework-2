@@ -1,14 +1,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <math.h>
 #include "stack.h"
 
 #define maxSize 256
-
-bool isOperation(char input)
-{
-    return input == '+' || input == '-' || input == '*' || input == '/';
-}
 
 bool isOpenBracket(char input)
 {
@@ -20,16 +16,16 @@ bool isCloseBracket(char input)
     return input == ')';
 }
 
-bool isLessPriority(char operationA, char operationB)
+bool isLessPriority(char operatorA, char operatorB)
 {
     int priorityA = 0;
-    if (operationA == '/' || operationA == '*')
+    if (operatorA == '/' || operatorA == '*')
     {
         priorityA = 1;
     }
 
     int priorityB = 0;
-    if (operationB == '/' || operationB == '*')
+    if (operatorB == '/' || operatorB == '*')
     {
         priorityB = 1;
     }
@@ -37,43 +33,87 @@ bool isLessPriority(char operationA, char operationB)
     return priorityA <= priorityB;
 }
 
-bool isNumber(char input)
+bool isDigit(char input)
 {
     return input - '0' >= 0 && input - '0' <= 9;
 }
+
+int getNumber(char* input, int* index)
+{
+    char number[maxSize] = "\0";
+    number[0] = input[*index];
+    int numberLength = 1;
+
+    int inputLength = strlen(input);
+    while (*index + 1 < inputLength && isDigit(input[*index + 1]))
+    {
+        number[numberLength] = input[*index + 1];
+        numberLength++;
+        (*index)++;
+    }
+
+    int numberValue = 0;
+    sscanf(number, "%d", &numberValue);
+    return numberValue;
+}
+
+bool isUnaryNegative(char* input, int index)
+{
+    if (input[index] == '-' && index + 1 < strlen(input))
+    {
+        return isDigit(input[index + 1]);
+    }
+
+    return false;
+}
+
+bool isOperator(char* input, int index)
+{
+    if (isUnaryNegative(input, index))
+    {
+        return false;
+    }
+
+    return input[index] == '+' || input[index] == '-' || input[index] == '*' || input[index] == '/';
+}
+
 
 int main()
 {
     Stack* stack = createStack();
 
     printf("Enter an expression in the infix notation:\n");
-    char infixNotation[maxSize] = "\0";
-    scanf("%[^\n]", infixNotation);
+    char inputString[maxSize] = "\0";
+    scanf("%[^\n]", inputString);
 
-    char postfixNotation[maxSize] = "\0";
-    int postfixNotationSize = 0;
-
-    int infixNotationLength = strlen(infixNotation);
-    char token = ' ';
-    for (int i = 0; i < infixNotationLength; i++)
+    int sizeOfOutput = 0;
+    int outputNumbers[maxSize] = {0};
+    char outputOperators[maxSize];
+    for (int i = 0; i < maxSize; i++)
     {
-        token = infixNotation[i];
-        if (isOperation(token))
+        outputOperators[i] = ' ';
+    }
+
+    int inputStringLength = strlen(inputString);
+    for (int i = 0; i < inputStringLength; i++)
+    {
+        if (isOperator(inputString, i))
         {
-            while (!isEmpty(stack) && isLessPriority(token, top(stack)) && !isOpenBracket(top(stack)))
+            while (!isEmpty(stack) && isLessPriority(inputString[i], top(stack))
+                && !isOpenBracket(top(stack)))
             {
-                 postfixNotation[postfixNotationSize] = pop(stack);
-                 postfixNotationSize++;
+                outputOperators[sizeOfOutput] = pop(stack);
+                sizeOfOutput++;
             }
 
-            push(token, stack);
+            push(inputString[i], stack);
         }
-        else if (isCloseBracket(token))
+        else if (isCloseBracket(inputString[i]))
         {
             while (!isEmpty(stack) && !isOpenBracket(top(stack)))
             {
-                postfixNotation[postfixNotationSize] = pop(stack);
-                postfixNotationSize++;
+                outputOperators[sizeOfOutput] = pop(stack);
+                sizeOfOutput++;
             }
 
             if (!isEmpty(stack))
@@ -86,16 +126,16 @@ int main()
                 return 0;
             }
         }
-        else if (isOpenBracket(token))
+        else if (isOpenBracket(inputString[i]))
         {
-            push(token, stack);
+            push(inputString[i], stack);
         }
-        else if (isNumber(token))
+        else if (isUnaryNegative(inputString, i) || isDigit(inputString[i]))
         {
-            postfixNotation[postfixNotationSize] = token;
-            postfixNotationSize++;
+            outputNumbers[sizeOfOutput] = getNumber(inputString, &i);
+            sizeOfOutput++;
         }
-        else if (token == ' ')
+        else if (inputString[i] == ' ')
         {
             continue;
         }
@@ -106,6 +146,7 @@ int main()
         }
     }
 
+
     while (!isEmpty(stack))
     {
         if (isOpenBracket(top(stack)))
@@ -114,13 +155,22 @@ int main()
             return 0;
         }
 
-        postfixNotation[postfixNotationSize] = pop(stack);
-        postfixNotationSize++;
+        outputOperators[sizeOfOutput] = pop(stack);
+        sizeOfOutput++;
     }
 
-    for (int i = 0; i < postfixNotationSize; i++)
+
+
+    for (int i = 0; i < sizeOfOutput; i++)
     {
-        printf("%c ", postfixNotation[i]);
+        if (outputOperators[i] == ' ')
+        {
+            printf("%d ", outputNumbers[i]);
+        }
+        else
+        {
+            printf("%c ", outputOperators[i]);
+        }
     }
 
     return 0;
