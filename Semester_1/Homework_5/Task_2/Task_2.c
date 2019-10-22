@@ -28,24 +28,29 @@ double getResultOfOperation(double valueA, double valueB, char operator)
     }
 }
 
-bool isOperator(char* input, int index)
-{
-    if (input[index] == '-')
-    {
-        if (index + 1 < strlen(input))
-        {
-            return input[index + 1] == ' ';
-        }
-
-        return true;
-    }
-
-    return input[index] == '+' || input[index] == '*' || input[index] == '/';
-}
-
 bool isDigit(char input)
 {
     return input - '0' >= 0 && input - '0' <= 9;
+}
+
+bool isUnaryNegative(char* input, int index)
+{
+    if (input[index] == '-' && index + 1 < strlen(input))
+    {
+        return isDigit(input[index + 1]);
+    }
+
+    return false;
+}
+
+bool isOperator(char* input, int index)
+{
+    if (isUnaryNegative(input, index))
+    {
+        return false;
+    }
+
+    return input[index] == '+' || input[index] == '-' || input[index] == '*' || input[index] == '/';
 }
 
 double getNumber(char* input, int* index)
@@ -69,7 +74,7 @@ double getNumber(char* input, int* index)
 
 int main()
 {
-    Stack* stack = createStack();
+    struct Stack* stack = createStack();
 
     printf("Enter an expression in the postfix notation (with spaces):\n");
     char inputString[maxSize] = "\0";
@@ -85,7 +90,7 @@ int main()
             double result = getResultOfOperation(operandA, operandB, inputString[i]);
             push(result, stack);
         }
-        else if (isDigit(inputString[i]))
+        else if (isUnaryNegative(inputString, i) || isDigit(inputString[i]))
         {
             push(getNumber(inputString, &i), stack);
         }

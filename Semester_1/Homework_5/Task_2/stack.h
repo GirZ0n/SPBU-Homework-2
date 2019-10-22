@@ -6,13 +6,10 @@
 struct Stack;
 struct StackElement;
 
-typedef struct Stack Stack;
-typedef struct StackElement StackElement;
-
-bool isEmpty(Stack* stack);
-bool push(double value, Stack* stack);
-double pop(Stack* stack);
-int stackSize(Stack* stack);
-Stack* createStack();
+bool isEmpty(struct Stack* stack);
+bool push(double value, struct Stack* stack);
+double pop(struct Stack* stack);
+int stackSize(struct Stack* stack);
+struct Stack* createStack();
 
 #endif
