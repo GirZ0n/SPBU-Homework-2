@@ -10,12 +10,8 @@ void freeTwoDimensionalArray(int **array, int size)
     free(array);
 }
 
-int main() {
-    int size = 0;
-    printf("Enter the size of the matrix: ");
-    scanf("%d", &size);
-
-    printf("Enter the matrix: ");
+int** createTwoDimensionalArray(int size)
+{
     int **matrix = malloc(sizeof(int*) * size);
     for (int i = 0; i < size; i++)
     {
@@ -29,6 +25,17 @@ int main() {
             scanf("%d", &matrix[i][j]);
         }
     }
+
+    return matrix;
+}
+
+int main() {
+    int size = 0;
+    printf("Enter the size of the matrix: ");
+    scanf("%d", &size);
+
+    printf("Enter the matrix: ");
+    int** matrix = createTwoDimensionalArray(size);
 
     int movementX[4] = {0, 1, 0, -1};
     int movementY[4] = {-1, 0, 1, 0};
