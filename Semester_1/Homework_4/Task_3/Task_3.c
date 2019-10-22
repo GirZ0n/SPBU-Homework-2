@@ -1,6 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void freeTwoDimensionalArray(int **array, int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        free(array[i]);
+    }
+    free(array);
+}
+
 int main() {
     int size = 0;
     printf("Enter the size of the matrix: ");
@@ -49,10 +58,7 @@ int main() {
         printf("%d ", matrix[coordinateY--][coordinateX]);
     }
 
-    for (int i = 0; i < size; i++)
-    {
-        free(matrix[i]);
-    }
-    free(matrix);
+    freeTwoDimensionalArray(matrix, size);
+
     return 0;
 }
