@@ -1,6 +1,9 @@
 #include <stdlib.h>
 #include "stack.h"
 
+typedef struct Stack Stack;
+typedef struct StackElement StackElement;
+
 struct StackElement
 {
     char value;

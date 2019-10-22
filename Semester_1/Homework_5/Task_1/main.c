@@ -80,7 +80,7 @@ bool isOperator(char* input, int index)
 
 int main()
 {
-    Stack* stack = createStack();
+    struct Stack* stack = createStack();
 
     printf("Enter an expression in the infix notation:\n");
     char inputString[maxSize] = "\0";
