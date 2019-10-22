@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+typedef struct List List;
+typedef struct ListElement ListElement;
+
 struct List
 {
     ListElement* current;

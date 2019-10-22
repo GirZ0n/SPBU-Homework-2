@@ -11,7 +11,7 @@ int main()
     printf("Need to kill every: ");
     scanf("%d", &needToKillEvery);
 
-    List* list = createList();
+    struct List* list = createList();
     for (int i = 1; i <= numberOfWarriors; i++)
     {
         pushBack(i, list);
