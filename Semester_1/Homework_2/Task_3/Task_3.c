@@ -4,6 +4,8 @@
 #include <stdbool.h>
 #include <string.h>
 
+#define numberLength 4
+
 void numberToDigits(int digits[], int number)
 {
     int i = 0;
@@ -17,13 +19,13 @@ void numberToDigits(int digits[], int number)
 
 int cowsCount(int randomNumber, int inputNumber)
 {
-    int randomNumberDigits[4] = {0};
+    int randomNumberDigits[numberLength] = {0};
     numberToDigits(randomNumberDigits, randomNumber);
-    int inputNumberDigits[4] = {0};
+    int inputNumberDigits[numberLength] = {0};
     numberToDigits(inputNumberDigits, inputNumber);
 
     int countOfDigits[10] = {0};
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < numberLength; i++)
     {
         if (randomNumberDigits[i] != inputNumberDigits[i])
         {
@@ -35,7 +37,7 @@ int cowsCount(int randomNumber, int inputNumber)
     int count = 0;
     for (int i = 0; i < 10; i++)
     {
-        if(countOfDigits[i] == 2)
+        if (countOfDigits[i] == 2)
         {
             count++;
         }
@@ -46,13 +48,13 @@ int cowsCount(int randomNumber, int inputNumber)
 
 int bullsCount(int randomNumber, int inputNumber)
 {
-    int randomNumberDigits[4] = {0};
+    int randomNumberDigits[numberLength] = {0};
     numberToDigits(randomNumberDigits, randomNumber);
-    int inputNumberDigits[4] = {0};
+    int inputNumberDigits[numberLength] = {0};
     numberToDigits(inputNumberDigits, inputNumber);
 
     int count = 0;
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < numberLength; i++)
     {
         if (randomNumberDigits[i] == inputNumberDigits[i])
         {
