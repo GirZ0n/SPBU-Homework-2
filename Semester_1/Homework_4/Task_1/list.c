@@ -37,22 +37,22 @@ ListElement* createListElement(int value)
 
 void pushBack(int value, List* list)
 {
-    ListElement* newListElement = createListElement(value);
+    ListElement* newElement = createListElement(value);
     if (list->current == NULL)
     {
-        newListElement->left = newListElement;
-        newListElement->right = newListElement;
-        list->current = newListElement;
+        newElement->left = newElement;
+        newElement->right = newElement;
+        list->current = newElement;
     }
     else
     {
-        ListElement* currentListElement = list->current;
-        ListElement* lastListElement = currentListElement->left;
+        ListElement* current = list->current;
+        ListElement* last = current->left;
 
-        lastListElement->right = newListElement;
-        currentListElement->left = newListElement;
-        newListElement->left = lastListElement;
-        newListElement->right = currentListElement;
+        last->right = newElement;
+        current->left = newElement;
+        newElement->left = last;
+        newElement->right = current;
     }
 }
 
@@ -63,21 +63,21 @@ void nextElement(List* list)
 
 void pop(List* list)
 {
-    ListElement* currentListElement = list->current;
-    ListElement* leftListElement = currentListElement->left;
-    ListElement* rightListElement = currentListElement->right;
+    ListElement* current = list->current;
+    ListElement* left = current->left;
+    ListElement* right = current->right;
 
-    leftListElement->right = rightListElement;
-    rightListElement->left = leftListElement;
-    list->current = rightListElement;
-    free(currentListElement);
+    left->right = right;
+    right->left = left;
+    list->current = right;
+    free(current);
 }
 
 void printList(int size, List* list)
 {
-    ListElement* currentListElement = list->current;
+    ListElement* current = list->current;
     for (int i = 0; i < size; i++) {
-        printf("%d ", currentListElement->value);
-        currentListElement = currentListElement->right;
+        printf("%d ", current->value);
+        current = current->right;
     }
 }
