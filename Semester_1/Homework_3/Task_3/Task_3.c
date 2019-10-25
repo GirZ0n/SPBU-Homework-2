@@ -28,16 +28,11 @@ int main()
 
     int i = 0;
     int j = size - 1;
-    while (true)
+    while (i < j)
     {
         while (i < size && arrayOfNumbers[i] == 0)
         {
             i++;
-        }
-
-        if (i >= j)
-        {
-            break;
         }
 
         while (j < size && arrayOfNumbers[j] != 0)
@@ -45,7 +40,10 @@ int main()
             j--;
         }
 
-        swap(&arrayOfNumbers[i++], &arrayOfNumbers[j--]);
+        if (i < j)
+        {
+            swap(&arrayOfNumbers[i++], &arrayOfNumbers[j--]);
+        }
     }
 
 
