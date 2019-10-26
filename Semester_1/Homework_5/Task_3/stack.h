@@ -1,15 +1,28 @@
-#ifndef CHARSTACK_H
-#define CHARSTACK_H
+#ifndef STACK_H
+#define STACK_H
 
 #include <stdbool.h>
 
-struct CharStack;
-struct CharStackElement;
+// Stack of char
+struct StackOfChar;
+struct StackOfCharElement;
 
-struct CharStack* charStackCreate();
-bool charStackIsEmpty(struct CharStack* stack);
-bool charStackPush(char value, struct CharStack* stack);
-char charStackPop(struct CharStack* stack);
-char charStackTop(struct CharStack* stack);
+struct StackOfChar* createStackOfChar();
+bool stackOfCharIsEmpty(struct StackOfChar* stack);
+bool pushChar(char value, struct StackOfChar* stack);
+char popChar(struct StackOfChar* stack);
+char stackOfCharTop(struct StackOfChar* stack);
+
+
+
+// Stack of double
+struct StackOfDouble;
+struct StackOfDoubleElement;
+
+struct StackOfDouble* createStackOfDouble();
+bool stackOfDoubleIsEmpty(struct StackOfDouble* stack);
+bool pushDouble(double value, struct StackOfDouble* stack);
+double popDouble(struct StackOfDouble* stack);
+double stackOfDoubleTop(struct StackOfDouble* stack);
 
 #endif
