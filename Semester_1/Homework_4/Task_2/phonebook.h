@@ -34,5 +34,4 @@ bool getPhoneByName(struct Entry* phoneBook, int phoneBookSize, char* name, char
  */
 bool getNameByPhone(struct Entry* phoneBook, int phoneBookSize, char* name, char* phoneNumber);
 
-
 #endif
