@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "charStack.h"
+#include "stack.h"
 
 typedef struct CharStack CharStack;
 typedef struct CharStackElement CharStackElement;
