@@ -146,7 +146,6 @@ int main()
         }
     }
 
-
     while (!isEmpty(stack))
     {
         if (isOpenBracket(top(stack)))
@@ -159,8 +158,7 @@ int main()
         sizeOfOutput++;
     }
 
-
-
+    printf("Expression in postfix notation: ");
     for (int i = 0; i < sizeOfOutput; i++)
     {
         if (outputOperators[i] == ' ')
