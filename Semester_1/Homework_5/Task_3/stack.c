@@ -32,7 +32,7 @@ int stackOfCharSize(StackOfChar* stack)
 
 bool stackOfCharIsEmpty(StackOfChar* stack)
 {
-    return stackOfCharSize(stack) > 0;
+    return stackOfCharSize(stack) == 0;
 }
 
 bool pushChar(char value, StackOfChar* stack)
@@ -99,7 +99,7 @@ int stackOfDoubleSize(StackOfDouble* stack)
 
 bool stackOfDoubleIsEmpty(StackOfDouble* stack)
 {
-    return (stackOfDoubleSize(stack) > 0);
+    return stackOfDoubleSize(stack) == 0;
 }
 
 bool pushDouble(double value, StackOfDouble* stack)
