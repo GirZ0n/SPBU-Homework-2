@@ -214,8 +214,6 @@ int main()
         return 0;
     }
 
-
-
     printf("Result: %lf", calculatePostfixNotation(sizeOfPostfixNotation, postfixNotationNumbers,
             postfixNotationOperators));
     return 0;
