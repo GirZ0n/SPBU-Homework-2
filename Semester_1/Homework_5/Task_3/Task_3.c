@@ -99,6 +99,10 @@ double getResultOfOperation(double valueA, double valueB, char operator)
     }
 }
 
+/*
+ * infixToPostfix - convert an expression in infix notation to postfix;
+ *                - return true if the conversion succeeds, otherwise return false
+ */
 bool infixToPostfix (char* infixNotation, int* sizeOfPostfixNotation,
                      int* postfixNotationNumbers, char* postfixNotationOperators)
 {
