@@ -34,3 +34,29 @@ SetElement* createSetElement()
     return element;
 }
 
+SetElement* getSetElement(int value, Set* set)
+{
+    SetElement* current = set->root;
+    while (current != NULL)
+    {
+        if (current->value == value)
+        {
+            return current;
+        }
+        else if (current->value < value)
+        {
+            current = current->leftChild;
+        }
+        else
+        {
+            current = current->rightChild;
+        }
+    }
+
+    return NULL;
+}
+
+bool isContained(int value, Set* set)
+{
+    return getSetElement(value, set) != NULL;
+}
