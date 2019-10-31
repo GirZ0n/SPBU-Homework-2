@@ -8,10 +8,10 @@ struct SetElement;
 
 struct Set* createSet();
 struct SetElement* createSetElement();
-bool isContained(int number);
-void add(int number, struct Set*);
-bool remove(int number, struct Set*);
-void printInAscendingOrder(struct Set*);
-void printInDescendingOrder(struct Set*);
+bool isContained(int value, struct Set* set);
+void add(int value, struct Set* set);
+bool remove(int value, struct Set* set);
+void printInAscendingOrder(struct Set* set);
+void printInDescendingOrder(struct Set* set);
 
 #endif
