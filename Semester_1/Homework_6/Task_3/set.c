@@ -10,6 +10,7 @@ struct Set
 struct SetElement
 {
     int value;
+    struct SetElement* parent;
     struct SetElement* leftChild;
     struct SetElement* rightChild;
 };
@@ -25,10 +26,11 @@ Set* createSet()
     return set;
 }
 
-SetElement* createSetElement(int value)
+SetElement* createSetElement(int value, SetElement* parent)
 {
     SetElement* element = malloc(sizeof(SetElement));
     element->value = value;
+    element->parent = parent;
     element->leftChild = NULL;
     element->rightChild = NULL;
 
@@ -71,7 +73,7 @@ void addElement(int value, Set* set)
         {
             if (current->leftChild == NULL)
             {
-                current->leftChild = createSetElement(value);
+                current->leftChild = createSetElement(value, current);
                 return;
             }
             else
@@ -83,7 +85,7 @@ void addElement(int value, Set* set)
         {
             if (current->rightChild == NULL)
             {
-                current->rightChild = createSetElement(value);
+                current->rightChild = createSetElement(value, current);
                 return;
             }
             else
@@ -97,7 +99,7 @@ void addElement(int value, Set* set)
         }
     }
 
-    set->root = createSetElement(value);
+    set->root = createSetElement(value, NULL);
 }
 
 void printSubtreeInAscendingOrder(SetElement* root)

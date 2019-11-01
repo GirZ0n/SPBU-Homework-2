@@ -7,7 +7,7 @@ struct Set;
 struct SetElement;
 
 struct Set* createSet();
-struct SetElement* createSetElement(int value);
+struct SetElement* createSetElement(int value, struct SetElement* parent);
 bool isContained(int value, struct Set* set);
 void addElement(int value, struct Set* set);
 bool removeElement(int value, struct Set* set);
