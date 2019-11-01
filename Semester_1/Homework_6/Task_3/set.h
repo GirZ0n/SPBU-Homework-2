@@ -13,5 +13,6 @@ void addElement(int value, struct Set* set);
 bool removeElement(int value, struct Set* set);
 void printInAscendingOrder(struct Set* set);
 void printInDescendingOrder(struct Set* set);
+void printSet(struct Set* set);
 
 #endif

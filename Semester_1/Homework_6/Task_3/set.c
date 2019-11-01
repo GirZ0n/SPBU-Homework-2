@@ -67,11 +67,6 @@ void addElement(int value, Set* set)
     SetElement* current = set->root;
     while (current != NULL)
     {
-        if (current->value == value)
-        {
-            return;
-        }
-
         if (current->value > value)
         {
             if (current->leftChild == NULL)
@@ -84,7 +79,7 @@ void addElement(int value, Set* set)
                 current = current->leftChild;
             }
         }
-        else
+        else if (current->value < value)
         {
             if (current->rightChild == NULL)
             {
@@ -95,6 +90,10 @@ void addElement(int value, Set* set)
             {
                 current = current->rightChild;
             }
+        }
+        else
+        {
+            return;
         }
     }
 
@@ -145,4 +144,23 @@ void printSubtreeInDescendingOrder(SetElement* root)
 void printInDescendingOrder(Set* set)
 {
     printSubtreeInDescendingOrder(set->root);
+}
+
+void printSubtree(SetElement* root)
+{
+    if (root == NULL)
+    {
+        printf("NULL ");
+        return;
+    }
+
+    printf("(%d ", root->value);
+    printSubtree(root->leftChild);
+    printSubtree(root->rightChild);
+    printf(") ");
+}
+
+void printSet(Set* set)
+{
+    printSubtree(set->root);
 }
