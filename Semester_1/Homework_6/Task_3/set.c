@@ -22,7 +22,6 @@ Set* createSet()
 {
     Set* set = malloc(sizeof(Set));
     set->root = NULL;
-
     return set;
 }
 
@@ -46,7 +45,7 @@ SetElement* getSetElement(int value, Set* set)
         {
             return current;
         }
-        else if (current->value < value)
+        else if (current->value > value)
         {
             current = current->leftChild;
         }
@@ -165,4 +164,87 @@ void printSubtree(SetElement* root)
 void printSet(Set* set)
 {
     printSubtree(set->root);
+}
+
+bool removeElement(int value, struct Set* set)
+{
+    SetElement* removable = getSetElement(value, set);
+    if (removable == NULL)
+    {
+        return false;
+    }
+
+    if (removable->leftChild != NULL && removable->rightChild != NULL)
+    {
+        SetElement* largestElementInLeftSubtree = removable->leftChild;
+        while (largestElementInLeftSubtree->rightChild != NULL)
+        {
+            largestElementInLeftSubtree = largestElementInLeftSubtree->rightChild;
+        }
+        removeElement(largestElementInLeftSubtree->value, set);
+        removable->value = largestElementInLeftSubtree->value;
+    }
+    else if (removable->leftChild != NULL)
+    {
+        if (removable->parent != NULL)
+        {
+            if (removable->parent->leftChild != NULL && removable->parent->leftChild->value == value)
+            {
+                removable->parent->leftChild = removable->leftChild;
+                removable->leftChild->parent = removable->parent;
+            }
+            else
+            {
+                removable->parent->rightChild = removable->leftChild;
+                removable->leftChild->parent = removable->parent;
+            }
+        }
+        else
+        {
+            set->root = removable->leftChild;
+            removable->leftChild->parent = NULL;
+        }
+    }
+    else if (removable->rightChild != NULL)
+    {
+        if (removable->parent != NULL)
+        {
+            if (removable->parent->leftChild != NULL && removable->parent->leftChild->value == value)
+            {
+                removable->parent->leftChild = removable->rightChild;
+                removable->rightChild->parent = removable->parent;
+            }
+            else
+            {
+                removable->parent->rightChild = removable->rightChild;
+                removable->rightChild->parent = removable->parent;
+            }
+        }
+        else
+        {
+            set->root = removable->rightChild;
+            removable->rightChild->parent = NULL;
+        }
+    }
+    else
+    {
+        if (removable->parent != NULL)
+        {
+            if (removable->parent->leftChild != NULL && removable->parent->leftChild->value == value)
+            {
+                removable->parent->leftChild = NULL;
+            }
+            else
+            {
+                removable->parent->rightChild = NULL;
+            }
+        }
+        else
+        {
+            set->root = NULL;
+        }
+    }
+
+    return true;
+    free(removable);
 }
