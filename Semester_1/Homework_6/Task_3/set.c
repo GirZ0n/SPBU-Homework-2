@@ -22,6 +22,7 @@ Set* createSet()
 {
     Set* set = malloc(sizeof(Set));
     set->root = NULL;
+
     return set;
 }
 
@@ -155,7 +156,7 @@ void printSubtree(SetElement* root)
         return;
     }
 
-    printf("(%d ", root->value);
+    printf("( %d ", root->value);
     printSubtree(root->leftChild);
     printSubtree(root->rightChild);
     printf(") ");
@@ -246,5 +247,4 @@ bool removeElement(int value, struct Set* set)
     }
 
     return true;
-    free(removable);
 }
