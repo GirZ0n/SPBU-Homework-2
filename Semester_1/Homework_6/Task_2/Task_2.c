@@ -67,16 +67,6 @@ int* getPowersOfTwo(int maxPower)
     return powersOfTwo;
 }
 
-int getInvert(int value)
-{
-    if (value == 0)
-    {
-        return 1;
-    }
-
-    return 0;
-}
-
 int getNumberFromBinaryForm(int* binaryForm)
 {
     int* powersOfTwo = getPowersOfTwo(sizeOfInt - 1);
@@ -92,7 +82,7 @@ int getNumberFromBinaryForm(int* binaryForm)
     {
         for (int i = sizeOfInt - 1; i >= 0; i--)
         {
-            number += getInvert(binaryForm[i]) * powersOfTwo[i];
+            number += !binaryForm[i] * powersOfTwo[i];
         }
         number++;
         number *= -1;
