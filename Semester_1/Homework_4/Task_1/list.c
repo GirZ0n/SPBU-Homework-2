@@ -1,6 +1,6 @@
-#include "list.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "list.h"
 
 typedef struct List List;
 typedef struct ListElement ListElement;
@@ -27,32 +27,32 @@ List* createList()
 
 ListElement* createListElement(int value)
 {
-    ListElement* listElement = malloc(sizeof(ListElement));
-    listElement->value = value;
-    listElement->left = NULL;
-    listElement->right = NULL;
+    ListElement* newElement = malloc(sizeof(ListElement));
+    newElement->value = value;
+    newElement->left = NULL;
+    newElement->right = NULL;
 
-    return listElement;
+    return newElement;
 }
 
 void pushBack(int value, List* list)
 {
-    ListElement* newElement = createListElement(value);
+    ListElement* pushed = createListElement(value);
     if (list->current == NULL)
     {
-        newElement->left = newElement;
-        newElement->right = newElement;
-        list->current = newElement;
+        pushed->left = pushed;
+        pushed->right = pushed;
+        list->current = pushed;
     }
     else
     {
         ListElement* current = list->current;
         ListElement* last = current->left;
 
-        last->right = newElement;
-        current->left = newElement;
-        newElement->left = last;
-        newElement->right = current;
+        last->right = pushed;
+        current->left = pushed;
+        pushed->left = last;
+        pushed->right = current;
     }
 }
 
