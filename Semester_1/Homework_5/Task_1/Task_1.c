@@ -38,18 +38,18 @@ bool isDigit(char input)
     return input - '0' >= 0 && input - '0' <= 9;
 }
 
-int getNumber(char* input, int* index)
+int getNumber(char* input, int* indexOfStart)
 {
     char number[maxSize] = "\0";
-    number[0] = input[*index];
+    number[0] = input[*indexOfStart];
     int numberLength = 1;
 
     int inputLength = strlen(input);
-    while (*index + 1 < inputLength && isDigit(input[*index + 1]))
+    while (*indexOfStart + 1 < inputLength && isDigit(input[*indexOfStart + 1]))
     {
-        number[numberLength] = input[*index + 1];
+        number[numberLength] = input[*indexOfStart + 1];
         numberLength++;
-        (*index)++;
+        (*indexOfStart)++;
     }
 
     int numberValue = 0;
@@ -122,7 +122,7 @@ int main()
             }
             else
             {
-                printf("Missing bracket");
+                printf("Missing bracket.");
                 return 0;
             }
         }
@@ -141,7 +141,7 @@ int main()
         }
         else
         {
-            printf("Invalid character");
+            printf("Invalid character.");
             return 0;
         }
     }
@@ -150,7 +150,7 @@ int main()
     {
         if (isOpenBracket(top(stack)))
         {
-            printf("Missing bracket");
+            printf("Missing bracket.");
             return 0;
         }
 
