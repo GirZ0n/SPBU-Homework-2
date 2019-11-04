@@ -47,10 +47,10 @@ double pop(Stack* stack)
     }
 
     stack->size--;
-    StackElement* poppedElement = stack->first;
-    stack->first = poppedElement->next;
-    double value = poppedElement->value;
-    free(poppedElement);
+    StackElement* popped = stack->first;
+    stack->first = popped->next;
+    double value = popped->value;
+    free(popped);
 
     return value;
 }
