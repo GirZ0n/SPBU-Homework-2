@@ -1,19 +1,19 @@
 #include <stdlib.h>
 #include "stack.h"
 
-typedef struct Stack Stack;
-typedef struct StackElement StackElement;
+struct Stack
+{
+    struct StackElement* first;
+};
 
 struct StackElement
 {
     char value;
-    StackElement* next;
+    struct StackElement* next;
 };
 
-struct Stack
-{
-    StackElement* first;
-};
+typedef struct Stack Stack;
+typedef struct StackElement StackElement;
 
 Stack* createStack()
 {
@@ -29,11 +29,11 @@ bool isEmpty(Stack* stack)
 
 bool push(char value, Stack* stack)
 {
-    StackElement* stackElement = malloc(sizeof(struct StackElement));
-    stackElement->value = value;
-    stackElement->next = stack->first;
+    StackElement* current = malloc(sizeof(struct StackElement));
+    current->value = value;
+    current->next = stack->first;
+    stack->first = current;
 
-    stack->first = stackElement;
     return true;
 }
 
@@ -44,10 +44,10 @@ char pop(Stack* stack)
         return 0;
     }
 
-    StackElement* poppedElement = stack->first;
-    stack->first = poppedElement->next;
-    char value = poppedElement->value;
-    free(poppedElement);
+    StackElement* popped = stack->first;
+    stack->first = popped->next;
+    char value = popped->value;
+    free(popped);
     return value;
 }
 
