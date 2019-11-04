@@ -17,7 +17,6 @@ int* createArray(int size)
 int* getBinaryForm(int number)
 {
     int* binaryForm = createArray(sizeOfInt);
-
     for (int i = 0; i < sizeOfInt; i ++)
     {
         binaryForm[i] = number >> i & 1;
@@ -113,4 +112,5 @@ int main()
     printf("%5c Binary form of sum: ", ' ');
     printBinaryForm(sum);
     printf("%4c Decimal form of sum: %d", ' ', getNumberFromBinaryForm(sum));
+    return 0;
 }
