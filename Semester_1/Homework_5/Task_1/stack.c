@@ -29,10 +29,10 @@ bool isEmpty(Stack* stack)
 
 bool push(char value, Stack* stack)
 {
-    StackElement* current = malloc(sizeof(struct StackElement));
-    current->value = value;
-    current->next = stack->first;
-    stack->first = current;
+    StackElement* pushed = malloc(sizeof(struct StackElement));
+    pushed->value = value;
+    pushed->next = stack->first;
+    stack->first = pushed;
 
     return true;
 }
