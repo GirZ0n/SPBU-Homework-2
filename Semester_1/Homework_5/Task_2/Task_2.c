@@ -33,38 +33,38 @@ bool isDigit(char input)
     return input - '0' >= 0 && input - '0' <= 9;
 }
 
-bool isUnaryNegative(char* input, int index)
+bool isUnaryNegative(char* input, int indexOfCheck)
 {
-    if (input[index] == '-' && index + 1 < strlen(input))
+    if (input[indexOfCheck] == '-' && indexOfCheck + 1 < strlen(input))
     {
-        return isDigit(input[index + 1]);
+        return isDigit(input[indexOfCheck + 1]);
     }
 
     return false;
 }
 
-bool isOperator(char* input, int index)
+bool isOperator(char* input, int indexOfCheck)
 {
-    if (isUnaryNegative(input, index))
+    if (isUnaryNegative(input, indexOfCheck))
     {
         return false;
     }
 
-    return input[index] == '+' || input[index] == '-' || input[index] == '*' || input[index] == '/';
+    return input[indexOfCheck] == '+' || input[indexOfCheck] == '-' || input[indexOfCheck] == '*' || input[indexOfCheck] == '/';
 }
 
-double getNumber(char* input, int* index)
+double getNumber(char* input, int* indexOfStart)
 {
     char number[maxSize] = "\0";
-    number[0] = input[*index];
+    number[0] = input[*indexOfStart];
     int numberLength = 1;
 
     int inputLength = strlen(input);
-    while (*index + 1 < inputLength && isDigit(input[*index + 1]))
+    while (*indexOfStart + 1 < inputLength && isDigit(input[*indexOfStart + 1]))
     {
-        number[numberLength] = input[*index + 1];
+        number[numberLength] = input[*indexOfStart + 1];
         numberLength++;
-        (*index)++;
+        (*indexOfStart)++;
     }
 
     double numberValue = 0;
