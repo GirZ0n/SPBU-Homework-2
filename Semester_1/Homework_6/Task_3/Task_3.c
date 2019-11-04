@@ -79,7 +79,6 @@ int main()
             default:
             {
                 printf("Enter the correct action.\n\n");
-
                 break;
             }
         }
