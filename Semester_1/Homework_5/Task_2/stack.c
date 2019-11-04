@@ -1,20 +1,20 @@
 #include <stdlib.h>
 #include "stack.h"
 
-typedef struct Stack Stack;
-typedef struct StackElement StackElement;
+struct Stack
+{
+    int size;
+    struct StackElement* first;
+};
 
 struct StackElement
 {
     double value;
-    StackElement* next;
+    struct StackElement* next;
 };
 
-struct Stack
-{
-    int size;
-    StackElement* first;
-};
+typedef struct Stack Stack;
+typedef struct StackElement StackElement;
 
 Stack* createStack()
 {
@@ -31,11 +31,11 @@ bool isEmpty(Stack* stack)
 bool push(double value, Stack* stack)
 {
     stack->size++;
-    StackElement* stackElement = malloc(sizeof(struct StackElement));
-    stackElement->value = value;
-    stackElement->next = stack->first;
+    StackElement* pushed = malloc(sizeof(struct StackElement));
+    pushed->value = value;
+    pushed->next = stack->first;
+    stack->first = pushed;
 
-    stack->first = stackElement;
     return true;
 }
 
@@ -51,6 +51,7 @@ double pop(Stack* stack)
     stack->first = poppedElement->next;
     double value = poppedElement->value;
     free(poppedElement);
+
     return value;
 }
 
