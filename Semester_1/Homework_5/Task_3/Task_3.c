@@ -37,18 +37,18 @@ bool isDigit(char input)
     return input - '0' >= 0 && input - '0' <= 9;
 }
 
-int getNumber(char* input, int* index)
+int getNumber(char* input, int* indexOfStart)
 {
     char number[maxSize] = "\0";
-    number[0] = input[*index];
+    number[0] = input[*indexOfStart];
     int numberLength = 1;
 
     int inputLength = strlen(input);
-    while (*index + 1 < inputLength && isDigit(input[*index + 1]))
+    while (*indexOfStart + 1 < inputLength && isDigit(input[*indexOfStart + 1]))
     {
-        number[numberLength] = input[*index + 1];
+        number[numberLength] = input[*indexOfStart + 1];
         numberLength++;
-        (*index)++;
+        (*indexOfStart)++;
     }
 
     int numberValue = 0;
@@ -56,24 +56,24 @@ int getNumber(char* input, int* index)
     return numberValue;
 }
 
-bool isUnaryNegative(char* input, int index)
+bool isUnaryNegative(char* input, int indexOfCheck)
 {
-    if (input[index] == '-' && index + 1 < strlen(input))
+    if (input[indexOfCheck] == '-' && indexOfCheck + 1 < strlen(input))
     {
-        return isDigit(input[index + 1]);
+        return isDigit(input[indexOfCheck + 1]);
     }
 
     return false;
 }
 
-bool isOperator(char* input, int index)
+bool isOperator(char* input, int indexOfCheck)
 {
-    if (isUnaryNegative(input, index))
+    if (isUnaryNegative(input, indexOfCheck))
     {
         return false;
     }
 
-    return input[index] == '+' || input[index] == '-' || input[index] == '*' || input[index] == '/';
+    return input[indexOfCheck] == '+' || input[indexOfCheck] == '-' || input[indexOfCheck] == '*' || input[indexOfCheck] == '/';
 }
 
 double getResultOfOperation(double valueA, double valueB, char operator)
@@ -114,7 +114,7 @@ bool infixToPostfix (char* infixNotation, int* sizeOfPostfixNotation,
         if (isOperator(infixNotation, i))
         {
             while (!stackOfCharIsEmpty(stackOfChar) && isLessPriority(infixNotation[i], stackOfCharTop(stackOfChar))
-                   && !isOpenBracket(stackOfCharTop(stackOfChar)))
+                && !isOpenBracket(stackOfCharTop(stackOfChar)))
             {
                 postfixNotationOperators[*sizeOfPostfixNotation] = popChar(stackOfChar);
                 (*sizeOfPostfixNotation)++;
@@ -136,7 +136,7 @@ bool infixToPostfix (char* infixNotation, int* sizeOfPostfixNotation,
             }
             else
             {
-                printf("Missing bracket");
+                printf("Missing bracket.");
                 return false;
             }
         }
@@ -155,7 +155,7 @@ bool infixToPostfix (char* infixNotation, int* sizeOfPostfixNotation,
         }
         else
         {
-            printf("Invalid character");
+            printf("Invalid character.");
             return false;
         }
     }
@@ -165,7 +165,7 @@ bool infixToPostfix (char* infixNotation, int* sizeOfPostfixNotation,
     {
         if (isOpenBracket(stackOfCharTop(stackOfChar)))
         {
-            printf("Missing bracket");
+            printf("Missing bracket.");
             return 0;
         }
 
