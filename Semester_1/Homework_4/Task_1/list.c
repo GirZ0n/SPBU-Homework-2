@@ -76,7 +76,8 @@ void pop(List* list)
 void printList(int size, List* list)
 {
     ListElement* current = list->current;
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++)
+    {
         printf("%d ", current->value);
         current = current->right;
     }
