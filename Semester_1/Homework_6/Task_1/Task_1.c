@@ -73,9 +73,9 @@ double getMantissa(bool* binaryFormOfNumber)
 {
     bool* binaryFormOfMantissa = getBinaryFormOfMantissa(binaryFormOfNumber);
     double mantissa = 0;
-    for (int i = 0; i < sizeOfMantissa; i++)
+    for (int i = 1; i <= sizeOfMantissa; i++)
     {
-        mantissa += binaryFormOfMantissa[sizeOfMantissa - 1 - i] * pow(2, -(i + 1));
+        mantissa += binaryFormOfMantissa[sizeOfMantissa - i] * pow(2, -i);
     }
     return mantissa;
 }
