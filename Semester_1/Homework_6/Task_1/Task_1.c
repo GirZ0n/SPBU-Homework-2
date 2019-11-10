@@ -100,11 +100,11 @@ void printBinaryForm(bool* binaryForm, int size)
 
 int main()
 {
-    Number number;
+    Number inputNumber;
     printf("Enter the number: ");
-    scanf("%lf", &number.value);
+    scanf("%lf", &inputNumber.value);
 
-    bool* binaryFormOfNumber = getBinaryFormOfNumber(number.binaryForm);
+    bool* binaryFormOfNumber = getBinaryFormOfNumber(inputNumber.binaryForm);
     double mantissa = getMantissa(binaryFormOfNumber) + 1;
     int exponent = getExponent(binaryFormOfNumber);
     if (isNegative(binaryFormOfNumber))
