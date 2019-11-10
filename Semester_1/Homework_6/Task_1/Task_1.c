@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include <stdbool.h>
+#include <math.h>
 
 #define sizeOfDouble 8 * 8
+#define sizeOfMantissa 52
+#define sizeOfExponent 11
+
 typedef union Number Number;
 
 union Number
@@ -12,20 +15,19 @@ union Number
     char binaryForm[8];
 };
 
-int* createArray(int size)
+bool* createArray(int size)
 {
-    int* array = malloc(sizeof(int) * size);
+    bool* array = malloc(sizeof(bool) * size);
     for (int i = 0; i < size; i++)
     {
         array[i] = 0;
     }
-
     return array;
 }
 
-int* getBinaryForm(char* number)
+bool* getBinaryFormOfNumber(char* number)
 {
-    int* binaryForm = createArray(sizeOfDouble);
+    bool* binaryForm = createArray(sizeOfDouble);
     for (int i = 0; i < 8; i ++)
     {
         for (int j = 0; j < 8; j++)
@@ -33,36 +35,57 @@ int* getBinaryForm(char* number)
             binaryForm[i * 8 + j] = number[i] >> j & 1;
         }
     }
-
     return binaryForm;
 }
 
-int* getMantissaBinaryForm(int* binaryForm)
+bool* getBinaryFormOfMantissa(bool* binaryFormOfNumber)
 {
-    int* mantissaBinaryForm = createArray(52);
-    for (int i = 0; i < 52; i++)
+    bool* binaryFormOfMantissa = createArray(sizeOfMantissa);
+    for (int i = 0; i < sizeOfMantissa; i++)
     {
-        mantissaBinaryForm[i] = binaryForm[i];
+        binaryFormOfMantissa[i] = binaryFormOfNumber[i];
     }
-    return mantissaBinaryForm;
+    return binaryFormOfMantissa;
 }
 
-int* getExponentBinaryForm(int* binaryForm)
+bool* getBinaryFormOfExponent(bool* binaryFormOfNumber)
 {
-    int* exponentBinaryForm = createArray(11);
-    for (int i = 52; i < sizeOfDouble - 1; i++)
+    bool* binaryFormOfExponent = createArray(sizeOfExponent);
+    for (int i = sizeOfMantissa; i < sizeOfDouble - 1; i++)
     {
-        exponentBinaryForm[i - 52] = binaryForm[i];
+        binaryFormOfExponent[i - sizeOfMantissa] = binaryFormOfNumber[i];
     }
-    return exponentBinaryForm;
+    return binaryFormOfExponent;
 }
 
-bool isPositive(int* binaryForm)
+int getExponent(bool* binaryFormOfNumber)
 {
-    return binaryForm[sizeOfDouble - 1];
+    bool* binaryFormOfExponent = getBinaryFormOfExponent(binaryFormOfNumber);
+    int exponent = 0;
+    for (int i = 0; i < sizeOfExponent; i++)
+    {
+        exponent += binaryFormOfExponent[i] * (int)pow(2, i);
+    }
+    return exponent - ((int)pow(2, sizeOfExponent - 1) - 1);
 }
 
-void printBinaryForm(int* binaryForm, int size)
+double getMantissa(bool* binaryFormOfNumber)
+{
+    bool* binaryFormOfMantissa = getBinaryFormOfMantissa(binaryFormOfNumber);
+    double mantissa = 0;
+    for (int i = 0; i < sizeOfMantissa; i++)
+    {
+        mantissa += binaryFormOfMantissa[sizeOfMantissa - 1 - i] * pow(2, -(i + 1));
+    }
+    return mantissa;
+}
+
+bool isNegative(bool* binaryFormOfNumber)
+{
+    return binaryFormOfNumber[sizeOfDouble - 1];
+}
+
+void printBinaryForm(bool* binaryForm, int size)
 {
     for (int i = size - 1; i >= 0; i--)
     {
@@ -75,30 +98,20 @@ void printBinaryForm(int* binaryForm, int size)
     printf("\n");
 }
 
-void getRandomNumber(Number* number)
-{
-    srand(time(NULL));
-    for (int i = 0; i < 8; i++)
-    {
-        number->binaryForm[i] = (char)(rand() % 256);
-    }
-}
-
 int main()
 {
     Number number;
-    getRandomNumber(&number);
-    int* binaryFormOfNumber = getBinaryForm(number.binaryForm);
+    printf("Enter the number: ");
+    scanf("%lf", &number.value);
 
-    printBinaryForm(binaryFormOfNumber, sizeOfDouble);
+    bool* binaryFormOfNumber = getBinaryFormOfNumber(number.binaryForm);
+    double mantissa = getMantissa(binaryFormOfNumber) + 1;
+    int exponent = getExponent(binaryFormOfNumber);
+    if (isNegative(binaryFormOfNumber))
+    {
+        mantissa *= -1;
+    }
 
-    int* binaryFormOfMantissa = getMantissaBinaryForm(binaryFormOfNumber);
-    printf("%13c", ' ');
-    printBinaryForm(binaryFormOfMantissa, 52);
-
-    int* binaryFormOfExponent = getExponentBinaryForm(binaryFormOfNumber);
-    printf("%c", ' ');
-    printBinaryForm(binaryFormOfExponent, 11);
-
-    printf("%d\n", isPositive(binaryFormOfNumber));
+    printf("Scientific notation: %.10lf * 2^(%d)", mantissa, exponent);
+    return 0;
 }
