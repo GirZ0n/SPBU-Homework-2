@@ -124,7 +124,6 @@ int main()
     int moves = 1;
     int inputNumber = 0;
     int randomNumber = getRandomNumber();
-    printf("%d\n", randomNumber);
     while (true)
     {
         printf("Enter the estimated number:");
