@@ -4,9 +4,9 @@
 #include <stdbool.h>
 #include <string.h>
 
-#define numberLength 4
+const int numberLength = 4;
 
-void numberToDigits(int digits[], int number)
+void numberToDigits(int* digits, int number)
 {
     int i = 0;
     while (number > 0)
@@ -19,9 +19,18 @@ void numberToDigits(int digits[], int number)
 
 int cowsCount(int randomNumber, int inputNumber)
 {
-    int randomNumberDigits[numberLength] = {0};
+    int* randomNumberDigits = malloc(sizeof(int) * numberLength);
+    for (int i = 0; i < numberLength; i++)
+    {
+        randomNumberDigits[i] = 0;
+    }
     numberToDigits(randomNumberDigits, randomNumber);
-    int inputNumberDigits[numberLength] = {0};
+
+    int* inputNumberDigits = malloc(sizeof(int) * numberLength);
+    for (int i = 0; i < numberLength; i++)
+    {
+        inputNumberDigits[i] = 0;
+    }
     numberToDigits(inputNumberDigits, inputNumber);
 
     int countOfDigits[10] = {0};
@@ -48,9 +57,18 @@ int cowsCount(int randomNumber, int inputNumber)
 
 int bullsCount(int randomNumber, int inputNumber)
 {
-    int randomNumberDigits[numberLength] = {0};
+    int* randomNumberDigits = malloc(sizeof(int) * numberLength);
+    for (int i = 0; i < numberLength; i++)
+    {
+        randomNumberDigits[i] = 0;
+    }
     numberToDigits(randomNumberDigits, randomNumber);
-    int inputNumberDigits[numberLength] = {0};
+
+    int* inputNumberDigits = malloc(sizeof(int) * numberLength);
+    for (int i = 0; i < numberLength; i++)
+    {
+        inputNumberDigits[i] = 0;
+    }
     numberToDigits(inputNumberDigits, inputNumber);
 
     int count = 0;
@@ -106,6 +124,7 @@ int main()
     int moves = 1;
     int inputNumber = 0;
     int randomNumber = getRandomNumber();
+    printf("%d\n", randomNumber);
     while (true)
     {
         printf("Enter the estimated number:");
