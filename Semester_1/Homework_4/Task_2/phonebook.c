@@ -2,12 +2,12 @@
 #include <string.h>
 #include "phonebook.h"
 
-#define maxStringSize 256
+const int maxStringSize = 256;
 
 struct Entry
 {
-    char name[maxStringSize];
-    char phoneNumber[maxStringSize];
+    char name[256];
+    char phoneNumber[256];
 };
 
 typedef struct Entry Entry;
