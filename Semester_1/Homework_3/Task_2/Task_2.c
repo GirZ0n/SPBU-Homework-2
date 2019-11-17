@@ -10,20 +10,8 @@ bool isSpecials(char input)
     return (input == ' ') || (input == '\n') || (input == '\t');
 }
 
-bool isEmpty(char *string)
+int main()
 {
-    for (int i = 0; i < strlen(string); i++)
-    {
-        if (!isSpecials(string[i]))
-        {
-            return false;
-        }
-    }
-
-    return true;
-}
-
-int main() {
     FILE *input = fopen("input.txt", "r");
 
     int numberOfNonEmptyStrings = 0;
@@ -32,26 +20,33 @@ int main() {
     {
         inputString[i] = ' ';
     }
-    
+
     if (input == NULL)
     {
         printf("Cant open the file");
         return 0;
     }
-    else
+
+    bool isEmptyString = true;
+    char inputChar = ' ';
+    while (feof(input) == false)
     {
-        while (feof(input) == false)
+        inputChar = fgetc(input);
+        if (inputChar == '\n')
         {
-            fgets(inputString, stringMaxSize, input);
-            if (!isEmpty(inputString))
+            isEmptyString = true;
+        }
+        if (isEmptyString)
+        {
+            if (!isSpecials(inputChar) && inputChar != EOF)
             {
+                isEmptyString = false;
                 numberOfNonEmptyStrings++;
             }
         }
     }
 
     printf("The number of non-empty lines = %d", numberOfNonEmptyStrings);
-
     free(inputString);
     fclose(input);
     return 0;
