@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include "phonebook.h"
 
-#define maxStringSize 256
+extern const int maxStringSize;
 
 void getName(char* name, char* firstName, char* secondName)
 {
@@ -13,6 +13,16 @@ void getName(char* name, char* firstName, char* secondName)
     strcat(name, firstName);
     strcat(name, " ");
     strcat(name, secondName);
+}
+
+char* createString(int size)
+{
+    char* newString = malloc(sizeof(char) * size);
+    for (int i = 0; i < size; i++)
+    {
+        newString[i] = '\0';
+    }
+    return newString;
 }
 
 int main()
@@ -36,10 +46,10 @@ int main()
     printf("4 - Save current data to a file.\n\n");
     printf("Attention! The phone number must be entered in the international format: +12345678...\n\n");
 
-    char name[maxStringSize] = "";
-    char firstName[maxStringSize] = "";
-    char secondName[maxStringSize] = "";
-    char phoneNumber[maxStringSize] = "";
+    char* name = createString(maxStringSize);
+    char* firstName = createString(maxStringSize);
+    char* secondName = createString(maxStringSize);
+    char* phoneNumber = createString(maxStringSize);
     int action = 0;
     while (true)
     {
