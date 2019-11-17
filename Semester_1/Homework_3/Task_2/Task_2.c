@@ -23,7 +23,7 @@ int main()
 
     if (input == NULL)
     {
-        printf("Cant open the file");
+        printf("Can't open the file");
         return 0;
     }
 
