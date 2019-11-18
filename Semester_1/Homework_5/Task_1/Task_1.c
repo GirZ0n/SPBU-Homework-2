@@ -78,7 +78,7 @@ bool isOperator(char* input, int index)
 char* charToString(char input)
 {
     char* string = calloc(1, sizeof(char));
-    sprintf(string, "%c ", input);
+    sprintf(string, "%c", input);
     return string;
 }
 
@@ -100,6 +100,7 @@ int main()
                 && !isOpenBracket(top(stack)))
             {
                 strcat(outputString, charToString(pop(stack)));
+                strcat(outputString, " ");
             }
 
             push(inputString[i], stack);
@@ -109,6 +110,7 @@ int main()
             while (!isEmpty(stack) && !isOpenBracket(top(stack)))
             {
                 strcat(outputString, charToString(pop(stack)));
+                strcat(outputString, " ");
             }
 
             if (!isEmpty(stack))
@@ -150,6 +152,7 @@ int main()
         }
 
         strcat(outputString, charToString(pop(stack)));
+        strcat(outputString, " ");
     }
 
     printf("Expression in postfix notation:\n%s", outputString);
