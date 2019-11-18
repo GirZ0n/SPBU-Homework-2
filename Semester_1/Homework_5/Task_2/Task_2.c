@@ -1,9 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
 #include "stack.h"
 
-#define maxSize 256
+const int maxSize = 256;
 
 double getResultOfOperation(double valueA, double valueB, char operator)
 {
@@ -55,21 +56,19 @@ bool isOperator(char* input, int indexOfCheck)
 
 double getNumber(char* input, int* indexOfStart)
 {
-    char number[maxSize] = "\0";
-    number[0] = input[*indexOfStart];
-    int numberLength = 1;
+    int number = 0;
+    if (isDigit(input[*indexOfStart]))
+    {
+        number = input[*indexOfStart] - '0';
+    }
 
     int inputLength = strlen(input);
     while (*indexOfStart + 1 < inputLength && isDigit(input[*indexOfStart + 1]))
     {
-        number[numberLength] = input[*indexOfStart + 1];
-        numberLength++;
+        number = number * 10 + (input[*indexOfStart + 1] - '0');
         (*indexOfStart)++;
     }
-
-    double numberValue = 0;
-    sscanf(number, "%lf", &numberValue);
-    return numberValue;
+    return number;
 }
 
 int main()
@@ -77,7 +76,7 @@ int main()
     struct Stack* stack = createStack();
 
     printf("Enter an expression in the postfix notation (with spaces):\n");
-    char inputString[maxSize] = "\0";
+    char* inputString = calloc(maxSize, sizeof(char));
     scanf("%[^\n]", inputString);
 
     int inputStringLength = strlen(inputString);
