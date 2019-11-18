@@ -1,10 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include <math.h>
 #include "stack.h"
 
-#define maxSize 256
+const int maxSize = 256;
 
 bool isOpenBracket(char input)
 {
@@ -38,9 +38,9 @@ bool isDigit(char input)
     return input - '0' >= 0 && input - '0' <= 9;
 }
 
-int getNumber(char* input, int* indexOfStart)
+char* getNumber(char* input, int* indexOfStart)
 {
-    char number[maxSize] = "\0";
+    char* number = calloc(maxSize, sizeof(char));
     number[0] = input[*indexOfStart];
     int numberLength = 1;
 
@@ -52,9 +52,7 @@ int getNumber(char* input, int* indexOfStart)
         (*indexOfStart)++;
     }
 
-    int numberValue = 0;
-    sscanf(number, "%d", &numberValue);
-    return numberValue;
+    return number;
 }
 
 bool isUnaryNegative(char* input, int index)
@@ -77,22 +75,21 @@ bool isOperator(char* input, int index)
     return input[index] == '+' || input[index] == '-' || input[index] == '*' || input[index] == '/';
 }
 
+char* charToString(char input)
+{
+    char* string = calloc(1, sizeof(char));
+    sprintf(string, "%c ", input);
+    return string;
+}
 
 int main()
 {
     struct Stack* stack = createStack();
 
     printf("Enter an expression in the infix notation:\n");
-    char inputString[maxSize] = "\0";
+    char* inputString = calloc(maxSize, sizeof(char));
     scanf("%[^\n]", inputString);
-
-    int sizeOfOutput = 0;
-    int outputNumbers[maxSize] = {0};
-    char outputOperators[maxSize];
-    for (int i = 0; i < maxSize; i++)
-    {
-        outputOperators[i] = ' ';
-    }
+    char* outputString = calloc(maxSize, sizeof(char));
 
     int inputStringLength = strlen(inputString);
     for (int i = 0; i < inputStringLength; i++)
@@ -102,8 +99,7 @@ int main()
             while (!isEmpty(stack) && isLessPriority(inputString[i], top(stack))
                 && !isOpenBracket(top(stack)))
             {
-                outputOperators[sizeOfOutput] = pop(stack);
-                sizeOfOutput++;
+                strcat(outputString, charToString(pop(stack)));
             }
 
             push(inputString[i], stack);
@@ -112,8 +108,7 @@ int main()
         {
             while (!isEmpty(stack) && !isOpenBracket(top(stack)))
             {
-                outputOperators[sizeOfOutput] = pop(stack);
-                sizeOfOutput++;
+                strcat(outputString, charToString(pop(stack)));
             }
 
             if (!isEmpty(stack))
@@ -132,8 +127,8 @@ int main()
         }
         else if (isUnaryNegative(inputString, i) || isDigit(inputString[i]))
         {
-            outputNumbers[sizeOfOutput] = getNumber(inputString, &i);
-            sizeOfOutput++;
+            strcat(outputString, getNumber(inputString, &i));
+            strcat(outputString, " ");
         }
         else if (inputString[i] == ' ')
         {
@@ -154,22 +149,9 @@ int main()
             return 0;
         }
 
-        outputOperators[sizeOfOutput] = pop(stack);
-        sizeOfOutput++;
+        strcat(outputString, charToString(pop(stack)));
     }
 
-    printf("Expression in postfix notation: ");
-    for (int i = 0; i < sizeOfOutput; i++)
-    {
-        if (outputOperators[i] == ' ')
-        {
-            printf("%d ", outputNumbers[i]);
-        }
-        else
-        {
-            printf("%c ", outputOperators[i]);
-        }
-    }
-
+    printf("Expression in postfix notation:\n%s", outputString);
     return 0;
 }
