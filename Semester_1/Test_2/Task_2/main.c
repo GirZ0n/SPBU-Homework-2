@@ -102,5 +102,6 @@ int main()
         printf("Lowest date: %s", minDate);
     }
 
+    fclose(input);
     return 0;
 }
