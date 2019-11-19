@@ -29,7 +29,8 @@ int** createTwoDimensionalArray(int size)
     return matrix;
 }
 
-int main() {
+int main()
+{
     int size = 0;
     printf("Enter the size of the matrix: ");
     scanf("%d", &size);
@@ -37,8 +38,8 @@ int main() {
     printf("Enter the matrix: ");
     int** matrix = createTwoDimensionalArray(size);
 
-    int movementX[4] = {0, 1, 0, -1};
-    int movementY[4] = {-1, 0, 1, 0};
+    int movementX[4] = {0, 1, 0, -1}; // up, right, down, left
+    int movementY[4] = {-1, 0, 1, 0}; // up, right, down, left
 
     int currentPathLength = 1;
     int coordinateX = size / 2;
@@ -66,6 +67,5 @@ int main() {
     }
 
     freeTwoDimensionalArray(matrix, size);
-
     return 0;
 }
