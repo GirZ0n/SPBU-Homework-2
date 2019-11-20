@@ -7,16 +7,10 @@
 struct Entry;
 
 void createEntry (struct Entry* entry, char* name, char *phoneNumber);
-void addEntry(struct Entry* phoneBook, int* phoneBookSize, int* phoneBookCapacity, char* name, char* phoneNumber);
+struct Entry* addEntry(struct Entry* phoneBook, int* phoneBookSize, int* phoneBookCapacity, char* name, char* phoneNumber);
 struct Entry* createPhoneBook(int capacity);
 void saveData(struct Entry* phoneBook, int phoneBookSize, int* numberOfEntries ,FILE* output);
-
-
-/*
- * phoneBookInit - initialize a new phone book
- *               - return the number of processed entries
- */
-int phoneBookInit(struct Entry* phoneBook, int* phoneBookSize, int* phoneBookCapacity, FILE* input);
+struct Entry* phoneBookInit(int* phoneBookSize, int* phoneBookCapacity, FILE* input);
 
 
 /*
