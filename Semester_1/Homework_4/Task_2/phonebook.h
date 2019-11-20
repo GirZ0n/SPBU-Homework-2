@@ -8,7 +8,6 @@ struct Entry;
 
 void createEntry (struct Entry* entry, char* name, char *phoneNumber);
 struct Entry* addEntry(struct Entry* phoneBook, int* phoneBookSize, int* phoneBookCapacity, char* name, char* phoneNumber);
-struct Entry* createPhoneBook(int capacity);
 void saveData(struct Entry* phoneBook, int phoneBookSize, int* numberOfEntries ,FILE* output);
 struct Entry* phoneBookInit(int* phoneBookSize, int* phoneBookCapacity, FILE* input);
 
