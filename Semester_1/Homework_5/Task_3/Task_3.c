@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include "stack.h"
 
-#define maxSize 256
+const int maxSize = 256;
 
 bool isOpenBracket(char input)
 {
@@ -37,9 +38,9 @@ bool isDigit(char input)
     return input - '0' >= 0 && input - '0' <= 9;
 }
 
-int getNumber(char* input, int* indexOfStart)
+char* getNumberAsString(char* input, int* indexOfStart)
 {
-    char number[maxSize] = "\0";
+    char* number = calloc(maxSize, sizeof(char));
     number[0] = input[*indexOfStart];
     int numberLength = 1;
 
@@ -51,9 +52,24 @@ int getNumber(char* input, int* indexOfStart)
         (*indexOfStart)++;
     }
 
-    int numberValue = 0;
-    sscanf(number, "%d", &numberValue);
-    return numberValue;
+    return number;
+}
+
+double getNumberAsDouble(char* input, int* indexOfStart)
+{
+    int number = 0;
+    if (isDigit(input[*indexOfStart]))
+    {
+        number = input[*indexOfStart] - '0';
+    }
+
+    int inputLength = strlen(input);
+    while (*indexOfStart + 1 < inputLength && isDigit(input[*indexOfStart + 1]))
+    {
+        number = number * 10 + (input[*indexOfStart + 1] - '0');
+        (*indexOfStart)++;
+    }
+    return (double) number;
 }
 
 bool isUnaryNegative(char* input, int indexOfCheck)
@@ -99,25 +115,31 @@ double getResultOfOperation(double valueA, double valueB, char operator)
     }
 }
 
+char* charToString(char input)
+{
+    char* string = calloc(1, sizeof(char));
+    sprintf(string, "%c", input);
+    return string;
+}
+
 /*
  * infixToPostfix - convert an expression in infix notation to postfix;
  *                - return true if the conversion succeeds, otherwise return false
  */
-bool infixToPostfix (char* infixNotation, int* sizeOfPostfixNotation,
-                     int* postfixNotationNumbers, char* postfixNotationOperators)
+bool infixToPostfix (char* infixNotation, char* postfixNotation)
 {
     struct StackOfChar* stackOfChar = createStackOfChar();
 
-    int infixNotationLength = strlen(infixNotation);
-    for (int i = 0; i < infixNotationLength; i++)
+    int inputStringLength = strlen(infixNotation);
+    for (int i = 0; i < inputStringLength; i++)
     {
         if (isOperator(infixNotation, i))
         {
             while (!stackOfCharIsEmpty(stackOfChar) && isLessPriority(infixNotation[i], stackOfCharTop(stackOfChar))
-                && !isOpenBracket(stackOfCharTop(stackOfChar)))
+                   && !isOpenBracket(stackOfCharTop(stackOfChar)))
             {
-                postfixNotationOperators[*sizeOfPostfixNotation] = popChar(stackOfChar);
-                (*sizeOfPostfixNotation)++;
+                strcat(postfixNotation, charToString(popChar(stackOfChar)));
+                strcat(postfixNotation, " ");
             }
 
             pushChar(infixNotation[i], stackOfChar);
@@ -126,8 +148,8 @@ bool infixToPostfix (char* infixNotation, int* sizeOfPostfixNotation,
         {
             while (!stackOfCharIsEmpty(stackOfChar) && !isOpenBracket(stackOfCharTop(stackOfChar)))
             {
-                postfixNotationOperators[*sizeOfPostfixNotation] = popChar(stackOfChar);
-                (*sizeOfPostfixNotation)++;
+                strcat(postfixNotation, charToString(popChar(stackOfChar)));
+                strcat(postfixNotation, " ");
             }
 
             if (!stackOfCharIsEmpty(stackOfChar))
@@ -146,8 +168,8 @@ bool infixToPostfix (char* infixNotation, int* sizeOfPostfixNotation,
         }
         else if (isUnaryNegative(infixNotation, i) || isDigit(infixNotation[i]))
         {
-            postfixNotationNumbers[*sizeOfPostfixNotation] = getNumber(infixNotation, &i);
-            (*sizeOfPostfixNotation)++;
+            strcat(postfixNotation, getNumberAsString(infixNotation, &i));
+            strcat(postfixNotation, " ");
         }
         else if (infixNotation[i] == ' ')
         {
@@ -160,38 +182,41 @@ bool infixToPostfix (char* infixNotation, int* sizeOfPostfixNotation,
         }
     }
 
-
     while (!stackOfCharIsEmpty(stackOfChar))
     {
         if (isOpenBracket(stackOfCharTop(stackOfChar)))
         {
             printf("Missing bracket.");
-            return 0;
+            return false;
         }
 
-        postfixNotationOperators[*sizeOfPostfixNotation] = popChar(stackOfChar);
-        (*sizeOfPostfixNotation)++;
+        strcat(postfixNotation, charToString(popChar(stackOfChar)));
+        strcat(postfixNotation, " ");
     }
 
     return true;
 }
 
-double calculatePostfixNotation(int sizeOfPostfixNotation, int* postfixNotationNumbers,
-                                char* postfixNotationOperators)
+double calculatePostfixNotation(char* postfixNotation)
 {
     struct StackOfDouble* stackOfDouble = createStackOfDouble();
-    for (int i = 0; i < sizeOfPostfixNotation; i++)
+    int inputStringLength = strlen(postfixNotation);
+    for (int i = 0; i < inputStringLength; i++)
     {
-        if (postfixNotationOperators[i] != ' ')
+        if (isOperator(postfixNotation, i))
         {
             double operandB = popDouble(stackOfDouble);
             double operandA = popDouble(stackOfDouble);
-            double result = getResultOfOperation(operandA, operandB, postfixNotationOperators[i]);
+            double result = getResultOfOperation(operandA, operandB, postfixNotation[i]);
             pushDouble(result, stackOfDouble);
+        }
+        else if (isUnaryNegative(postfixNotation, i) || isDigit(postfixNotation[i]))
+        {
+            pushDouble(getNumberAsDouble(postfixNotation, &i), stackOfDouble);
         }
         else
         {
-            pushDouble(postfixNotationNumbers[i], stackOfDouble);
+            continue;
         }
     }
 
@@ -201,24 +226,15 @@ double calculatePostfixNotation(int sizeOfPostfixNotation, int* postfixNotationN
 int main()
 {
     printf("Enter an expression in the infix notation:\n");
-    char infixNotation[maxSize] = "\0";
+    char* infixNotation = calloc(maxSize, sizeof(char));
     scanf("%[^\n]", infixNotation);
 
-    int sizeOfPostfixNotation = 0;
-    int postfixNotationNumbers[maxSize] = {0};
-    char postfixNotationOperators[maxSize];
-    for (int i = 0; i < maxSize; i++)
-    {
-        postfixNotationOperators[i] = ' ';
-    }
-
-    if (infixToPostfix(infixNotation, &sizeOfPostfixNotation,
-            postfixNotationNumbers, postfixNotationOperators) == false)
+    char* postfixNotation = calloc(maxSize, sizeof(char));
+    if (infixToPostfix(infixNotation, postfixNotation) == false)
     {
         return 0;
     }
 
-    printf("Result: %lf", calculatePostfixNotation(sizeOfPostfixNotation, postfixNotationNumbers,
-            postfixNotationOperators));
+    printf("Result: %lf", calculatePostfixNotation(postfixNotation));
     return 0;
 }
