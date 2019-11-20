@@ -29,10 +29,8 @@ int main()
 {
     int phoneBookCapacity = 2;
     int phoneBookSize = 0;
-    struct Entry* phoneBook = createPhoneBook(phoneBookCapacity);
-
     FILE* input = fopen("Phone_book.txt", "r");
-    phoneBook = phoneBookInit(&phoneBookSize, &phoneBookCapacity, input);
+    struct Entry* phoneBook = phoneBookInit(&phoneBookSize, &phoneBookCapacity, input);
     int numberOfEntries = phoneBookSize;
     if (input != NULL)
     {
