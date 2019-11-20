@@ -47,9 +47,9 @@ int main()
     }
 
     printf("Desired array: ");
-    for (int i = 0; i < size; i++)
+    for (int k = 0; k < size; k++)
     {
-        printf("%d ", arrayOfNumbers[i]);
+        printf("%d ", arrayOfNumbers[k]);
     }
 
     free(arrayOfNumbers);
