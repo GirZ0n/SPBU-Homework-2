@@ -6,14 +6,16 @@ const int maxStringSize = 256;
 
 struct Entry
 {
-    char name[256];
-    char phoneNumber[256];
+    char* name;
+    char* phoneNumber;
 };
 
 typedef struct Entry Entry;
 
 void createEntry(struct Entry* entry, char* name, char* phoneNumber)
 {
+    entry->name = malloc(sizeof(char) * maxStringSize);
+    entry->phoneNumber = malloc(sizeof(char) * maxStringSize);
     strcpy(entry->name, name);
     strcpy(entry->phoneNumber, phoneNumber);
 }
@@ -24,9 +26,9 @@ Entry* createPhoneBook(int capacity)
     return database;
 }
 
-int phoneBookInit(struct Entry* phoneBook, int* phoneBookSize, int* phoneBookCapacity, FILE* input)
+Entry* phoneBookInit(int* phoneBookSize, int* phoneBookCapacity, FILE* input)
 {
-    int numberOfEntries = 0;
+    Entry* newPhoneBook = createPhoneBook(*phoneBookCapacity);
     if (input != NULL)
     {
         char *inputString = malloc(sizeof(char) * maxStringSize);
@@ -37,13 +39,12 @@ int phoneBookInit(struct Entry* phoneBook, int* phoneBookSize, int* phoneBookCap
             if (*phoneBookSize == *phoneBookCapacity)
             {
                 *phoneBookCapacity *= 2;
-                phoneBook = realloc(phoneBook, *phoneBookCapacity);
+                newPhoneBook = realloc(newPhoneBook, *phoneBookCapacity * sizeof(Entry));
             }
 
             fscanf(input, "%s %[^\n]", phoneNumber, name);
-            createEntry(&phoneBook[*phoneBookSize], name, phoneNumber);
+            createEntry(&newPhoneBook[*phoneBookSize], name, phoneNumber);
             (*phoneBookSize)++;
-            numberOfEntries++;
         }
 
         free(inputString);
@@ -51,19 +52,21 @@ int phoneBookInit(struct Entry* phoneBook, int* phoneBookSize, int* phoneBookCap
         free(phoneNumber);
     }
 
-    return numberOfEntries;
+    return newPhoneBook;
 }
 
-void addEntry(struct Entry* phoneBook, int* phoneBookSize, int* phoneBookCapacity, char* name, char* phoneNumber)
+Entry* addEntry(struct Entry* phoneBook, int* phoneBookSize, int* phoneBookCapacity, char* name, char* phoneNumber)
 {
     if (*phoneBookSize == *phoneBookCapacity)
     {
         *phoneBookCapacity *= 2;
-        phoneBook = realloc(phoneBook, *phoneBookCapacity);
+        phoneBook = realloc(phoneBook, *phoneBookCapacity * sizeof(Entry));
     }
 
     createEntry(&phoneBook[*phoneBookSize], name, phoneNumber);
     (*phoneBookSize)++;
+
+    return phoneBook;
 }
 
 bool getPhoneByName(struct Entry* phoneBook, int phoneBookSize, char* name, char* phoneNumber)
