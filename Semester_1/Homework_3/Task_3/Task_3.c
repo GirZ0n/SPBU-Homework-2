@@ -35,7 +35,7 @@ int main()
             i++;
         }
 
-        while (j < size && arrayOfNumbers[j] != 0)
+        while (j >= 0 && arrayOfNumbers[j] != 0)
         {
             j--;
         }
@@ -45,7 +45,6 @@ int main()
             swap(&arrayOfNumbers[i++], &arrayOfNumbers[j--]);
         }
     }
-
 
     printf("Desired array: ");
     for (int i = 0; i < size; i++)
