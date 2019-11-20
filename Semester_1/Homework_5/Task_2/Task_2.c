@@ -68,7 +68,7 @@ double getNumber(char* input, int* indexOfStart)
         number = number * 10 + (input[*indexOfStart + 1] - '0');
         (*indexOfStart)++;
     }
-    return number;
+    return (double) number;
 }
 
 int main()
