@@ -32,7 +32,8 @@ int main()
     struct Entry* phoneBook = createPhoneBook(phoneBookCapacity);
 
     FILE* input = fopen("Phone_book.txt", "r");
-    int numberOfEntries = phoneBookInit(phoneBook, &phoneBookSize, &phoneBookCapacity, input);
+    phoneBook = phoneBookInit(&phoneBookSize, &phoneBookCapacity, input);
+    int numberOfEntries = phoneBookSize;
     if (input != NULL)
     {
         fclose(input);
@@ -44,7 +45,7 @@ int main()
     printf("2 - Find phone number by name;\n");
     printf("3 - Find name by phone number;\n");
     printf("4 - Save current data to a file.\n\n");
-    printf("Attention! The phone number must be entered in the international format: +12345678...\n\n");
+    printf("Attention! The phone number must be entered in the international format: +12345678...\n");
 
     char* name = createString(maxStringSize);
     char* firstName = createString(maxStringSize);
@@ -53,6 +54,7 @@ int main()
     int action = 0;
     while (true)
     {
+        printf("\n");
         printf("Your action: ");
         scanf("%d", &action);
         switch (action)
@@ -68,9 +70,7 @@ int main()
                 getName(name, firstName, secondName);
                 printf("Enter phone number: ");
                 scanf("%s", phoneNumber);
-
-                addEntry(phoneBook, &phoneBookSize, &phoneBookCapacity, name, phoneNumber);
-                printf("\n");
+                phoneBook = addEntry(phoneBook, &phoneBookSize, &phoneBookCapacity, name, phoneNumber);
 
                 break;
             }
