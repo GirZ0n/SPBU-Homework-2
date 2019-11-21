@@ -38,7 +38,7 @@ bool* getBinaryFormOfNumber(const char* number)
     return binaryForm;
 }
 
-bool* getBinaryFormOfMantissa(bool* binaryFormOfNumber)
+bool* getBinaryFormOfMantissa(const bool* binaryFormOfNumber)
 {
     bool* binaryFormOfMantissa = createArray(sizeOfMantissa);
     for (int i = 0; i < sizeOfMantissa; i++)
@@ -48,7 +48,7 @@ bool* getBinaryFormOfMantissa(bool* binaryFormOfNumber)
     return binaryFormOfMantissa;
 }
 
-bool* getBinaryFormOfExponent(bool* binaryFormOfNumber)
+bool* getBinaryFormOfExponent(const bool* binaryFormOfNumber)
 {
     bool* binaryFormOfExponent = createArray(sizeOfExponent);
     for (int i = sizeOfMantissa; i < sizeOfDouble - 1; i++)
