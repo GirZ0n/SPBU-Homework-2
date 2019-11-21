@@ -3,9 +3,9 @@
 #include <stdbool.h>
 #include <math.h>
 
-#define sizeOfDouble 8 * 8
-#define sizeOfMantissa 52
-#define sizeOfExponent 11
+const int sizeOfDouble = 8 * 8;
+const int sizeOfMantissa = 52;
+const int sizeOfExponent = 11;
 
 typedef union Number Number;
 
@@ -25,14 +25,14 @@ bool* createArray(int size)
     return array;
 }
 
-bool* getBinaryFormOfNumber(char* number)
+bool* getBinaryFormOfNumber(const char* number)
 {
     bool* binaryForm = createArray(sizeOfDouble);
     for (int i = 0; i < 8; i ++)
     {
         for (int j = 0; j < 8; j++)
         {
-            binaryForm[i * 8 + j] = number[i] >> j & 1;
+            binaryForm[i * 8 + j] = (int) number[i] >> j & 1;
         }
     }
     return binaryForm;
@@ -66,7 +66,7 @@ int getExponent(bool* binaryFormOfNumber)
     {
         exponent += binaryFormOfExponent[i] * (int)pow(2, i);
     }
-    return exponent - ((int)pow(2, sizeOfExponent - 1) - 1);
+    return exponent - ((int) pow(2, sizeOfExponent - 1) - 1);
 }
 
 double getMantissa(bool* binaryFormOfNumber)
