@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define sizeOfInt 4 * 8
+const int sizeOfInt = 4 * 8;
 
 int* createArray(int size)
 {
@@ -38,7 +38,7 @@ void printBinaryForm(int* binaryForm)
     printf("\n");
 }
 
-int* getSumInBinaryForm(int* binaryFormOfNumberA, int* binaryFormOfNumberB)
+int* getSumInBinaryForm(const int* binaryFormOfNumberA, const int* binaryFormOfNumberB)
 {
     int* sumInBinaryForm = createArray(sizeOfInt);
 
@@ -66,7 +66,7 @@ int* getPowersOfTwo(int maxPower)
     return powersOfTwo;
 }
 
-int getNumberFromBinaryForm(int* binaryForm)
+int getNumberFromBinaryForm(const int* binaryForm)
 {
     int* powersOfTwo = getPowersOfTwo(sizeOfInt - 1);
     int number = 0;
@@ -109,8 +109,8 @@ int main()
     printBinaryForm(binaryFormOfNumberB);
 
     int* sum = getSumInBinaryForm(binaryFormOfNumberA, binaryFormOfNumberB);
-    printf("%5c Binary form of sum: ", ' ');
+    printf("%6cBinary form of sum: ", ' ');
     printBinaryForm(sum);
-    printf("%4c Decimal form of sum: %d", ' ', getNumberFromBinaryForm(sum));
+    printf("%5cDecimal form of sum: %d", ' ', getNumberFromBinaryForm(sum));
     return 0;
 }
