@@ -4,32 +4,31 @@
 
 struct Set
 {
-    struct SetElement* root;
+    struct Node* root;
 };
 
-struct SetElement
+struct Node
 {
     int value;
     int height;
-    struct SetElement* parent;
-    struct SetElement* leftChild;
-    struct SetElement* rightChild;
+    struct Node* leftChild;
+    struct Node* rightChild;
 };
 
 typedef struct Set Set;
-typedef struct SetElement SetElement;
+typedef struct Node Node;
 
-int height(SetElement *node)
+int height(Node* node)
 {
     return node ? node->height : 0;
 }
 
-int balanceFactor(SetElement *node)
+int balanceFactor(Node* node)
 {
     return height(node->rightChild) - height(node->leftChild);
 }
 
-void updateHeight(SetElement *node)
+void updateHeight(Node* node)
 {
     int heightLeftChild = height(node->leftChild);
     int heightRightChild = height(node->rightChild);
@@ -44,21 +43,20 @@ Set* createSet()
     return set;
 }
 
-SetElement* createSetElement(int value, SetElement* parent)
+Node* createNode(int value)
 {
-    SetElement* element = malloc(sizeof(SetElement));
+    Node* element = malloc(sizeof(Node));
     element->value = value;
     element->height = 0;
-    element->parent = parent;
     element->leftChild = NULL;
     element->rightChild = NULL;
 
     return element;
 }
 
-SetElement* getSetElement(int value, Set* set)
+Node* getSetElement(int value, Set* set)
 {
-    SetElement* current = set->root;
+    Node* current = set->root;
     while (current != NULL)
     {
         if (current->value == value)
@@ -83,7 +81,7 @@ bool isContained(int value, Set* set)
     return getSetElement(value, set) != NULL;
 }
 
-void printSubtreeInAscendingOrder(SetElement* root)
+void printSubtreeInAscendingOrder(Node* root)
 {
     if (root == NULL)
     {
@@ -106,7 +104,7 @@ void printInAscendingOrder(Set* set)
     printSubtreeInAscendingOrder(set->root);
 }
 
-void printSubtreeInDescendingOrder(SetElement* root)
+void printSubtreeInDescendingOrder(Node* root)
 {
     if (root == NULL)
     {
@@ -129,7 +127,7 @@ void printInDescendingOrder(Set* set)
     printSubtreeInDescendingOrder(set->root);
 }
 
-void printSubtree(SetElement* root)
+void printSubtree(Node* root)
 {
     if (root == NULL)
     {
@@ -146,4 +144,143 @@ void printSubtree(SetElement* root)
 void printSet(Set* set)
 {
     printSubtree(set->root);
+}
+
+Node* rotateRight(Node* root)
+{
+    Node* pivot = root->leftChild;
+    root->leftChild = pivot->rightChild;
+    pivot->rightChild = root;
+    updateHeight(root);
+    updateHeight(pivot);
+
+    return pivot;
+}
+
+Node* rotateLeft(Node* root)
+{
+    Node* pivot = root->rightChild;
+    root->rightChild = pivot->leftChild;
+    pivot->leftChild = root;
+    updateHeight(root);
+    updateHeight(pivot);
+
+    return pivot;
+}
+
+Node* balance(Node* root)
+{
+    updateHeight(root);
+
+    if (balanceFactor(root) == 2)
+    {
+        if (balanceFactor(root->rightChild) < 0)
+        {
+            root->rightChild = rotateRight(root->rightChild);
+        }
+
+        return rotateLeft(root);
+    }
+
+    if (balanceFactor(root) == -2)
+    {
+        if (balanceFactor(root->leftChild) > 0)
+        {
+            root->leftChild = rotateLeft(root->leftChild);
+        }
+
+        return rotateRight(root);
+    }
+
+    return root;
+}
+
+Node* addElementInSubtree(int value, Node* root)
+{
+    if (root == NULL)
+    {
+        return createNode(value);
+    }
+
+    if (value < root->value)
+    {
+        root->leftChild = addElementInSubtree(value, root->leftChild);
+    }
+    else if (value > root->value)
+    {
+        root->rightChild = addElementInSubtree(value, root->rightChild);
+    }
+
+    return balance(root);
+}
+
+bool addElement(int value, Set* set)
+{
+    if (!isContained(value, set))
+    {
+        set->root = addElementInSubtree(value, set->root);
+        return true;
+    }
+    return false;
+}
+
+Node* getMinimumNodeFromRightSubtree(Node* root)
+{
+    if (root->leftChild != NULL)
+    {
+        return getMinimumNodeFromRightSubtree(root->leftChild);
+    }
+
+    return root;
+}
+
+Node* removeMinimumNodeFromRightSubtree(Node* root)
+{
+    if (root->leftChild == NULL)
+    {
+        return root->rightChild;
+    }
+
+    root->leftChild = removeMinimumNodeFromRightSubtree(root->leftChild);
+    return balance(root);
+}
+
+Node* removeElementFromSubtree(int value, Node* root)
+{
+    if (value < root->value)
+    {
+        root->leftChild = removeElementFromSubtree(value, root->leftChild);
+    }
+    else if (value > root->value)
+    {
+        root->rightChild = removeElementFromSubtree(value, root->rightChild);
+    }
+    else
+    {
+        Node* leftChild = root->leftChild;
+        Node* rightChild = root->rightChild;
+
+        if (rightChild == NULL)
+        {
+            return leftChild;
+        }
+
+        Node* minimum = getMinimumNodeFromRightSubtree(rightChild);
+        minimum->rightChild = removeMinimumNodeFromRightSubtree(rightChild);
+        minimum->leftChild = leftChild;
+        free(root);
+        return balance(minimum);
+    }
+
+    return balance(root);
+}
+
+bool removeElement(int value, Set* set)
+{
+    if (isContained(value, set))
+    {
+        set->root = removeElementFromSubtree(value, set->root);
+        return true;
+    }
+    return false;
 }
