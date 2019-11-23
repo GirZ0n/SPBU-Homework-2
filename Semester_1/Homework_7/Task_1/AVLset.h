@@ -7,7 +7,7 @@ struct Set;
 
 struct Set* createSet();
 bool isContained(int value, struct Set* set);
-void addElement(int value, struct Set* set);
+bool addElement(int value, struct Set* set);
 bool removeElement(int value, struct Set* set);
 void printInAscendingOrder(struct Set* set);
 void printInDescendingOrder(struct Set* set);
