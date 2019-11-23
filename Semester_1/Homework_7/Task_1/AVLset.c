@@ -28,11 +28,16 @@ int balanceFactor(Node* node)
     return height(node->rightChild) - height(node->leftChild);
 }
 
+int max(int elementA, int elementB)
+{
+    return elementA > elementB ? elementA : elementB;
+}
+
 void updateHeight(Node* node)
 {
     int heightLeftChild = height(node->leftChild);
     int heightRightChild = height(node->rightChild);
-    node->height = ((heightLeftChild > heightRightChild) ? heightLeftChild : heightRightChild) + 1;
+    node->height = max(heightLeftChild, heightRightChild) + 1;
 }
 
 Set* createSet()
