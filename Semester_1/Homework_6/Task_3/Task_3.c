@@ -32,7 +32,6 @@ int main()
                 printf("Enter value: ");
                 scanf("%d", &value);
                 addElement(value, set);
-
                 break;
             }
             case 2:
@@ -40,7 +39,6 @@ int main()
                 printf("Enter value: ");
                 scanf("%d", &value);
                 removeElement(value, set);
-
                 break;
             }
             case 3:
@@ -55,34 +53,29 @@ int main()
                 {
                     printf("Value isn't in the set.\n");
                 }
-
                 break;
             }
             case 4:
             {
                 printInAscendingOrder(set);
                 printf("\n");
-
                 break;
             }
             case 5:
             {
                 printInDescendingOrder(set);
                 printf("\n");
-
                 break;
             }
             case 6:
             {
                 printSet(set);
                 printf("\n");
-
                 break;
             }
             default:
             {
                 printf("Enter the correct action.\n");
-
                 break;
             }
         }
