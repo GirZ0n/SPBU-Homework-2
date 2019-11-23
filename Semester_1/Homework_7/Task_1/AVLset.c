@@ -18,14 +18,14 @@ struct Node
 typedef struct Set Set;
 typedef struct Node Node;
 
-int height(Node* node)
+int getHeight(Node* node)
 {
-    return node ? node->height : 0;
+    return node ? node->height : -1;
 }
 
-int balanceFactor(Node* node)
+int getBalanceFactor(Node* node)
 {
-    return height(node->rightChild) - height(node->leftChild);
+    return getHeight(node->rightChild) - getHeight(node->leftChild);
 }
 
 int max(int elementA, int elementB)
@@ -35,8 +35,8 @@ int max(int elementA, int elementB)
 
 void updateHeight(Node* node)
 {
-    int heightLeftChild = height(node->leftChild);
-    int heightRightChild = height(node->rightChild);
+    int heightLeftChild = getHeight(node->leftChild);
+    int heightRightChild = getHeight(node->rightChild);
     node->height = max(heightLeftChild, heightRightChild) + 1;
 }
 
@@ -177,9 +177,9 @@ Node* balance(Node* root)
 {
     updateHeight(root);
 
-    if (balanceFactor(root) == 2)
+    if (getBalanceFactor(root) == 2)
     {
-        if (balanceFactor(root->rightChild) < 0)
+        if (getBalanceFactor(root->rightChild) < 0)
         {
             root->rightChild = rotateRight(root->rightChild);
         }
@@ -187,9 +187,9 @@ Node* balance(Node* root)
         return rotateLeft(root);
     }
 
-    if (balanceFactor(root) == -2)
+    if (getBalanceFactor(root) == -2)
     {
-        if (balanceFactor(root->leftChild) > 0)
+        if (getBalanceFactor(root->leftChild) > 0)
         {
             root->leftChild = rotateLeft(root->leftChild);
         }
