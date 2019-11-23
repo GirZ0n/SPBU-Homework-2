@@ -1,8 +1,16 @@
-//
-// Created by ilya on 23.11.2019.
-//
+#ifndef AVLSET_H
+#define AVLSET_H
 
-#ifndef TASK_1_AVLSET_H
-#define TASK_1_AVLSET_H
+#include <stdbool.h>
 
-#endif //TASK_1_AVLSET_H
+struct Set;
+
+struct Set* createSet();
+bool isContained(int value, struct Set* set);
+void addElement(int value, struct Set* set);
+bool removeElement(int value, struct Set* set);
+void printInAscendingOrder(struct Set* set);
+void printInDescendingOrder(struct Set* set);
+void printSet(struct Set* set);
+
+#endif
