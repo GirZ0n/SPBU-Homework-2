@@ -37,20 +37,20 @@ Semester №1 |
 11. Реализовать быструю сортировку (в рекурсивном варианте). [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Homework_1/Task_11.c)
 
 ### Homework №2 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
-1. Напечатать все представления натурального числа `N` суммой натуральных слагаемых. Перестановка слагаемых нового способа не дает. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Homework_2/Task_1.c)
+1. Напечатать все представления натурального числа `N` суммой натуральных слагаемых. Перестановка слагаемых нового способа не дает. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Homework_2/Task_1/Task_1.c)
 
-2. Напечатать в порядке возрастания все простые несократимые дроби, заключенные между 0 и 1, знаменатели которых не превышают `n`. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Homework_2/Task_2.c)
+2. Напечатать в порядке возрастания все простые несократимые дроби, заключенные между 0 и 1, знаменатели которых не превышают `n`. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Homework_2/Task_2/Task_2.c)
 
 3. Реализовать консольную игру ["Быки и коровы"](http://goo.gl/J1LKti).
 
-4. Найдите максимальный элемент массива, встречающийся более одного раза (массив неупорядоченный). [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Homework_2/Task_4.c)
+4. Найдите максимальный элемент массива, встречающийся более одного раза (массив неупорядоченный). [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Homework_2/Task_4/Task_4.c)
 
-5. Даны две строки. Определить, можно ли, переставляя символы в первой строке, получить вторую строку. Хочется решение без вложенных циклов. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Homework_2/Task_5.c)
+5. Даны две строки. Определить, можно ли, переставляя символы в первой строке, получить вторую строку. Хочется решение без вложенных циклов. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Homework_2/Task_5/Task_5.c)
 
-6. Написать программу, которая переставляет цифры натурального числа таким образом, чтобы образовалось наименьшее число, записанное этими же цифрами. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Homework_2/Task_6.c)
+6. Написать программу, которая переставляет цифры натурального числа таким образом, чтобы образовалось наименьшее число, записанное этими же цифрами. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Homework_2/Task_6/Task_6.c)
 
 ### Homework №3 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
-1. Реализовать алгоритм пирамидальной сортировки. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Homework_3/Task_1.c)
+1. Реализовать алгоритм пирамидальной сортировки. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Homework_3/Task_1/Task_1.c)
 
 2. Написать программу, которая считает количество непустых строк в исходном файле. Строка считается пустой, если состоит только из пробелов и табуляций (символ `\t`), или в ней нет символов вообще.
 
@@ -82,7 +82,7 @@ Semester №1 |
 4 - сохранить текущие данные в файл.
 ``` 
 
-3. Дан массив размерностью `n x n`, `n` — нечетное число. Вывести элементы массива при обходе его по спирали, начиная с центра. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Homework_2/Task_3.c)
+3. Дан массив размерностью `n x n`, `n` — нечетное число. Вывести элементы массива при обходе его по спирали, начиная с центра. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Homework_2/Task_3/Task_3.c)
 
 ### Homework №5 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
 1. Написать программу преобразования инфиксной формы выражения в постфиксную. Известно, что каждый операнд занимает один символ. В выражении могут быть знаки `+, -, *, /`, скобки и цифры. Пример: `(1 + 1) * 2` должно преобразовываться в `1 1 + 2 *`. Алгоритм перевода предлагается найти самостоятельно (алгоритм "сортировочной станции" Э. Дейкстры).
