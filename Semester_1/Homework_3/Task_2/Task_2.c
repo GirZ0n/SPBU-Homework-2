@@ -1,9 +1,6 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-
-const int stringMaxSize = 512;
 
 bool isSpecials(char input)
 {
@@ -13,20 +10,13 @@ bool isSpecials(char input)
 int main()
 {
     FILE *input = fopen("input.txt", "r");
-
-    int numberOfNonEmptyStrings = 0;
-    char *inputString = malloc(sizeof(char) * stringMaxSize);
-    for (int i = 0; i < stringMaxSize; i++)
-    {
-        inputString[i] = ' ';
-    }
-
     if (input == NULL)
     {
         printf("Can't open the file");
         return 0;
     }
 
+    int numberOfNonEmptyStrings = 0;
     bool isEmptyString = true;
     char inputChar = ' ';
     while (feof(input) == false)
@@ -47,7 +37,6 @@ int main()
     }
 
     printf("The number of non-empty lines = %d", numberOfNonEmptyStrings);
-    free(inputString);
     fclose(input);
     return 0;
 }
