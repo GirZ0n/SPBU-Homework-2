@@ -167,6 +167,44 @@ void printSet(Set* set)
     printSubtree(set->root);
 }
 
+int popMinimumValueFromRightSubtree(SetElement* root)
+{
+    SetElement* minimum = root;
+    while (minimum->leftChild != NULL)
+    {
+        minimum = minimum->leftChild;
+    }
+
+    if (minimum->parent->leftChild == minimum)
+    {
+        if (minimum->rightChild != NULL)
+        {
+            minimum->parent->leftChild = minimum->rightChild;
+            minimum->rightChild->parent = minimum->parent;
+        }
+        else
+        {
+            minimum->parent->leftChild = NULL;
+        }
+    }
+    else
+    {
+        if (minimum->rightChild != NULL)
+        {
+            minimum->parent->rightChild = minimum->rightChild;
+            minimum->rightChild->parent = minimum->parent;
+        }
+        else
+        {
+            minimum->parent->rightChild = NULL;
+        }
+    }
+
+    int valueOfMinimum = minimum->value;
+    free(minimum);
+    return valueOfMinimum;
+}
+
 bool removeElement(int value, struct Set* set)
 {
     SetElement* removable = getSetElement(value, set);
@@ -175,21 +213,21 @@ bool removeElement(int value, struct Set* set)
         return false;
     }
 
+    bool isLeftChild = false;
+    if (removable->parent != NULL)
+    {
+        isLeftChild = (removable->parent->leftChild == removable);
+    }
+
     if (removable->leftChild != NULL && removable->rightChild != NULL)
     {
-        SetElement* largestElementInLeftSubtree = removable->leftChild;
-        while (largestElementInLeftSubtree->rightChild != NULL)
-        {
-            largestElementInLeftSubtree = largestElementInLeftSubtree->rightChild;
-        }
-        removeElement(largestElementInLeftSubtree->value, set);
-        removable->value = largestElementInLeftSubtree->value;
+        removable->value = popMinimumValueFromRightSubtree(removable->rightChild);
     }
     else if (removable->leftChild != NULL)
     {
         if (removable->parent != NULL)
         {
-            if (removable->parent->leftChild != NULL && removable->parent->leftChild->value == value)
+            if (isLeftChild)
             {
                 removable->parent->leftChild = removable->leftChild;
                 removable->leftChild->parent = removable->parent;
@@ -205,12 +243,13 @@ bool removeElement(int value, struct Set* set)
             set->root = removable->leftChild;
             removable->leftChild->parent = NULL;
         }
+        free(removable);
     }
     else if (removable->rightChild != NULL)
     {
         if (removable->parent != NULL)
         {
-            if (removable->parent->leftChild != NULL && removable->parent->leftChild->value == value)
+            if (isLeftChild)
             {
                 removable->parent->leftChild = removable->rightChild;
                 removable->rightChild->parent = removable->parent;
@@ -226,12 +265,13 @@ bool removeElement(int value, struct Set* set)
             set->root = removable->rightChild;
             removable->rightChild->parent = NULL;
         }
+        free(removable);
     }
     else
     {
         if (removable->parent != NULL)
         {
-            if (removable->parent->leftChild != NULL && removable->parent->leftChild->value == value)
+            if (isLeftChild)
             {
                 removable->parent->leftChild = NULL;
             }
@@ -244,6 +284,7 @@ bool removeElement(int value, struct Set* set)
         {
             set->root = NULL;
         }
+        free(removable);
     }
 
     return true;
