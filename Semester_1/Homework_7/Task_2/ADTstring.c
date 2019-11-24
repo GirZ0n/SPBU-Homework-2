@@ -114,6 +114,17 @@ void concatenateStrings(String* destination, String* source)
 String* getSubstring(String* string, int indexOfBegin, int indexOfEnd)
 {
     String* substring = createString(getStringCapacity(string));
+
+    if (indexOfBegin < 0)
+    {
+        indexOfBegin = 0;
+    }
+
+    if (indexOfEnd > getStringSize(string) - 1)
+    {
+        indexOfEnd = getStringSize(string) - 1;
+    }
+
     for (int i = 0; i < indexOfEnd - indexOfBegin + 1; i++)
     {
         substring->text[i] = string->text[indexOfBegin + i];
@@ -156,7 +167,7 @@ struct String* getStringFromConsole()
 struct String* getStringFromFile(FILE* input)
 {
     String* newString = createString(2);
-    char inputChar = (char) fgetc(input);
+    char inputChar = fgetc(input);
     while (!isSpecials(inputChar) && feof(input) == false)
     {
         if (getStringSize(newString) == getStringCapacity(newString))
@@ -167,7 +178,7 @@ struct String* getStringFromFile(FILE* input)
 
         newString->text[getStringSize(newString)] = inputChar;
         newString->size++;
-        scanf("%c", &inputChar);
+        inputChar = fgetc(input);
     }
 
     return newString;
