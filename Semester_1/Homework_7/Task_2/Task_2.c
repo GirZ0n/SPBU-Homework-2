@@ -1,21 +1,21 @@
 #include <stdio.h>
 #include "ADTstring.h"
 
-int main()
+void test()
 {
     char* string = "2365462kn 3434fd,kwmk";
     printf("string = %s\n", string);
 
     struct String* testString = convertStringToStructString(string);
-    printf("Conversion: size = %d, capacity = %d\n", getStringSize(testString), getStringCapacity(testString));
+    printf("Conversion: length = %d, capacity = %d\n", getStringLength(testString), getStringCapacity(testString));
 
     resizeString(testString, 45);
-    printf("Resize: size = %d, capacity = %d\n", getStringSize(testString), getStringCapacity(testString));
+    printf("Resize: length = %d, capacity = %d\n", getStringLength(testString), getStringCapacity(testString));
 
     struct String* clone = cloneString(testString);
     printf("Clone and print: ");
     printString(clone);
-    printf(" (Size = %d, capacity = %d)\n", getStringSize(clone), getStringCapacity(clone));
+    printf(" (Length = %d, capacity = %d)\n", getStringLength(clone), getStringCapacity(clone));
 
     printf("Convert and print (as char*): %s\n", convertStringToCharPointer(testString));
 
@@ -44,20 +44,34 @@ int main()
     printf("testString + 2nmfke3: ");
     concatenateStrings(testString, convertStringToStructString("2nmfke3"));
     printString(testString);
-    printf(" (After сoncatenation: size = %d, capacity = %d)\n",
-            getStringSize(testString), getStringCapacity(testString));
+    printf(" (After сoncatenation: length = %d, capacity = %d)\n",
+           getStringLength(testString), getStringCapacity(testString));
 
     printf("Enter string: ");
     testString = getStringFromConsole();
     printf("Get string from console and print it: ");
     printString(testString);
-    printf(" (Size = %d, capacity = %d)\n", getStringSize(testString), getStringCapacity(testString));
+    printf(" (Size = %d, capacity = %d)\n", getStringLength(testString), getStringCapacity(testString));
 
     printf("Get string from file and print it: ");
     FILE* test = fopen("testFile.txt", "r");
     testString = getStringFromFile(test);
     printString(testString);
-    printf(" (Size = %d, capacity = %d)\n", getStringSize(testString), getStringCapacity(testString));
+    printf(" (Size = %d, capacity = %d)\n", getStringLength(testString), getStringCapacity(testString));
 
+    if (test != NULL)
+    {
+        fclose(test);
+    }
+
+    deleteString(testString);
+    deleteString(clone);
+    deleteString(emptyString);
+    deleteString(otherString);
+}
+
+int main()
+{
+    test();
     return 0;
 }
