@@ -6,13 +6,13 @@
 
 struct String;
 
-int getStringSize(struct String* string);
-int getStringCapacity(struct String* string);
-char* convertStringToCharPointer(struct String* string);
-struct String* convertStringToStructString(char* string);
 struct String* createString(int size);
 void resizeString(struct String*, int newSize);
 void deleteString(struct String* string);
+int getStringLength(struct String* string);
+int getStringCapacity(struct String* string);
+char* convertStringToCharPointer(struct String* string);
+struct String* convertStringToStructString(char* string);
 bool isStringEmpty(struct String* string);
 bool areStringsEqual(struct String* stringA, struct String* stringB);
 struct String* cloneString(struct String* string);
