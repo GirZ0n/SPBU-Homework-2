@@ -4,8 +4,6 @@
 #include <stdbool.h>
 #include "stack.h"
 
-const int maxSize = 256;
-
 bool isOpenBracket(char input)
 {
     return input == '(';
@@ -40,13 +38,20 @@ bool isDigit(char input)
 
 char* getNumberAsString(char* input, int* indexOfStart)
 {
-    char* number = calloc(maxSize, sizeof(char));
+    int numberCapacity = 2;
+    char* number = calloc(numberCapacity, sizeof(char));
     number[0] = input[*indexOfStart];
     int numberLength = 1;
 
     int inputLength = strlen(input);
     while (*indexOfStart + 1 < inputLength && isDigit(input[*indexOfStart + 1]))
     {
+        if (numberLength == numberCapacity)
+        {
+            numberCapacity *= 2;
+            number = realloc(number, numberCapacity);
+        }
+
         number[numberLength] = input[*indexOfStart + 1];
         numberLength++;
         (*indexOfStart)++;
@@ -55,20 +60,28 @@ char* getNumberAsString(char* input, int* indexOfStart)
     return number;
 }
 
-double getNumberAsDouble(char* input, int* indexOfStart)
+double getNumberAsDouble(char* input, int* indexOfCurrentPosition)
 {
     int number = 0;
-    if (isDigit(input[*indexOfStart]))
+    if (isDigit(input[*indexOfCurrentPosition]))
     {
-        number = input[*indexOfStart] - '0';
+        number = input[*indexOfCurrentPosition] - '0';
     }
 
+    int indexOfStart = *indexOfCurrentPosition;
+
     int inputLength = strlen(input);
-    while (*indexOfStart + 1 < inputLength && isDigit(input[*indexOfStart + 1]))
+    while (*indexOfCurrentPosition + 1 < inputLength && isDigit(input[*indexOfCurrentPosition + 1]))
     {
-        number = number * 10 + (input[*indexOfStart + 1] - '0');
-        (*indexOfStart)++;
+        number = number * 10 + (input[*indexOfCurrentPosition + 1] - '0');
+        (*indexOfCurrentPosition)++;
     }
+
+    if (input[indexOfStart] == '-')
+    {
+        number *= -1;
+    }
+
     return (double) number;
 }
 
@@ -122,13 +135,12 @@ char* charToString(char input)
     return string;
 }
 
-/*
- * infixToPostfix - convert an expression in infix notation to postfix;
- *                - return true if the conversion succeeds, otherwise return false
- */
-bool infixToPostfix (char* infixNotation, char* postfixNotation)
+char* convertInfixToPostfix (char* infixNotation, bool* isError)
 {
     struct StackOfChar* stackOfChar = createStackOfChar();
+    int postfixLength = 0;
+    int postfixCapacity = 2;
+    char* postfixNotation = calloc(postfixCapacity, sizeof(char));
 
     int inputStringLength = strlen(infixNotation);
     for (int i = 0; i < inputStringLength; i++)
@@ -138,8 +150,15 @@ bool infixToPostfix (char* infixNotation, char* postfixNotation)
             while (!stackOfCharIsEmpty(stackOfChar) && isLessPriority(infixNotation[i], stackOfCharTop(stackOfChar))
                    && !isOpenBracket(stackOfCharTop(stackOfChar)))
             {
+                if (postfixLength + 2 > postfixCapacity)
+                {
+                    postfixCapacity *= 2;
+                    postfixNotation = realloc(postfixNotation, postfixCapacity);
+                }
+
                 strcat(postfixNotation, charToString(popChar(stackOfChar)));
                 strcat(postfixNotation, " ");
+                postfixLength += 2;
             }
 
             pushChar(infixNotation[i], stackOfChar);
@@ -148,8 +167,15 @@ bool infixToPostfix (char* infixNotation, char* postfixNotation)
         {
             while (!stackOfCharIsEmpty(stackOfChar) && !isOpenBracket(stackOfCharTop(stackOfChar)))
             {
+                if (postfixLength + 2 > postfixCapacity)
+                {
+                    postfixCapacity *= 2;
+                    postfixNotation = realloc(postfixNotation, postfixCapacity);
+                }
+
                 strcat(postfixNotation, charToString(popChar(stackOfChar)));
                 strcat(postfixNotation, " ");
+                postfixLength += 2;
             }
 
             if (!stackOfCharIsEmpty(stackOfChar))
@@ -158,8 +184,9 @@ bool infixToPostfix (char* infixNotation, char* postfixNotation)
             }
             else
             {
+                *isError = true;
                 printf("Missing bracket.");
-                return false;
+                return " ";
             }
         }
         else if (isOpenBracket(infixNotation[i]))
@@ -168,8 +195,16 @@ bool infixToPostfix (char* infixNotation, char* postfixNotation)
         }
         else if (isUnaryNegative(infixNotation, i) || isDigit(infixNotation[i]))
         {
-            strcat(postfixNotation, getNumberAsString(infixNotation, &i));
+            char* number = getNumberAsString(infixNotation, &i);
+            while (postfixLength + strlen(number) + 1 > postfixCapacity)
+            {
+                postfixCapacity *= 2;
+                postfixNotation = realloc(postfixNotation, postfixCapacity);
+            }
+
+            strcat(postfixNotation, number);
             strcat(postfixNotation, " ");
+            postfixLength += strlen(number) + 1;
         }
         else if (infixNotation[i] == ' ')
         {
@@ -177,8 +212,9 @@ bool infixToPostfix (char* infixNotation, char* postfixNotation)
         }
         else
         {
+            *isError = true;
             printf("Invalid character.");
-            return false;
+            return " ";
         }
     }
 
@@ -186,15 +222,23 @@ bool infixToPostfix (char* infixNotation, char* postfixNotation)
     {
         if (isOpenBracket(stackOfCharTop(stackOfChar)))
         {
+            *isError = true;
             printf("Missing bracket.");
-            return false;
+            return " ";
+        }
+
+        if (postfixLength + 2 > postfixCapacity)
+        {
+            postfixCapacity *= 2;
+            postfixNotation = realloc(postfixNotation, postfixCapacity);
         }
 
         strcat(postfixNotation, charToString(popChar(stackOfChar)));
         strcat(postfixNotation, " ");
+        postfixLength += 2;
     }
 
-    return true;
+    return postfixNotation;
 }
 
 double calculatePostfixNotation(char* postfixNotation)
@@ -223,18 +267,42 @@ double calculatePostfixNotation(char* postfixNotation)
     return popDouble(stackOfDouble);
 }
 
+char* getStringFromConsole()
+{
+    int length = 0;
+    int capacity = 2;
+    char* string = calloc(capacity, sizeof(char));
+    char input = ' ';
+    scanf("%c", &input);
+    while (input != '\n')
+    {
+        if (length == capacity)
+        {
+            capacity *= 2;
+            string = realloc(string, capacity);
+        }
+
+        string[length] = input;
+        length++;
+        scanf("%c", &input);
+    }
+    return string;
+}
+
 int main()
 {
     printf("Enter an expression in the infix notation:\n");
-    char* infixNotation = calloc(maxSize, sizeof(char));
-    scanf("%[^\n]", infixNotation);
+    char* infixNotation = getStringFromConsole();
+    bool isError = false;
+    char* postfixNotation = convertInfixToPostfix(infixNotation, &isError);
 
-    char* postfixNotation = calloc(maxSize, sizeof(char));
-    if (infixToPostfix(infixNotation, postfixNotation) == false)
+    if (isError)
     {
         return 0;
     }
 
     printf("Result: %lf", calculatePostfixNotation(postfixNotation));
+    free(infixNotation);
+    free(postfixNotation);
     return 0;
 }
