@@ -2,21 +2,20 @@
 #include <stdio.h>
 #include "set.h"
 
+typedef struct SetElement SetElement;
+
 struct Set
 {
-    struct SetElement* root;
+    SetElement* root;
 };
 
 struct SetElement
 {
     int value;
-    struct SetElement* parent;
-    struct SetElement* leftChild;
-    struct SetElement* rightChild;
+    SetElement* parent;
+    SetElement* leftChild;
+    SetElement* rightChild;
 };
-
-typedef struct Set Set;
-typedef struct SetElement SetElement;
 
 Set* createSet()
 {
@@ -61,11 +60,21 @@ SetElement* getSetElement(int value, Set* set)
 
 bool isContained(int value, Set* set)
 {
+    if (set == NULL)
+    {
+        return false;
+    }
+
     return getSetElement(value, set) != NULL;
 }
 
 void addElement(int value, Set* set)
 {
+    if (set == NULL)
+    {
+        return;
+    }
+
     SetElement* current = set->root;
     while (current != NULL)
     {
@@ -122,6 +131,11 @@ void printSubtreeInAscendingOrder(SetElement* root)
 
 void printInAscendingOrder(Set* set)
 {
+    if (set == NULL)
+    {
+        return;
+    }
+
     printSubtreeInAscendingOrder(set->root);
 }
 
@@ -145,6 +159,11 @@ void printSubtreeInDescendingOrder(SetElement* root)
 
 void printInDescendingOrder(Set* set)
 {
+    if (set == NULL)
+    {
+        return;
+    }
+
     printSubtreeInDescendingOrder(set->root);
 }
 
@@ -164,6 +183,11 @@ void printSubtree(SetElement* root)
 
 void printSet(Set* set)
 {
+    if (set == NULL)
+    {
+        return;
+    }
+
     printSubtree(set->root);
 }
 
@@ -208,7 +232,7 @@ int popMinimumValueFromRightSubtree(SetElement* root)
 bool removeElement(int value, struct Set* set)
 {
     SetElement* removable = getSetElement(value, set);
-    if (removable == NULL)
+    if (set == NULL || removable == NULL)
     {
         return false;
     }
