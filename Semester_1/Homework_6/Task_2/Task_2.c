@@ -87,6 +87,7 @@ int getNumberFromBinaryForm(const int* binaryForm)
         number *= -1;
     }
 
+    free(powersOfTwo);
     return number;
 }
 
@@ -112,5 +113,9 @@ int main()
     printf("%6cBinary form of sum: ", ' ');
     printBinaryForm(sum);
     printf("%5cDecimal form of sum: %d", ' ', getNumberFromBinaryForm(sum));
+
+    free(binaryFormOfNumberA);
+    free(binaryFormOfNumberB);
+    free(sum);
     return 0;
 }
