@@ -17,11 +17,7 @@ union Number
 
 bool* createArray(int size)
 {
-    bool* array = malloc(sizeof(bool) * size);
-    for (int i = 0; i < size; i++)
-    {
-        array[i] = 0;
-    }
+    bool* array = calloc(sizeof(bool), size);
     return array;
 }
 
@@ -66,6 +62,7 @@ int getExponent(bool* binaryFormOfNumber)
     {
         exponent += binaryFormOfExponent[i] * (int)pow(2, i);
     }
+    free(binaryFormOfExponent);
     return exponent - ((int) pow(2, sizeOfExponent - 1) - 1);
 }
 
@@ -77,6 +74,7 @@ double getMantissa(bool* binaryFormOfNumber)
     {
         mantissa += binaryFormOfMantissa[sizeOfMantissa - i] * pow(2, -i);
     }
+    free(binaryFormOfMantissa);
     return mantissa;
 }
 
@@ -113,5 +111,6 @@ int main()
     }
 
     printf("Scientific notation: %.10lf * 2^(%d)", mantissa, exponent);
+    free(binaryFormOfNumber);
     return 0;
 }
