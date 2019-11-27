@@ -2,20 +2,20 @@
 #include <stdio.h>
 #include "AVLset.h"
 
+typedef struct Node Node;
+
 struct Set
 {
-    struct Node* root;
+    Node* root;
 };
 
 struct Node
 {
     int value;
     int height;
-    struct Node* leftChild;
-    struct Node* rightChild;
+    Node* leftChild;
+    Node* rightChild;
 };
-
-typedef struct Node Node;
 
 int getHeight(Node* node)
 {
