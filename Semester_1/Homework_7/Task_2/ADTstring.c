@@ -6,17 +6,13 @@ struct String
 {
     char* text;
     int length;
-    int capacity;
 };
-
-typedef struct String String;
 
 String* createString(int size)
 {
     String* newString = malloc(sizeof(String));
     newString->text = calloc(sizeof(char), size);
     newString->length = 0;
-    newString->capacity = size;
     return newString;
 }
 
@@ -28,7 +24,6 @@ void resizeString(String* string, int newSize)
     }
 
     string->text = realloc(string->text, newSize);
-    string->capacity = newSize;
 }
 
 void deleteString(String* string)
@@ -50,16 +45,6 @@ int getStringLength(String *string)
    }
 
    return string->length;
-}
-
-int getStringCapacity(String* string)
-{
-    if (string == NULL)
-    {
-        return 0;
-    }
-
-    return string->capacity;
 }
 
 char* convertStringToCharPointer(String* string)
@@ -126,7 +111,7 @@ String* cloneString(String* string)
         return NULL;
     }
 
-    String* newString = createString(getStringCapacity(string));
+    String* newString = createString(getStringLength(string));
     newString->length = getStringLength(string);
 
     int length = newString->length;
@@ -145,9 +130,9 @@ void concatenateStrings(String* destination, String* source)
         return;
     }
 
-    resizeString(destination, getStringCapacity(destination) + getStringCapacity(source));
     int currentLength = getStringLength(destination);
     int newLength = getStringLength(destination) + getStringLength(source);
+    resizeString(destination, newLength);
     for (int i = currentLength; i < newLength; i++)
     {
         destination->text[i] = source->text[i - currentLength];
@@ -162,7 +147,6 @@ String* getSubstring(String* string, int indexOfBegin, int indexOfEnd)
         return NULL;
     }
 
-    String* substring = createString(getStringCapacity(string));
 
     if (indexOfBegin < 0)
     {
@@ -174,6 +158,13 @@ String* getSubstring(String* string, int indexOfBegin, int indexOfEnd)
         indexOfEnd = getStringLength(string) - 1;
     }
 
+    if (indexOfEnd < indexOfBegin)
+    {
+        indexOfEnd = indexOfBegin;
+        indexOfBegin++;
+    }
+
+    String* substring = createString(indexOfEnd - indexOfBegin + 1);
     for (int i = 0; i < indexOfEnd - indexOfBegin + 1; i++)
     {
         substring->text[i] = string->text[indexOfBegin + i];
@@ -194,15 +185,16 @@ void printString(String* string)
 
 struct String* getStringFromConsole()
 {
-    String* newString = createString(2);
+    int capacity = 2;
+    String* newString = createString(capacity);
     char input = ' ';
     scanf("%c", &input);
     while (input != '\n')
     {
-        if (getStringLength(newString) == getStringCapacity(newString))
+        if (getStringLength(newString) == capacity)
         {
-            newString->capacity *= 2;
-            resizeString(newString, getStringCapacity(newString));
+            capacity *= 2;
+            resizeString(newString, capacity);
         }
 
         newString->text[getStringLength(newString)] = input;
@@ -215,14 +207,15 @@ struct String* getStringFromConsole()
 
 struct String* getStringFromFile(FILE* input)
 {
-    String* newString = createString(2);
+    int capacity = 2;
+    String* newString = createString(capacity);
     char inputChar = (char) fgetc(input);
     while (feof(input) == false && inputChar != '\n')
     {
-        if (getStringLength(newString) == getStringCapacity(newString))
+        if (getStringLength(newString) == capacity)
         {
-            newString->capacity *= 2;
-            resizeString(newString, getStringCapacity(newString));
+            capacity *= 2;
+            resizeString(newString, capacity);
         }
 
         newString->text[getStringLength(newString)] = inputChar;
