@@ -1,25 +1,22 @@
-#ifndef ADTSTRING_H
-#define ADTSTRING_H
+#pragma once
 
 #include <stdbool.h>
 #include <stdio.h>
 
+typedef struct String String;
+
 struct String;
 
-struct String* createString(int size);
-void resizeString(struct String*, int newSize);
-void deleteString(struct String* string);
-int getStringLength(struct String* string);
-int getStringCapacity(struct String* string);
-char* convertStringToCharPointer(struct String* string);
-struct String* convertStringToStructString(char* string);
-bool isStringEmpty(struct String* string);
-bool areStringsEqual(struct String* stringA, struct String* stringB);
-struct String* cloneString(struct String* string);
-void concatenateStrings(struct String* stringA, struct String* stringB);
-struct String* getSubstring(struct String* string, int indexOfBegin, int indexOfEnd);
-void printString(struct String* string);
+String* createString(int size);
+void deleteString(String* string);
+int getStringLength(String* string);
+char* convertStringToCharPointer(String* string);
+String* convertStringToStructString(char* string);
+bool isStringEmpty(String* string);
+bool areStringsEqual(String* stringA, String* stringB);
+String* cloneString(String* string);
+void concatenateStrings(String* stringA, String* stringB);
+String* getSubstring(String* string, int indexOfBegin, int indexOfEnd);
+void printString(String* string);
 struct String* getStringFromConsole();
 struct String* getStringFromFile(FILE* input);
-
-#endif
