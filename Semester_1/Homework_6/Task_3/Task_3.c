@@ -1,9 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "set.h"
 
 int main()
 {
-    struct Set* set = createSet();
+    Set* set = createSet();
     printf("Select an action from the suggestions below.\n");
     printf("0 - Exit;\n");
     printf("1 - Add value to set;\n");
@@ -25,6 +26,7 @@ int main()
             case 0:
             {
                 printf("Have a nice day! Bye :)");
+                free(set);
                 return 0;
             }
             case 1:
