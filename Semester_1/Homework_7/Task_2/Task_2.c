@@ -30,7 +30,7 @@ void isEmptyTest(String* testString)
     deleteString(emptyString);
 }
 
-void isEqualTest(String* testString)
+void areEqualTest(String* testString)
 {
     struct String* equalString = cloneString(testString);
     printf("testString == equalString: %d\n", areStringsEqual(testString, equalString));
@@ -107,7 +107,7 @@ void test()
     isEmptyTest(testString);
     printf("\n");
 
-    isEqualTest(testString);
+    areEqualTest(testString);
     printf("\n");
 
     getSubstringTest(testString);
