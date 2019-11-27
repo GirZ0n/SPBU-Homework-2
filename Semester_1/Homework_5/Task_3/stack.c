@@ -1,21 +1,20 @@
 #include <stdlib.h>
 #include "stack.h"
 
+typedef struct StackOfCharElement StackOfCharElement;
+
 // Stack of char
 struct StackOfChar
 {
     int size;
-    struct StackOfCharElement* first;
+    StackOfCharElement* first;
 };
 
 struct StackOfCharElement
 {
     char value;
-    struct StackOfCharElement* next;
+    StackOfCharElement* next;
 };
-
-typedef struct StackOfChar StackOfChar;
-typedef struct StackOfCharElement StackOfCharElement;
 
 StackOfChar* createStackOfChar()
 {
@@ -27,16 +26,31 @@ StackOfChar* createStackOfChar()
 
 int stackOfCharSize(StackOfChar* stack)
 {
+    if (stack == NULL)
+    {
+        return 0;
+    }
+
     return stack->size;
 }
 
 bool stackOfCharIsEmpty(StackOfChar* stack)
 {
+    if (stack == NULL)
+    {
+        return true;
+    }
+
     return stackOfCharSize(stack) == 0;
 }
 
 bool pushChar(char value, StackOfChar* stack)
 {
+    if (stack == NULL)
+    {
+        return false;
+    }
+
     StackOfCharElement* pushed = malloc(sizeof(struct StackOfCharElement));
     pushed->value = value;
     pushed->next = stack->first;
@@ -48,9 +62,9 @@ bool pushChar(char value, StackOfChar* stack)
 
 char popChar(StackOfChar* stack)
 {
-    if (stackOfCharIsEmpty(stack))
+    if (stack == NULL || stackOfCharIsEmpty(stack))
     {
-        return 0;
+        return -1;
     }
 
     StackOfCharElement* popped = stack->first;
@@ -64,26 +78,29 @@ char popChar(StackOfChar* stack)
 
 char stackOfCharTop(StackOfChar* stack)
 {
+    if (stack == NULL || stack->first == NULL)
+    {
+        return -1;
+    }
+
     return stack->first->value;
 }
 
 
 
+typedef struct StackOfDoubleElement StackOfDoubleElement;
+
 // Stack of double
 struct StackOfDouble
 {
     int size;
-    struct StackOfDoubleElement* first;
+    StackOfDoubleElement* first;
 };
-
 struct StackOfDoubleElement
 {
     double value;
-    struct StackOfDoubleElement* next;
+    StackOfDoubleElement* next;
 };
-
-typedef struct StackOfDouble StackOfDouble;
-typedef struct StackOfDoubleElement StackOfDoubleElement;
 
 StackOfDouble* createStackOfDouble()
 {
@@ -95,16 +112,31 @@ StackOfDouble* createStackOfDouble()
 
 int stackOfDoubleSize(StackOfDouble* stack)
 {
+    if (stack == NULL)
+    {
+        return 0;
+    }
+
     return stack->size;
 }
 
 bool stackOfDoubleIsEmpty(StackOfDouble* stack)
 {
+    if (stack == NULL)
+    {
+        return true;
+    }
+
     return stackOfDoubleSize(stack) == 0;
 }
 
 bool pushDouble(double value, StackOfDouble* stack)
 {
+    if (stack == NULL)
+    {
+        return false;
+    }
+
     StackOfDoubleElement* pushed = malloc(sizeof(struct StackOfDoubleElement));
     pushed->value = value;
     pushed->next = stack->first;
@@ -116,7 +148,7 @@ bool pushDouble(double value, StackOfDouble* stack)
 
 double popDouble(StackOfDouble* stack)
 {
-    if (stackOfDoubleIsEmpty(stack))
+    if (stack == NULL || stackOfDoubleIsEmpty(stack))
     {
         return 0;
     }
