@@ -1,16 +1,15 @@
-#ifndef AVLSET_H
-#define AVLSET_H
+#pragma once
 
 #include <stdbool.h>
+
+typedef struct Set Set;
 
 struct Set;
 
 struct Set* createSet();
-bool isContained(int value, struct Set* set);
-bool addElement(int value, struct Set* set);
-bool removeElement(int value, struct Set* set);
-void printInAscendingOrder(struct Set* set);
-void printInDescendingOrder(struct Set* set);
-void printSet(struct Set* set);
-
-#endif
+bool isContained(int value, Set* set);
+bool addElement(int value, Set* set);
+bool removeElement(int value, Set* set);
+void printInAscendingOrder(Set* set);
+void printInDescendingOrder(Set* set);
+void printSet(Set* set);
