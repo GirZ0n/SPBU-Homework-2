@@ -26,28 +26,17 @@ void deleteMatrix(int** matrix, int numberOfLines)
     free(matrix);
 }
 
-void printMatrix(int** matrix, int numberOfLines, int numberOfColumns)
-{
-    for (int i = 0; i < numberOfLines; i++)
-    {
-        for (int j = 0; j < numberOfColumns; j++)
-        {
-            printf("%d ", matrix[i][j]);
-        }
-        printf("\n");
-    }
-}
-
 int getNumberOfNearestCity(int indexOfCurrentCapital, int** states, int** distanceBetweenCities, bool* isCityFree,
         int numberOfCities, int numberOfCapitals)
 {
     int minimumDistance = INT_MAX;
     int numberOfTheNearestCity = INT_MAX;
     int iterator = 0;
-    while (iterator < numberOfCities - numberOfCapitals && states[indexOfCurrentCapital][iterator] != 0)
+    int currentCity = states[indexOfCurrentCapital][iterator];
+    while (iterator < numberOfCities - numberOfCapitals && currentCity != 0)
     {
-        int currentCity = states[indexOfCurrentCapital][iterator];
-        for (int i = 1; i < numberOfCities; i++)
+        currentCity = states[indexOfCurrentCapital][iterator];
+        for (int i = 1; i < numberOfCities + 1; i++)
         {
             if (!isCityFree[i])
             {
