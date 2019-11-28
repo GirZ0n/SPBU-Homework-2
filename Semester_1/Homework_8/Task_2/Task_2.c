@@ -28,29 +28,17 @@ void deleteMatrix(int** matrix, int numberOfLines)
 
 void printMatrix(int** matrix, int numberOfLines, int numberOfColumns)
 {
-    for (int i = 1; i < numberOfLines; i++)
+    for (int i = 0; i < numberOfLines; i++)
     {
-        for (int j = 1; j < numberOfColumns; j++)
+        for (int j = 0; j < numberOfColumns; j++)
         {
-            if (matrix[i][j] == INT_MAX)
-            {
-                printf("0 ");
-            }
-            else
-            {
-                printf("%d ", matrix[i][j]);
-            }
+            printf("%d ", matrix[i][j]);
         }
         printf("\n");
     }
 }
 
-int min(int numberA, int numberB)
-{
-    return numberA < numberB ? numberA : numberB;
-}
-
-int getNumberOfNearestCity(int indexOfCurrentCapital, int** states, int** distanceBetweenCities, bool* isCityUsed,
+int getNumberOfNearestCity(int indexOfCurrentCapital, int** states, int** distanceBetweenCities, bool* isCityFree,
         int numberOfCities, int numberOfCapitals)
 {
     int minimumDistance = INT_MAX;
@@ -59,11 +47,21 @@ int getNumberOfNearestCity(int indexOfCurrentCapital, int** states, int** distan
     while (iterator < numberOfCities - numberOfCapitals && states[indexOfCurrentCapital][iterator] != 0)
     {
         int currentCity = states[indexOfCurrentCapital][iterator];
-
-
-
+        for (int i = 1; i < numberOfCities; i++)
+        {
+            if (!isCityFree[i])
+            {
+                if (distanceBetweenCities[currentCity][i] < minimumDistance)
+                {
+                    minimumDistance = distanceBetweenCities[currentCity][i];
+                    numberOfTheNearestCity = i;
+                }
+            }
+        }
         iterator++;
     }
+
+    return numberOfTheNearestCity;
 }
 
 int main()
@@ -89,8 +87,8 @@ int main()
     int numberOfCapitals = 0;
     fscanf(input, "%d", &numberOfCapitals);
 
+    bool* isCityFree = calloc(sizeof(bool), numberOfCities + 1);
     int numberOfUnusedCities = numberOfCities - numberOfCapitals;
-    bool* isCityUsed = calloc(sizeof(bool), numberOfCities + 1);
 
     int** states = createMatrix(numberOfCapitals, numberOfCities - numberOfCapitals + 1, 0);
     int capital = 0;
@@ -98,7 +96,7 @@ int main()
     {
         fscanf(input, "%d", &capital);
         states[i][0] = capital;
-        isCityUsed[capital] = true;
+        isCityFree[capital] = true;
     }
 
     int iterator = 0;
@@ -108,10 +106,11 @@ int main()
         indexOfCurrentCapital = iterator % numberOfCapitals;
 
         int numberOfNearestCity = getNumberOfNearestCity(indexOfCurrentCapital, states, distanceBetweenCities,
-                isCityUsed, numberOfCities, numberOfCapitals);
+                                                         isCityFree, numberOfCities, numberOfCapitals);
 
         if (numberOfNearestCity == INT_MAX)
         {
+            iterator++;
             continue;
         }
 
@@ -122,17 +121,34 @@ int main()
         }
 
         states[indexOfCurrentCapital][indexOfInsert] = numberOfNearestCity;
-        isCityUsed[numberOfNearestCity] = true;
+        isCityFree[numberOfNearestCity] = true;
 
         numberOfUnusedCities--;
         iterator++;
     }
 
+    printf("On the left is the number of the capital of the state, on the right, through a space,\n");
+    printf("the numbers of the city related to this state:\n");
+    for (int i = 0; i < numberOfCapitals; i++)
+    {
+        printf("%d - ", states[i][0]);
+        int indexOfCurrentCity = 1;
+        while (states[i][indexOfCurrentCity] != 0)
+        {
+            printf("%d ", states[i][indexOfCurrentCity]);
+            indexOfCurrentCity++;
+        }
 
+        if (indexOfCurrentCity == 1)
+        {
+            printf("there are no other cities");
+        }
 
+        printf("\n");
+    }
 
     deleteMatrix(distanceBetweenCities, numberOfCities + 1);
-    free(isCityUsed);
+    free(isCityFree);
     deleteMatrix(states, numberOfCapitals);
     if (input != NULL)
     {
