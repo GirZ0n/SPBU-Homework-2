@@ -32,18 +32,18 @@ int getNumberOfNearestCity(int indexOfCurrentCapital, int** states, int** distan
     int minimumDistance = INT_MAX;
     int numberOfTheNearestCity = INT_MAX;
     int iterator = 0;
-    int currentCity = states[indexOfCurrentCapital][iterator];
-    while (iterator < numberOfCities - numberOfCapitals && currentCity != 0)
+    int currentCityInState = states[indexOfCurrentCapital][iterator];
+    while (iterator < numberOfCities - numberOfCapitals && currentCityInState != 0)
     {
-        currentCity = states[indexOfCurrentCapital][iterator];
-        for (int i = 1; i < numberOfCities + 1; i++)
+        currentCityInState = states[indexOfCurrentCapital][iterator];
+        for (int currentCity = 1; currentCity < numberOfCities + 1; currentCity++)
         {
-            if (!isCityFree[i])
+            if (!isCityFree[currentCity])
             {
-                if (distanceBetweenCities[currentCity][i] < minimumDistance)
+                if (distanceBetweenCities[currentCityInState][currentCity] < minimumDistance)
                 {
-                    minimumDistance = distanceBetweenCities[currentCity][i];
-                    numberOfTheNearestCity = i;
+                    minimumDistance = distanceBetweenCities[currentCityInState][currentCity];
+                    numberOfTheNearestCity = currentCity;
                 }
             }
         }
