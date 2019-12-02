@@ -45,6 +45,7 @@ void getSize(int* size)
         printf("Enter the correct size of array: ");
         isCorrect = scanf("%d", size);
     }
+    cleanStdin();
 }
 
 bool checkArrayElement(int arrayElement, bool isCorrect)
@@ -67,8 +68,8 @@ void getArray(int size, int* array)
         if (checkArrayElement(array[i], isCorrect) == false)
         {
             printf("Re-enter the array: ");
-            i = -1;
             cleanStdin();
+            i = -1;
             continue;
         }
     }
