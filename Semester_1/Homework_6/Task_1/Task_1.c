@@ -96,11 +96,33 @@ void printBinaryForm(bool* binaryForm, int size)
     printf("\n");
 }
 
+void cleanStdin()
+{
+    int c;
+    do
+    {
+        c = getchar();
+    }
+    while (c != EOF && c != '\n');
+}
+
+void getInputNumber(double* inputNumber)
+{
+    bool isCorrect = scanf("%lf", inputNumber);
+    while (isCorrect == false)
+    {
+        cleanStdin();
+        printf("Input Error. Enter the correct number: ");
+        isCorrect = scanf("%lf", inputNumber);
+    }
+    cleanStdin();
+}
+
 int main()
 {
     Number inputNumber;
     printf("Enter the number: ");
-    scanf("%lf", &inputNumber.value);
+    getInputNumber(&inputNumber.value);
 
     bool* binaryFormOfNumber = getBinaryFormOfNumber(inputNumber.binaryForm);
     double mantissa = getMantissa(binaryFormOfNumber) + 1;
