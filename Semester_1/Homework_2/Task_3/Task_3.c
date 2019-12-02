@@ -128,12 +128,6 @@ int getNumberOfDigitsInNumber(int number)
     return numberOfDigits;
 }
 
-bool getInputNumber(int* inputNumber)
-{
-    bool isCorrect = scanf("%d", inputNumber);
-    return isCorrect && inputNumber >= 0 && getNumberOfDigitsInNumber(*inputNumber) == 4;
-}
-
 void cleanStdin()
 {
     int c;
@@ -142,6 +136,41 @@ void cleanStdin()
         c = getchar();
     }
     while (c != EOF && c != '\n');
+}
+
+bool checkInputNumber(int inputNumber, bool isCorrect)
+{
+    if (!isCorrect)
+    {
+        printf("Input Error. ");
+        return false;
+    }
+
+    if (inputNumber < 0)
+    {
+        printf("Need a number >= 0. ");
+        return false;
+    }
+
+    if (getNumberOfDigitsInNumber(inputNumber) != 4)
+    {
+        printf("Need a four-digit number. ");
+        return false;
+    }
+
+    return true;
+}
+
+void getInputNumber(int* inputNumber)
+{
+    bool isCorrect = scanf("%d", inputNumber);;
+    while (checkInputNumber(*inputNumber, isCorrect) == false)
+    {
+        cleanStdin();
+        printf("Enter the correct number: ");
+        isCorrect = scanf("%d", inputNumber);
+    }
+    cleanStdin();
 }
 
 int main()
@@ -154,12 +183,7 @@ int main()
     while (true)
     {
         printf("\nEnter the estimated number: ");
-        if (getInputNumber(&inputNumber) == false)
-        {
-            printf("Input Error. Enter the correct number.\n");
-            cleanStdin();
-            continue;
-        }
+        getInputNumber(&inputNumber);
 
         if (inputNumber == randomNumber)
         {
