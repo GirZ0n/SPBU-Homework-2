@@ -48,26 +48,15 @@ void getSize(int* size)
     cleanStdin();
 }
 
-bool checkArrayElement(int arrayElement, bool isCorrect)
-{
-    if (!isCorrect)
-    {
-        printf("Input Error. ");
-        return false;
-    }
-
-    return true;
-}
-
 void getArray(int size, int* array)
 {
     bool isCorrect = true;
     for (int i = 0; i < size; i++)
     {
         isCorrect = scanf("%d", &array[i]);
-        if (checkArrayElement(array[i], isCorrect) == false)
+        if (isCorrect == false)
         {
-            printf("Re-enter the array: ");
+            printf("Input Error. Re-enter the array: ");
             cleanStdin();
             i = -1;
             continue;
