@@ -19,7 +19,7 @@ void cleanStdin()
     while (c != EOF && c != '\n');
 }
 
-bool checkNumber(int number, bool isCorrect)
+bool checkSize(int size, bool isCorrect)
 {
     if (!isCorrect)
     {
@@ -27,9 +27,9 @@ bool checkNumber(int number, bool isCorrect)
         return false;
     }
 
-    if (number < 0)
+    if (size < 1)
     {
-        printf("Need a positive number. ");
+        printf("Need a number >= 1. ");
         return false;
     }
 
@@ -39,7 +39,7 @@ bool checkNumber(int number, bool isCorrect)
 void getSize(int* size)
 {
     bool isCorrect = scanf("%d", size);
-    if (checkNumber(*size, isCorrect) == false)
+    if (checkSize(*size, isCorrect) == false)
     {
         do
         {
@@ -47,22 +47,34 @@ void getSize(int* size)
             printf("Enter the correct number: ");
             isCorrect = scanf("%d", size);
         }
-        while (checkNumber(*size, isCorrect) == false);
+        while (checkSize(*size, isCorrect) == false);
     }
 }
 
-void getArrayElement(int* arrayElement)
+bool checkArrayElement(int arrayElement, bool isCorrect)
 {
-    bool isCorrect = scanf("%d", arrayElement);
-    if (checkNumber(*arrayElement, isCorrect) == false)
+    if (!isCorrect)
     {
-        do
+        printf("Input Error. ");
+        return false;
+    }
+
+    return true;
+}
+
+void getArray(int size, int* array)
+{
+    bool isCorrect = true;
+    for (int i = 0; i < size; i++)
+    {
+        isCorrect = scanf("%d", &array[i]);
+        if (checkArrayElement(array[i], isCorrect) == false)
         {
+            printf("Re-enter the array: ");
+            i = -1;
             cleanStdin();
-            printf("Enter the correct number: ");
-            isCorrect = scanf("%d", arrayElement);
+            continue;
         }
-        while (checkNumber(*arrayElement, isCorrect) == false);
     }
 }
 
@@ -78,10 +90,7 @@ int main()
         arrayOfNumbers[i] = 0;
     }
     printf("Enter the array: ");
-    for (int i = 0; i < size; i++)
-    {
-        getArrayElement(&arrayOfNumbers[i]);
-    }
+    getArray(size, arrayOfNumbers);
 
     int i = 0;
     int j = size - 1;
