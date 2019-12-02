@@ -39,15 +39,11 @@ bool checkSize(int size, bool isCorrect)
 void getSize(int* size)
 {
     bool isCorrect = scanf("%d", size);
-    if (checkSize(*size, isCorrect) == false)
+    while (checkSize(*size, isCorrect) == false)
     {
-        do
-        {
-            cleanStdin();
-            printf("Enter the correct number: ");
-            isCorrect = scanf("%d", size);
-        }
-        while (checkSize(*size, isCorrect) == false);
+        cleanStdin();
+        printf("Enter the correct size of array: ");
+        isCorrect = scanf("%d", size);
     }
 }
 
