@@ -117,6 +117,33 @@ int getRandomNumber()
     return randomNumber;
 }
 
+int getNumberOfDigitsInNumber(int number)
+{
+    int numberOfDigits = 0;
+    while (number > 0)
+    {
+        number /= 10;
+        numberOfDigits++;
+    }
+    return numberOfDigits;
+}
+
+bool getInputNumber(int* inputNumber)
+{
+    bool isCorrect = scanf("%d", inputNumber);
+    return isCorrect && inputNumber >= 0 && getNumberOfDigitsInNumber(*inputNumber) == 4;
+}
+
+void cleanStdin()
+{
+    int c;
+    do
+    {
+        c = getchar();
+    }
+    while (c != EOF && c != '\n');
+}
+
 int main()
 {
     printf("I made up a four-digit number. Try to guess it ;) \n");
@@ -126,8 +153,13 @@ int main()
     int randomNumber = getRandomNumber();
     while (true)
     {
-        printf("Enter the estimated number:");
-        scanf("%d", &inputNumber);
+        printf("\nEnter the estimated number: ");
+        if (getInputNumber(&inputNumber) == false)
+        {
+            printf("Input Error. Enter the correct number.\n");
+            cleanStdin();
+            continue;
+        }
 
         if (inputNumber == randomNumber)
         {
