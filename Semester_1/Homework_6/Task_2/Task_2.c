@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 const int sizeOfInt = 4 * 8;
 
@@ -91,15 +92,37 @@ int getNumberFromBinaryForm(const int* binaryForm)
     return number;
 }
 
+void cleanStdin()
+{
+    int c;
+    do
+    {
+        c = getchar();
+    }
+    while (c != EOF && c != '\n');
+}
+
+void getNumber(int* number)
+{
+    bool isCorrect = scanf("%d", number);
+    while (isCorrect == false)
+    {
+        cleanStdin();
+        printf("Input Error. Enter the correct number: ");
+        isCorrect = scanf("%d", number);
+    }
+    cleanStdin();
+}
+
 int main()
 {
     int numberA = 0;
     printf("Enter the number #1: ");
-    scanf("%d", &numberA);
+    getNumber(&numberA);
 
     int numberB = 0;
     printf("Enter the number #2: ");
-    scanf("%d", &numberB);
+    getNumber(&numberB);
 
     int* binaryFormOfNumberA = getBinaryForm(numberA);
     int* binaryFormOfNumberB = getBinaryForm(numberB);
