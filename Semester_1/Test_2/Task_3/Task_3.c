@@ -11,54 +11,32 @@ struct Pair
     int loyalty;
 };
 
-void swap(struct Pair* left, struct Pair* right)
-{
-    struct Pair temp = *left;
-    *left = *right;
-    *right = temp;
-}
+typedef struct Pair Pair;
 
-void printArray(int size, struct Pair* array)
+void deleteArray(int size, Pair* array)
 {
     for (int i = 0; i < size; i++)
     {
-        printf("%s %d\n", array[i].surname, array[i].loyalty);
+        free(array[i].surname);
     }
+    free(array);
 }
 
-void sortByLoyalty(int size, struct Pair* array)
+int byLoyalty(const void* left, const void* right)
 {
-    for (int i = 0 ; i < size - 1; i++)
-    {
-        for (int j = 0 ; j < size - i - 1 ; j++)
-        {
-            if(array[j].loyalty > array[j + 1].loyalty)
-            {
-                swap(&array[j], &array[j + 1]);
-            }
-        }
-    }
+    return ((Pair*)left)->loyalty - ((Pair*)right)->loyalty;
 }
 
-void sortBySurname(int size, struct Pair* array)
+int bySurname(const void* left, const void* right)
 {
-    for (int i = 0 ; i < size - 1; i++)
-    {
-        for (int j = 0 ; j < size - i - 1 ; j++)
-        {
-            if(array[j].surname < array[j + 1].surname)
-            {
-                swap(&array[j], &array[j + 1]);
-            }
-        }
-    }
+    return strcmp(((Pair*)left)->surname, ((Pair*)right)->surname);
 }
 
 int main()
 {
     int sizeOfList = 0;
     int capacityOfList = 2;
-    struct Pair* list = malloc(capacityOfList * sizeof(struct Pair));
+    Pair* list = malloc(capacityOfList * sizeof(Pair));
     FILE* input = fopen("input.txt", "r");
     char* inputString = calloc(maxSize, sizeof(char));
     char* surname = calloc(maxSize, sizeof(char));
@@ -71,7 +49,7 @@ int main()
         if (sizeOfList == capacityOfList)
         {
             capacityOfList *= 2;
-            list = realloc(list, capacityOfList * sizeof(struct Pair));
+            list = realloc(list, capacityOfList * sizeof(Pair));
         }
 
         sscanf(inputString,"%s %d", surname, &loyalty);
@@ -82,7 +60,7 @@ int main()
     }
 
     int numberOfDeadPeople = 0;
-    printf("Enter the number of people you want to shoot: ");
+    printf("Enter the number of people you want to kill: ");
     scanf("%d", &numberOfDeadPeople);
 
     int numberOfPeopleInSiberia = 0;
@@ -91,40 +69,34 @@ int main()
 
     if (numberOfDeadPeople + numberOfPeopleInSiberia > sizeOfList)
     {
-        printf("You want to kill too many people");
+        printf("You want to kill too many people. Think about your behavior!");
         return 0;
     }
 
-    printf("Starred list:\n");
-    sortByLoyalty(sizeOfList, list);
+    printf("Expected list:\n");
+    qsort(list, sizeOfList, sizeof(Pair), byLoyalty);
     for (int i = 0; i < numberOfDeadPeople; i++)
     {
         printf("%s - Kill\n", list[i].surname);
     }
 
-    struct Pair* others = malloc((sizeOfList - numberOfDeadPeople) * sizeof(struct Pair));
-    for (int i = 0; i < sizeOfList - numberOfDeadPeople; i++)
+    qsort(list + numberOfDeadPeople, sizeOfList - numberOfDeadPeople, sizeof(Pair), bySurname);
+    for (int i = numberOfDeadPeople; i < numberOfDeadPeople + numberOfPeopleInSiberia; i++)
     {
-        others[i] = list[numberOfDeadPeople + i];
+        printf("%s - Siberia\n", list[i].surname);
     }
 
-    sortBySurname(sizeOfList - numberOfDeadPeople, others);
-    for (int i = 0; i < numberOfPeopleInSiberia; i++)
+    for (int i = numberOfDeadPeople + numberOfPeopleInSiberia; i < sizeOfList; i++)
     {
-        printf("%s - Siberia\n", others[i].surname);
+        printf("%s - Do not touch\n", list[i].surname);
     }
 
-    for (int i = numberOfPeopleInSiberia; i < sizeOfList - numberOfDeadPeople; i++)
-    {
-        printf("%s - Do not touch\n", others[i].surname);
-    }
-
-    free(list);
-    free(others);
+    deleteArray(sizeOfList, list);
     free(inputString);
     free(surname);
     if (input != NULL)
     {
         fclose(input);
     }
+    return 0;
 }
