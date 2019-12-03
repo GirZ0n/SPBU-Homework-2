@@ -121,4 +121,10 @@ int main()
 
     free(list);
     free(others);
+    free(inputString);
+    free(surname);
+    if (input != NULL)
+    {
+        fclose(input);
+    }
 }
