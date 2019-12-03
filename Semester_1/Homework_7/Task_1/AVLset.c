@@ -348,3 +348,25 @@ bool removeElement(int value, Set* set)
     }
     return false;
 }
+
+void deleteSubtree(Node* root)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+
+    deleteSubtree(root->leftChild);
+    deleteSubtree(root->rightChild);
+    free(root);
+}
+
+void deleteSet(Set* set)
+{
+    if (set == NULL)
+    {
+        return;
+    }
+
+    deleteSubtree(set->root);
+}
