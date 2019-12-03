@@ -2,6 +2,28 @@
 #include <stdlib.h>
 #include "AVLset.h"
 
+void cleanStdin()
+{
+    int c;
+    do
+    {
+        c = getchar();
+    }
+    while (c != EOF && c != '\n');
+}
+
+void getNumber(int* number)
+{
+    bool isCorrect = scanf("%d", number);
+    while (isCorrect == false)
+    {
+        cleanStdin();
+        printf("Input Error. Enter the correct number: ");
+        isCorrect = scanf("%d", number);
+    }
+    cleanStdin();
+}
+
 int main()
 {
     Set* set = createSet();
@@ -20,33 +42,33 @@ int main()
     {
         printf("\n");
         printf("Your action: ");
-        scanf("%d", &action);
+        getNumber(&action);
         switch (action)
         {
             case 0:
             {
                 printf("Have a nice day! Bye :)");
-                free(set);
+                deleteSet(set);
                 return 0;
             }
             case 1:
             {
                 printf("Enter value: ");
-                scanf("%d", &value);
+                getNumber(&value);
                 addElement(value, set);
                 break;
             }
             case 2:
             {
                 printf("Enter value: ");
-                scanf("%d", &value);
+                getNumber(&value);
                 removeElement(value, set);
                 break;
             }
             case 3:
             {
                 printf("Enter value: ");
-                scanf("%d", &value);
+                getNumber(&value);
                 if (isContained(value, set))
                 {
                     printf("Value is in the set.\n");
