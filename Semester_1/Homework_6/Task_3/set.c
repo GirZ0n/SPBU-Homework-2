@@ -313,3 +313,25 @@ bool removeElement(int value, struct Set* set)
 
     return true;
 }
+
+void deleteSubtree(SetElement* root)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+
+    deleteSubtree(root->leftChild);
+    deleteSubtree(root->rightChild);
+    free(root);
+}
+
+void deleteSet(Set* set)
+{
+    if (set == NULL)
+    {
+        return;
+    }
+
+    deleteSubtree(set->root);
+}

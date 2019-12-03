@@ -7,6 +7,7 @@ typedef struct Set Set;
 struct Set;
 
 Set* createSet();
+void deleteSet(Set* set);
 bool isContained(int value, Set* set);
 void addElement(int value, Set* set);
 bool removeElement(int value, Set* set);
