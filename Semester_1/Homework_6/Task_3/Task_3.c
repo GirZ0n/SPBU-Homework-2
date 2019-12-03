@@ -48,7 +48,7 @@ int main()
             case 0:
             {
                 printf("Have a nice day! Bye :)");
-                free(set);
+                deleteSet(set);
                 return 0;
             }
             case 1:
