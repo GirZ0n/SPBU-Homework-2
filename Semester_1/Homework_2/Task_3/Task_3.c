@@ -52,6 +52,8 @@ int cowsCount(int randomNumber, int inputNumber)
         }
     }
 
+    free(inputNumberDigits);
+    free(randomNumberDigits);
     return count;
 }
 
@@ -79,6 +81,9 @@ int bullsCount(int randomNumber, int inputNumber)
             count++;
         }
     }
+
+    free(inputNumberDigits);
+    free(randomNumberDigits);
     return count;
 }
 
@@ -138,32 +143,39 @@ void cleanStdin()
     while (c != EOF && c != '\n');
 }
 
-bool checkInputNumber(int inputNumber, bool isCorrect)
+bool checkInputNumber(int inputNumber, int isCorrect)
 {
-    if (!isCorrect)
+    if (isCorrect != 1 || inputNumber < 0 || getNumberOfDigitsInNumber(inputNumber) != 4)
     {
-        printf("Input Error. ");
         return false;
     }
 
-    if (inputNumber < 0)
+    int* inputNumberDigits = calloc(numberLength, sizeof(int));
+    numberToDigits(inputNumberDigits, inputNumber);
+    int* numberOfDigits = calloc(10, sizeof(int));
+    for (int i = 0; i < numberLength; i++)
     {
-        printf("Need a number >= 0. ");
-        return false;
+        numberOfDigits[inputNumberDigits[i]]++;
     }
 
-    if (getNumberOfDigitsInNumber(inputNumber) != 4)
+    bool areDifferentDigits = true;
+    for (int i = 0; i < 10; i++)
     {
-        printf("Need a four-digit number. ");
-        return false;
+        if (numberOfDigits[i] > 1)
+        {
+            areDifferentDigits = false;
+            break;
+        }
     }
 
-    return true;
+    free(numberOfDigits);
+    free(inputNumberDigits);
+    return areDifferentDigits;
 }
 
 void getInputNumber(int* inputNumber)
 {
-    bool isCorrect = scanf("%d", inputNumber);;
+    int isCorrect = scanf("%d", inputNumber);;
     while (checkInputNumber(*inputNumber, isCorrect) == false)
     {
         cleanStdin();
@@ -175,7 +187,8 @@ void getInputNumber(int* inputNumber)
 
 int main()
 {
-    printf("I made up a four-digit number. Try to guess it ;) \n");
+    printf("I made up a four-digit number. Try to guess it ;)\n\n");
+    printf("Attention! You must enter a positive four-digit number, which consists of different digits.\n");
 
     int moves = 1;
     int inputNumber = 0;
