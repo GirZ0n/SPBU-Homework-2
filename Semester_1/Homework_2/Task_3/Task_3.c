@@ -165,7 +165,7 @@ bool checkInputNumber(int inputNumber, int isCorrect)
 
 void getInputNumber(int* inputNumber)
 {
-    int isCorrect = scanf("%d", inputNumber);;
+    int isCorrect = scanf("%d", inputNumber);
     while (checkInputNumber(*inputNumber, isCorrect) == false)
     {
         cleanStdin();
