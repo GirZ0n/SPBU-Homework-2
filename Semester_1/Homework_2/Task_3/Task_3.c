@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <math.h>
 
 const int numberLength = 4;
 
@@ -87,17 +88,6 @@ int bullsCount(int randomNumber, int inputNumber)
     return count;
 }
 
-int integerPow(int base, int exponent)
-{
-    int result = 1;
-    for (int i = 0; i < exponent; i++)
-    {
-        result *= base;
-    }
-
-    return result;
-}
-
 int getRandomNumber()
 {
     srand(time(NULL));
@@ -113,7 +103,7 @@ int getRandomNumber()
         randomDigit = rand() % 10;
         if (isUsed[randomDigit] == false)
         {
-            randomNumber += randomDigit * integerPow(10, needToGenerate - 1);
+            randomNumber += randomDigit * (int) pow(10, needToGenerate - 1);
             isUsed[randomDigit] = true;
             needToGenerate--;
         }
