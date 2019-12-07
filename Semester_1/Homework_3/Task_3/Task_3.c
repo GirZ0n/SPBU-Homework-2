@@ -19,30 +19,22 @@ void cleanStdin()
     while (c != EOF && c != '\n');
 }
 
-bool checkSize(int size, bool isCorrect)
+bool checkSize(int size, int isCorrect)
 {
-    if (!isCorrect)
+    if (isCorrect != 1 || size < 1)
     {
-        printf("Input Error. ");
         return false;
     }
-
-    if (size < 1)
-    {
-        printf("Need a number >= 1. ");
-        return false;
-    }
-
     return true;
 }
 
 void getSize(int* size)
 {
-    bool isCorrect = scanf("%d", size);
+    int isCorrect = scanf("%d", size);
     while (checkSize(*size, isCorrect) == false)
     {
         cleanStdin();
-        printf("Enter the correct size of array: ");
+        printf("Enter the correct size of array:\n");
         isCorrect = scanf("%d", size);
     }
     cleanStdin();
@@ -50,13 +42,12 @@ void getSize(int* size)
 
 void getArray(int size, int* array)
 {
-    bool isCorrect = true;
     for (int i = 0; i < size; i++)
     {
-        isCorrect = scanf("%d", &array[i]);
-        if (isCorrect == false)
+        int isCorrect = scanf("%d", &array[i]);
+        if (isCorrect != 1)
         {
-            printf("Input Error. Re-enter the array: ");
+            printf("Input Error. Re-enter the array:\n");
             cleanStdin();
             i = -1;
             continue;
@@ -67,15 +58,11 @@ void getArray(int size, int* array)
 int main()
 {
     int size = 0;
-    printf("Enter the size of array: ");
+    printf("Enter the size of array (number > 0):\n");
     getSize(&size);
 
-    int *arrayOfNumbers = malloc(sizeof(int) * size);
-    for (int i = 0; i < size; i++)
-    {
-        arrayOfNumbers[i] = 0;
-    }
-    printf("Enter the array: ");
+    int *arrayOfNumbers = calloc(sizeof(int), size);
+    printf("Enter the array (the element must be a number):\n");
     getArray(size, arrayOfNumbers);
 
     int i = 0;
@@ -98,7 +85,7 @@ int main()
         }
     }
 
-    printf("Desired array: ");
+    printf("Desired array:\n");
     for (int k = 0; k < size; k++)
     {
         printf("%d ", arrayOfNumbers[k]);
