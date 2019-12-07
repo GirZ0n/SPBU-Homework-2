@@ -43,7 +43,7 @@ char* getNumberAsString(char* input, int* indexOfStart)
     number[0] = input[*indexOfStart];
     int numberLength = 1;
 
-    int inputLength = strlen(input);
+    int inputLength = (int) strlen(input);
     while (*indexOfStart + 1 < inputLength && isDigit(input[*indexOfStart + 1]))
     {
         if (numberLength == numberCapacity)
@@ -70,7 +70,7 @@ double getNumberAsDouble(char* input, int* indexOfCurrentPosition)
 
     int indexOfStart = *indexOfCurrentPosition;
 
-    int inputLength = strlen(input);
+    int inputLength = (int) strlen(input);
     while (*indexOfCurrentPosition + 1 < inputLength && isDigit(input[*indexOfCurrentPosition + 1]))
     {
         number = number * 10 + (input[*indexOfCurrentPosition + 1] - '0');
@@ -102,7 +102,8 @@ bool isOperator(char* input, int indexOfCheck)
         return false;
     }
 
-    return input[indexOfCheck] == '+' || input[indexOfCheck] == '-' || input[indexOfCheck] == '*' || input[indexOfCheck] == '/';
+    return input[indexOfCheck] == '+' || input[indexOfCheck] == '-' ||
+           input[indexOfCheck] == '*' || input[indexOfCheck] == '/';
 }
 
 double getResultOfOperation(double valueA, double valueB, char operator)
@@ -142,7 +143,7 @@ char* convertInfixToPostfix (char* infixNotation, bool* isError)
     int postfixCapacity = 2;
     char* postfixNotation = calloc(postfixCapacity, sizeof(char));
 
-    int inputStringLength = strlen(infixNotation);
+    int inputStringLength = (int) strlen(infixNotation);
     for (int i = 0; i < inputStringLength; i++)
     {
         if (isOperator(infixNotation, i))
@@ -204,7 +205,8 @@ char* convertInfixToPostfix (char* infixNotation, bool* isError)
 
             strcat(postfixNotation, number);
             strcat(postfixNotation, " ");
-            postfixLength += strlen(number) + 1;
+            postfixLength += (int) strlen(number) + 1;
+            free(number);
         }
         else if (infixNotation[i] == ' ')
         {
@@ -233,18 +235,21 @@ char* convertInfixToPostfix (char* infixNotation, bool* isError)
             postfixNotation = realloc(postfixNotation, postfixCapacity);
         }
 
-        strcat(postfixNotation, charToString(popChar(stackOfChar)));
+        char* operator = charToString(popChar(stackOfChar));
+        strcat(postfixNotation, operator);
         strcat(postfixNotation, " ");
         postfixLength += 2;
+        free(operator);
     }
 
+    deleteStackOfChar(stackOfChar);
     return postfixNotation;
 }
 
 double calculatePostfixNotation(char* postfixNotation)
 {
     struct StackOfDouble* stackOfDouble = createStackOfDouble();
-    int inputStringLength = strlen(postfixNotation);
+    int inputStringLength = (int) strlen(postfixNotation);
     for (int i = 0; i < inputStringLength; i++)
     {
         if (isOperator(postfixNotation, i))
@@ -264,7 +269,9 @@ double calculatePostfixNotation(char* postfixNotation)
         }
     }
 
-    return popDouble(stackOfDouble);
+    double result = popDouble(stackOfDouble);
+    deleteStackOfDouble(stackOfDouble);
+    return result;
 }
 
 char* getStringFromConsole()
