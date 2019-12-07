@@ -369,4 +369,5 @@ void deleteSet(Set* set)
     }
 
     deleteSubtree(set->root);
+    free(set);
 }
