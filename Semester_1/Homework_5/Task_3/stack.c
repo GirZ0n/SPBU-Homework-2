@@ -86,6 +86,21 @@ char stackOfCharTop(StackOfChar* stack)
     return stack->first->value;
 }
 
+void deleteStackOfChar(StackOfChar* stack)
+{
+    if (stack == NULL)
+    {
+        return;
+    }
+
+    while (!stackOfCharIsEmpty(stack))
+    {
+        popChar(stack);
+    }
+
+    free(stack);
+}
+
 
 
 typedef struct StackOfDoubleElement StackOfDoubleElement;
@@ -160,4 +175,19 @@ double popDouble(StackOfDouble* stack)
 
     free(popped);
     return value;
+}
+
+void deleteStackOfDouble(StackOfDouble* stack)
+{
+    if (stack == NULL)
+    {
+        return;
+    }
+
+    while (!stackOfDoubleIsEmpty(stack))
+    {
+        popDouble(stack);
+    }
+
+    free(stack);
 }

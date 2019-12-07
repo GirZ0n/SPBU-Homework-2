@@ -9,6 +9,7 @@ typedef struct StackOfDouble StackOfDouble;
 struct StackOfChar;
 
 StackOfChar* createStackOfChar();
+void deleteStackOfChar(StackOfChar* stack);
 bool stackOfCharIsEmpty(StackOfChar* stack);
 bool pushChar(char value, StackOfChar* stack);
 char popChar(StackOfChar* stack);
@@ -20,6 +21,7 @@ char stackOfCharTop(StackOfChar* stack);
 struct StackOfDouble;
 
 StackOfDouble* createStackOfDouble();
+void deleteStackOfDouble(StackOfDouble* stack);
 bool stackOfDoubleIsEmpty(StackOfDouble* stack);
 bool pushDouble(double value, StackOfDouble* stack);
 double popDouble(StackOfDouble* stack);
