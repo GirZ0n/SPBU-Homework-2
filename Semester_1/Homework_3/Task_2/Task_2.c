@@ -21,11 +21,12 @@ int main()
     char inputChar = ' ';
     while (feof(input) == false)
     {
-        inputChar = fgetc(input);
+        inputChar = (char) fgetc(input);
         if (inputChar == '\n')
         {
             isEmptyString = true;
         }
+
         if (isEmptyString)
         {
             if (!isSpecials(inputChar) && inputChar != EOF)
