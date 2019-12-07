@@ -14,11 +14,11 @@ void cleanStdin()
 
 void getNumber(int* number)
 {
-    bool isCorrect = scanf("%d", number);
-    while (isCorrect == false)
+    int isCorrect = scanf("%d", number);
+    while (isCorrect != 1)
     {
         cleanStdin();
-        printf("Input Error. Enter the correct number: ");
+        printf("Input Error. Enter the correct number:\n");
         isCorrect = scanf("%d", number);
     }
     cleanStdin();
@@ -41,7 +41,7 @@ int main()
     while (true)
     {
         printf("\n");
-        printf("Your action: ");
+        printf("Your action:\n");
         getNumber(&action);
         switch (action)
         {
@@ -53,21 +53,21 @@ int main()
             }
             case 1:
             {
-                printf("Enter value: ");
+                printf("Enter value (number):\n");
                 getNumber(&value);
                 addElement(value, set);
                 break;
             }
             case 2:
             {
-                printf("Enter value: ");
+                printf("Enter value (number):\n");
                 getNumber(&value);
                 removeElement(value, set);
                 break;
             }
             case 3:
             {
-                printf("Enter value: ");
+                printf("Enter value (number):\n");
                 getNumber(&value);
                 if (isContained(value, set))
                 {
@@ -81,18 +81,21 @@ int main()
             }
             case 4:
             {
+                printf("Set in ascending order:\n");
                 printInAscendingOrder(set);
                 printf("\n");
                 break;
             }
             case 5:
             {
+                printf("Set in descending order:\n");
                 printInDescendingOrder(set);
                 printf("\n");
                 break;
             }
             case 6:
             {
+                printf("Set:\n");
                 printSet(set);
                 printf("\n");
                 break;
