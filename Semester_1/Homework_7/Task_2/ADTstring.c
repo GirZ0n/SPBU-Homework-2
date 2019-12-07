@@ -209,6 +209,12 @@ struct String* getStringFromFile(FILE* input)
 {
     int capacity = 2;
     String* newString = createString(capacity);
+
+    if (input == NULL)
+    {
+        return newString;
+    }
+
     char inputChar = (char) fgetc(input);
     while (feof(input) == false && inputChar != '\n')
     {
