@@ -108,11 +108,11 @@ void cleanStdin()
 
 void getInputNumber(double* inputNumber)
 {
-    bool isCorrect = scanf("%lf", inputNumber);
-    while (isCorrect == false)
+    int isCorrect = scanf("%lf", inputNumber);
+    while (isCorrect != 1)
     {
         cleanStdin();
-        printf("Input Error. Enter the correct number: ");
+        printf("Input Error. Enter the correct number:\n");
         isCorrect = scanf("%lf", inputNumber);
     }
     cleanStdin();
@@ -121,7 +121,7 @@ void getInputNumber(double* inputNumber)
 int main()
 {
     Number inputNumber;
-    printf("Enter the number: ");
+    printf("Enter the number:\n");
     getInputNumber(&inputNumber.value);
 
     bool* binaryFormOfNumber = getBinaryFormOfNumber(inputNumber.binaryForm);
