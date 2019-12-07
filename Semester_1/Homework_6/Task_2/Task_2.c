@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
@@ -55,40 +56,26 @@ int* getSumInBinaryForm(const int* binaryFormOfNumberA, const int* binaryFormOfN
     return sumInBinaryForm;
 }
 
-int* getPowersOfTwo(int maxPower)
-{
-    int* powersOfTwo = createArray(maxPower + 1);
-    powersOfTwo[0] = 1;
-    for (int i = 1; i < maxPower + 1; i++)
-    {
-        powersOfTwo[i] = powersOfTwo[i - 1] * 2;
-    }
-
-    return powersOfTwo;
-}
-
 int getNumberFromBinaryForm(const int* binaryForm)
 {
-    int* powersOfTwo = getPowersOfTwo(sizeOfInt - 1);
     int number = 0;
     if (binaryForm[sizeOfInt - 1] == 0)
     {
         for (int i = sizeOfInt - 1; i >= 0; i--)
         {
-            number += binaryForm[i] * powersOfTwo[i];
+            number += binaryForm[i] * (int) pow(2, i);
         }
     }
     else
     {
         for (int i = sizeOfInt - 1; i >= 0; i--)
         {
-            number += !binaryForm[i] * powersOfTwo[i];
+            number += !binaryForm[i] * (int) pow(2, i);
         }
         number++;
         number *= -1;
     }
 
-    free(powersOfTwo);
     return number;
 }
 
@@ -104,11 +91,11 @@ void cleanStdin()
 
 void getNumber(int* number)
 {
-    bool isCorrect = scanf("%d", number);
-    while (isCorrect == false)
+    int isCorrect = scanf("%d", number);
+    while (isCorrect != 1)
     {
         cleanStdin();
-        printf("Input Error. Enter the correct number: ");
+        printf("Input Error. Enter the correct number:\n");
         isCorrect = scanf("%d", number);
     }
     cleanStdin();
@@ -117,11 +104,11 @@ void getNumber(int* number)
 int main()
 {
     int numberA = 0;
-    printf("Enter the number #1: ");
+    printf("Enter the number #1:\n");
     getNumber(&numberA);
 
     int numberB = 0;
-    printf("Enter the number #2: ");
+    printf("Enter the number #2:\n");
     getNumber(&numberB);
 
     int* binaryFormOfNumberA = getBinaryForm(numberA);
