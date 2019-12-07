@@ -169,7 +169,7 @@ void getInputNumber(int* inputNumber)
     while (checkInputNumber(*inputNumber, isCorrect) == false)
     {
         cleanStdin();
-        printf("Enter the correct number: ");
+        printf("Enter the correct number:\n");
         isCorrect = scanf("%d", inputNumber);
     }
     cleanStdin();
@@ -185,7 +185,7 @@ int main()
     int randomNumber = getRandomNumber();
     while (true)
     {
-        printf("\nEnter the estimated number: ");
+        printf("\nEnter the estimated number:\n");
         getInputNumber(&inputNumber);
 
         if (inputNumber == randomNumber)
