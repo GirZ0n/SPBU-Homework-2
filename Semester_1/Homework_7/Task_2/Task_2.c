@@ -49,37 +49,41 @@ void getSubstringTest(String* testString)
     printString(substring);
     printf(" (Length = %d)", getStringLength(substring));
     printf("\n");
+    deleteString(substring);
 
     printf("testString[-1000:3256]: ");
     substring = getSubstring(testString, -1000, 3256);
     printString(substring);
     printf(" (Length = %d)", getStringLength(substring));
     printf("\n");
+    deleteString(substring);
 
     printf("testString[435345:-235436]: ");
     substring = getSubstring(testString, 435345, -235436);
     printString(substring);
     printf(" (Length = %d)", getStringLength(substring));
     printf("\n");
-
     deleteString(substring);
 }
 
 void concatenationTest(String* testString)
 {
     printf("testString + 2nmfke3: ");
-    concatenateStrings(testString, convertStringToStructString("2nmfke3"));
+    String* convertedString = convertStringToStructString("2nmfke3");
+    concatenateStrings(testString, convertedString);
     printString(testString);
     printf(" (After сoncatenation: length = %d)\n", getStringLength(testString));
+    deleteString(convertedString);
 }
 
-void getStringFromConsoleTest(String* testString)
+void getStringFromConsoleTest()
 {
     printf("Enter string: ");
-    testString = getStringFromConsole();
+    String* input = getStringFromConsole();
     printf("Get string from console and print it: ");
-    printString(testString);
-    printf(" (Size = %d)\n", getStringLength(testString));
+    printString(input);
+    printf(" (Size = %d)\n", getStringLength(input));
+    deleteString(input);
 }
 
 void getStringFromFileTest(String* testString, FILE* testFile)
@@ -116,16 +120,17 @@ void test()
     concatenationTest(testString);
     printf("\n");
 
-    getStringFromConsoleTest(testString);
+    getStringFromConsoleTest();
     printf("\n");
 
     FILE* testFile = fopen("testFile.txt", "r");
-    getStringFromFileTest(testString, testFile);
-
-    if (testFile != NULL)
+    if (testFile == NULL)
     {
-        fclose(testFile);
+        printf("Can not open the file");
+        return;
     }
+    getStringFromFileTest(testString, testFile);
+    fclose(testFile);
 
     deleteString(testString);
 }
