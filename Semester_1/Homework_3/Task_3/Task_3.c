@@ -19,9 +19,9 @@ void cleanStdin()
     while (c != EOF && c != '\n');
 }
 
-bool checkSize(int size, int isCorrect)
+bool checkSize(int size, int numberOfVariablesRead)
 {
-    if (isCorrect != 1 || size < 1)
+    if (numberOfVariablesRead != 1 || size < 1)
     {
         return false;
     }
@@ -30,12 +30,12 @@ bool checkSize(int size, int isCorrect)
 
 void getSize(int* size)
 {
-    int isCorrect = scanf("%d", size);
-    while (checkSize(*size, isCorrect) == false)
+    int numberOfVariablesRead = scanf("%d", size);
+    while (checkSize(*size, numberOfVariablesRead) == false)
     {
         cleanStdin();
         printf("Enter the correct size of array:\n");
-        isCorrect = scanf("%d", size);
+        numberOfVariablesRead = scanf("%d", size);
     }
     cleanStdin();
 }
@@ -44,8 +44,8 @@ void getArray(int size, int* array)
 {
     for (int i = 0; i < size; i++)
     {
-        int isCorrect = scanf("%d", &array[i]);
-        if (isCorrect != 1)
+        int numberOfVariablesRead = scanf("%d", &array[i]);
+        if (numberOfVariablesRead != 1)
         {
             printf("Input Error. Re-enter the array:\n");
             cleanStdin();
