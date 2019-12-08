@@ -14,12 +14,12 @@ void cleanStdin()
 
 void getNumber(int* number)
 {
-    int isCorrect = scanf("%d", number);
-    while (isCorrect != 1)
+    int numberOfVariablesRead = scanf("%d", number);
+    while (numberOfVariablesRead != 1)
     {
         cleanStdin();
         printf("Input Error. Enter the correct number:\n");
-        isCorrect = scanf("%d", number);
+        numberOfVariablesRead = scanf("%d", number);
     }
     cleanStdin();
 }
