@@ -133,9 +133,9 @@ void cleanStdin()
     while (c != EOF && c != '\n');
 }
 
-bool checkInputNumber(int inputNumber, int isCorrect)
+bool checkInputNumber(int inputNumber, int numberOfVariablesRead)
 {
-    if (isCorrect != 1 || inputNumber < 0 || getNumberOfDigitsInNumber(inputNumber) != 4)
+    if (numberOfVariablesRead != 1 || inputNumber < 0 || getNumberOfDigitsInNumber(inputNumber) != 4)
     {
         return false;
     }
@@ -165,12 +165,12 @@ bool checkInputNumber(int inputNumber, int isCorrect)
 
 void getInputNumber(int* inputNumber)
 {
-    int isCorrect = scanf("%d", inputNumber);
-    while (checkInputNumber(*inputNumber, isCorrect) == false)
+    int numberOfVariablesRead = scanf("%d", inputNumber);
+    while (checkInputNumber(*inputNumber, numberOfVariablesRead) == false)
     {
         cleanStdin();
         printf("Enter the correct number:\n");
-        isCorrect = scanf("%d", inputNumber);
+        numberOfVariablesRead = scanf("%d", inputNumber);
     }
     cleanStdin();
 }
