@@ -108,12 +108,12 @@ void cleanStdin()
 
 void getInputNumber(double* inputNumber)
 {
-    int isCorrect = scanf("%lf", inputNumber);
-    while (isCorrect != 1)
+    int numberOfVariablesRead = scanf("%lf", inputNumber);
+    while (numberOfVariablesRead != 1)
     {
         cleanStdin();
         printf("Input Error. Enter the correct number:\n");
-        isCorrect = scanf("%lf", inputNumber);
+        numberOfVariablesRead = scanf("%lf", inputNumber);
     }
     cleanStdin();
 }
