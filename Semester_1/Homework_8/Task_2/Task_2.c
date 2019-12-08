@@ -53,13 +53,80 @@ int getNumberOfNearestCity(int indexOfCurrentCapital, int** states, int** distan
     return numberOfTheNearestCity;
 }
 
+bool getNumberOfCities(int* numberOfCities, FILE* input)
+{
+    if (fscanf(input, "%d", numberOfCities) != 1 || *numberOfCities < 1)
+    {
+        return false;
+    }
+
+    return true;
+}
+
+bool getNumberOfRoads(int* numberOfRoads, FILE* input)
+{
+    if (fscanf(input, "%d", numberOfRoads) != 1 || *numberOfRoads < 1)
+    {
+        return false;
+    }
+
+    return true;
+}
+
+bool getCitiesAndDistance(int* cityA, int* cityB, int* distance, int numberOfCities, FILE* input)
+{
+    if (fscanf(input,"%d %d %d", cityA, cityB, distance) == 3 && *cityA > 0 && *cityB > 0 &&
+        *cityA != *cityB && *cityA <= numberOfCities && *cityB <= numberOfCities && *distance > 0)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+bool getNumberOfCapitals(int* numberOfCapitals, int numberOfCities, FILE* input)
+{
+    if (fscanf(input, "%d", numberOfCapitals) != 1 || *numberOfCapitals < 1 ||
+        *numberOfCapitals > numberOfCities)
+    {
+        return false;
+    }
+
+    return true;
+}
+
+bool getCapital(int* capital, int numberOfCities, FILE* input)
+{
+    if (fscanf(input, "%d", capital) != 1 || *capital < 1 || *capital > numberOfCities)
+    {
+        return false;
+    }
+
+    return true;
+}
+
 int main()
 {
     FILE* input = fopen("input.txt", "r");
+    if (input == NULL)
+    {
+        printf("Can't open the file.");
+        return 0;
+    }
 
     int numberOfCities = 0;
+    if (getNumberOfCities(&numberOfCities, input) == false)
+    {
+        printf("Invalid number of cities.");
+        return 0;
+    }
+
     int numberOfRoads = 0;
-    fscanf(input,"%d %d", &numberOfCities, &numberOfRoads);
+    if (getNumberOfRoads(&numberOfRoads, input) == false)
+    {
+        printf("Invalid number of roads.");
+        return 0;
+    }
 
     int** distanceBetweenCities =
             createMatrix(numberOfCities + 1, numberOfCities + 1, INT_MAX);
@@ -68,13 +135,21 @@ int main()
     int length = 0;
     for (int i = 0; i < numberOfRoads; i++)
     {
-        fscanf(input,"%d %d %d", &cityA, &cityB, &length);
+        if (getCitiesAndDistance(&cityA, &cityB, &length, numberOfCities, input) == false)
+        {
+            printf("Invalid line.");
+            return 0;
+        }
         distanceBetweenCities[cityA][cityB] = length;
         distanceBetweenCities[cityB][cityA] = length;
     }
 
     int numberOfCapitals = 0;
-    fscanf(input, "%d", &numberOfCapitals);
+    if (getNumberOfCapitals(&numberOfCapitals, numberOfCities, input) == false)
+    {
+        printf("Invalid number of capitals.");
+        return 0;
+    }
 
     bool* isCityFree = calloc(sizeof(bool), numberOfCities + 1);
     int numberOfUnusedCities = numberOfCities - numberOfCapitals;
@@ -83,7 +158,11 @@ int main()
     int capital = 0;
     for (int i = 0; i < numberOfCapitals; i++)
     {
-        fscanf(input, "%d", &capital);
+        if (getCapital(&capital, numberOfCities, input) == false)
+        {
+            printf("Invalid capital.");
+            return 0;
+        }
         states[i][0] = capital;
         isCityFree[capital] = true;
     }
@@ -139,9 +218,6 @@ int main()
     deleteMatrix(distanceBetweenCities, numberOfCities + 1);
     free(isCityFree);
     deleteMatrix(states, numberOfCapitals);
-    if (input != NULL)
-    {
-        fclose(input);
-    }
+    fclose(input);
     return 0;
 }
