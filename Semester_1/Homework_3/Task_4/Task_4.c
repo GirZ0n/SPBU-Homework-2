@@ -12,9 +12,9 @@ void cleanStdin()
     while (c != EOF && c != '\n');
 }
 
-bool isNatural(int inputNumber, int  isCorrect)
+bool isNatural(int inputNumber, int numberOfVariablesRead)
 {
-    if (isCorrect != 1 || inputNumber < 1)
+    if (numberOfVariablesRead != 1 || inputNumber < 1)
     {
         return false;
     }
@@ -24,36 +24,36 @@ bool isNatural(int inputNumber, int  isCorrect)
 
 void getNumberOfUsers(int* numberOfUsers)
 {
-    int isCorrect = scanf("%d", numberOfUsers);
-    while (isNatural(*numberOfUsers, isCorrect) == false)
+    int numberOfVariablesRead = scanf("%d", numberOfUsers);
+    while (isNatural(*numberOfUsers, numberOfVariablesRead) == false)
     {
         cleanStdin();
         printf("Enter the correct number of users:\n");
-        isCorrect = scanf("%d", numberOfUsers);
+        numberOfVariablesRead = scanf("%d", numberOfUsers);
     }
     cleanStdin();
 }
 
 void getNumberOfActions(int* numberOfActions)
 {
-    int isCorrect = scanf("%d", numberOfActions);
-    while (isNatural(*numberOfActions, isCorrect) == false)
+    int numberOfVariablesRead = scanf("%d", numberOfActions);
+    while (isNatural(*numberOfActions, numberOfVariablesRead) == false)
     {
         cleanStdin();
         printf("Enter the correct number of actions:\n");
-        isCorrect = scanf("%d", numberOfActions);
+        numberOfVariablesRead = scanf("%d", numberOfActions);
     }
     cleanStdin();
 }
 
 void getTimeInterval(int* timePeriod)
 {
-    int isCorrect = scanf("%d", timePeriod);
-    while (isNatural(*timePeriod, isCorrect) == false)
+    int numberOfVariablesRead = scanf("%d", timePeriod);
+    while (isNatural(*timePeriod, numberOfVariablesRead) == false)
     {
         cleanStdin();
         printf("Enter the correct time interval:\n");
-        isCorrect = scanf("%d", timePeriod);
+        numberOfVariablesRead = scanf("%d", timePeriod);
     }
     cleanStdin();
 }
@@ -61,12 +61,12 @@ void getTimeInterval(int* timePeriod)
 
 void getNumberOfUserActions(int* numberOfUserActions)
 {
-    int isCorrect = scanf("%d", numberOfUserActions);
-    while (isNatural(*numberOfUserActions, isCorrect) == false)
+    int numberOfVariablesRead = scanf("%d", numberOfUserActions);
+    while (isNatural(*numberOfUserActions, numberOfVariablesRead) == false)
     {
         cleanStdin();
         printf("Enter the correct number of user actions:\n");
-        isCorrect = scanf("%d", numberOfUserActions);
+        numberOfVariablesRead = scanf("%d", numberOfUserActions);
     }
     cleanStdin();
 }
@@ -75,8 +75,8 @@ void getArray(int size, int* array)
 {
     for (int i = 0; i < size; i++)
     {
-        int isCorrect = scanf("%d", &array[i]);
-        if (isNatural(array[i], isCorrect) == false)
+        int numberOfVariablesRead = scanf("%d", &array[i]);
+        if (isNatural(array[i], numberOfVariablesRead) == false)
         {
             printf("Input Error. Re-enter the array:\n");
             cleanStdin();
