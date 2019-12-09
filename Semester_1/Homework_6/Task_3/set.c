@@ -229,6 +229,72 @@ int popMinimumValueFromRightSubtree(SetElement* root)
     return valueOfMinimum;
 }
 
+void removeLeaf(bool isLeftChild, Set* set, SetElement* leaf)
+{
+    if (leaf->parent != NULL)
+    {
+        if (isLeftChild)
+        {
+            leaf->parent->leftChild = NULL;
+        }
+        else
+        {
+            leaf->parent->rightChild = NULL;
+        }
+    }
+    else
+    {
+        set->root = NULL;
+    }
+    free(leaf);
+}
+
+void removeNodeWithLeftChild(bool isLeftChild, Set* set, SetElement* removable)
+{
+    if (removable->parent != NULL)
+    {
+        if (isLeftChild)
+        {
+            removable->parent->leftChild = removable->leftChild;
+            removable->leftChild->parent = removable->parent;
+        }
+        else
+        {
+            removable->parent->rightChild = removable->leftChild;
+            removable->leftChild->parent = removable->parent;
+        }
+    }
+    else
+    {
+        set->root = removable->leftChild;
+        removable->leftChild->parent = NULL;
+    }
+    free(removable);
+}
+
+void removeNodeWithRightChild(bool isLeftChild, Set* set, SetElement* removable)
+{
+    if (removable->parent != NULL)
+    {
+        if (isLeftChild)
+        {
+            removable->parent->leftChild = removable->rightChild;
+            removable->rightChild->parent = removable->parent;
+        }
+        else
+        {
+            removable->parent->rightChild = removable->rightChild;
+            removable->rightChild->parent = removable->parent;
+        }
+    }
+    else
+    {
+        set->root = removable->rightChild;
+        removable->rightChild->parent = NULL;
+    }
+    free(removable);
+}
+
 bool removeElement(int value, struct Set* set)
 {
     SetElement* removable = getSetElement(value, set);
@@ -249,66 +315,15 @@ bool removeElement(int value, struct Set* set)
     }
     else if (removable->leftChild != NULL)
     {
-        if (removable->parent != NULL)
-        {
-            if (isLeftChild)
-            {
-                removable->parent->leftChild = removable->leftChild;
-                removable->leftChild->parent = removable->parent;
-            }
-            else
-            {
-                removable->parent->rightChild = removable->leftChild;
-                removable->leftChild->parent = removable->parent;
-            }
-        }
-        else
-        {
-            set->root = removable->leftChild;
-            removable->leftChild->parent = NULL;
-        }
-        free(removable);
+        removeNodeWithLeftChild(isLeftChild, set, removable);
     }
     else if (removable->rightChild != NULL)
     {
-        if (removable->parent != NULL)
-        {
-            if (isLeftChild)
-            {
-                removable->parent->leftChild = removable->rightChild;
-                removable->rightChild->parent = removable->parent;
-            }
-            else
-            {
-                removable->parent->rightChild = removable->rightChild;
-                removable->rightChild->parent = removable->parent;
-            }
-        }
-        else
-        {
-            set->root = removable->rightChild;
-            removable->rightChild->parent = NULL;
-        }
-        free(removable);
+        removeNodeWithRightChild(isLeftChild, set, removable);
     }
     else
     {
-        if (removable->parent != NULL)
-        {
-            if (isLeftChild)
-            {
-                removable->parent->leftChild = NULL;
-            }
-            else
-            {
-                removable->parent->rightChild = NULL;
-            }
-        }
-        else
-        {
-            set->root = NULL;
-        }
-        free(removable);
+        removeLeaf(isLeftChild, set, removable);
     }
 
     return true;
