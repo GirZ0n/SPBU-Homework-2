@@ -105,6 +105,95 @@ bool getCapital(int* capital, int numberOfCities, FILE* input)
     return true;
 }
 
+bool graphInitialization(int numberOfRoads, int numberOfCities, int** graph, FILE* input)
+{
+    int cityA = 0;
+    int cityB = 0;
+    int length = 0;
+    for (int i = 0; i < numberOfRoads; i++)
+    {
+        if (getCitiesAndDistance(&cityA, &cityB, &length, numberOfCities, input) == false)
+        {
+            return false;
+        }
+        graph[cityA][cityB] = length;
+        graph[cityB][cityA] = length;
+    }
+
+    return true;
+}
+
+bool statesInitialization(int numberOfCapitals, int numberOfCities, bool* isCityFree, int** states, FILE* input)
+{
+    int capital = 0;
+    for (int i = 0; i < numberOfCapitals; i++)
+    {
+        if (getCapital(&capital, numberOfCities, input) == false)
+        {
+            return false;
+        }
+        states[i][0] = capital;
+        isCityFree[capital] = true;
+    }
+
+    return true;
+}
+
+void outputResult(int numberOfCapitals, int** states)
+{
+    printf("On the left is the number of the capital of the state, on the right, through a space,\n");
+    printf("the numbers of the city related to this state:\n");
+    for (int i = 0; i < numberOfCapitals; i++)
+    {
+        printf("%d - ", states[i][0]);
+        int indexOfCurrentCity = 1;
+        while (states[i][indexOfCurrentCity] != 0)
+        {
+            printf("%d ", states[i][indexOfCurrentCity]);
+            indexOfCurrentCity++;
+        }
+
+        if (indexOfCurrentCity == 1)
+        {
+            printf("there are no other cities");
+        }
+
+        printf("\n");
+    }
+}
+
+void cityDistribution(int* numberOfUnusedCities, int numberOfCities, int numberOfCapitals, int** states,
+                      int** distanceBetweenCities, bool* isCityFree)
+{
+    int iterator = 0;
+    int indexOfCurrentCapital = 0;
+    while (*numberOfUnusedCities != 0)
+    {
+        indexOfCurrentCapital = iterator % numberOfCapitals;
+
+        int numberOfNearestCity = getNumberOfNearestCity(indexOfCurrentCapital, states, distanceBetweenCities,
+                                                         isCityFree, numberOfCities, numberOfCapitals);
+
+        if (numberOfNearestCity == INT_MAX)
+        {
+            iterator++;
+            continue;
+        }
+
+        int indexOfInsert = 0;
+        while (states[indexOfCurrentCapital][indexOfInsert] != 0)
+        {
+            indexOfInsert++;
+        }
+
+        states[indexOfCurrentCapital][indexOfInsert] = numberOfNearestCity;
+        isCityFree[numberOfNearestCity] = true;
+
+        (*numberOfUnusedCities)--;
+        iterator++;
+    }
+}
+
 int main()
 {
     FILE* input = fopen("input.txt", "r");
@@ -130,18 +219,10 @@ int main()
 
     int** distanceBetweenCities =
             createMatrix(numberOfCities + 1, numberOfCities + 1, INT_MAX);
-    int cityA = 0;
-    int cityB = 0;
-    int length = 0;
-    for (int i = 0; i < numberOfRoads; i++)
+    if (graphInitialization(numberOfRoads, numberOfCities, distanceBetweenCities, input) == false)
     {
-        if (getCitiesAndDistance(&cityA, &cityB, &length, numberOfCities, input) == false)
-        {
-            printf("Invalid line.");
-            return 0;
-        }
-        distanceBetweenCities[cityA][cityB] = length;
-        distanceBetweenCities[cityB][cityA] = length;
+        printf("Invalid line.");
+        return 0;
     }
 
     int numberOfCapitals = 0;
@@ -155,65 +236,16 @@ int main()
     int numberOfUnusedCities = numberOfCities - numberOfCapitals;
 
     int** states = createMatrix(numberOfCapitals, numberOfCities - numberOfCapitals + 1, 0);
-    int capital = 0;
-    for (int i = 0; i < numberOfCapitals; i++)
+    if (statesInitialization(numberOfCapitals, numberOfCities, isCityFree, states, input) == false)
     {
-        if (getCapital(&capital, numberOfCities, input) == false)
-        {
-            printf("Invalid capital.");
-            return 0;
-        }
-        states[i][0] = capital;
-        isCityFree[capital] = true;
+        printf("Invalid capital.");
+        return 0;
     }
 
-    int iterator = 0;
-    int indexOfCurrentCapital = 0;
-    while (numberOfUnusedCities != 0)
-    {
-        indexOfCurrentCapital = iterator % numberOfCapitals;
+    cityDistribution(&numberOfUnusedCities, numberOfCities, numberOfCapitals, states,
+                     distanceBetweenCities, isCityFree);
 
-        int numberOfNearestCity = getNumberOfNearestCity(indexOfCurrentCapital, states, distanceBetweenCities,
-                                                         isCityFree, numberOfCities, numberOfCapitals);
-
-        if (numberOfNearestCity == INT_MAX)
-        {
-            iterator++;
-            continue;
-        }
-
-        int indexOfInsert = 0;
-        while (states[indexOfCurrentCapital][indexOfInsert] != 0)
-        {
-            indexOfInsert++;
-        }
-
-        states[indexOfCurrentCapital][indexOfInsert] = numberOfNearestCity;
-        isCityFree[numberOfNearestCity] = true;
-
-        numberOfUnusedCities--;
-        iterator++;
-    }
-
-    printf("On the left is the number of the capital of the state, on the right, through a space,\n");
-    printf("the numbers of the city related to this state:\n");
-    for (int i = 0; i < numberOfCapitals; i++)
-    {
-        printf("%d - ", states[i][0]);
-        int indexOfCurrentCity = 1;
-        while (states[i][indexOfCurrentCity] != 0)
-        {
-            printf("%d ", states[i][indexOfCurrentCity]);
-            indexOfCurrentCity++;
-        }
-
-        if (indexOfCurrentCity == 1)
-        {
-            printf("there are no other cities");
-        }
-
-        printf("\n");
-    }
+    outputResult(numberOfCapitals, states);
 
     deleteMatrix(distanceBetweenCities, numberOfCities + 1);
     free(isCityFree);
