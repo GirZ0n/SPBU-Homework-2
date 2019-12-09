@@ -18,20 +18,12 @@ void numberToDigits(int* digits, int number)
     }
 }
 
-int cowsCount(int randomNumber, int inputNumber)
+void countingNumberOfCowsAndBulls(int randomNumber, int inputNumber, int* numberOfCows, int* numberOfBulls)
 {
-    int* randomNumberDigits = malloc(sizeof(int) * numberLength);
-    for (int i = 0; i < numberLength; i++)
-    {
-        randomNumberDigits[i] = 0;
-    }
+    int* randomNumberDigits = calloc(numberLength, sizeof(int));
     numberToDigits(randomNumberDigits, randomNumber);
 
-    int* inputNumberDigits = malloc(sizeof(int) * numberLength);
-    for (int i = 0; i < numberLength; i++)
-    {
-        inputNumberDigits[i] = 0;
-    }
+    int* inputNumberDigits = calloc(numberLength, sizeof(int));
     numberToDigits(inputNumberDigits, inputNumber);
 
     int countOfDigits[10] = {0};
@@ -42,50 +34,22 @@ int cowsCount(int randomNumber, int inputNumber)
             countOfDigits[randomNumberDigits[i]]++;
             countOfDigits[inputNumberDigits[i]]++;
         }
+        else
+        {
+            (*numberOfBulls)++;
+        }
     }
 
-    int count = 0;
     for (int i = 0; i < 10; i++)
     {
         if (countOfDigits[i] == 2)
         {
-            count++;
+            (*numberOfCows)++;
         }
     }
 
     free(inputNumberDigits);
     free(randomNumberDigits);
-    return count;
-}
-
-int bullsCount(int randomNumber, int inputNumber)
-{
-    int* randomNumberDigits = malloc(sizeof(int) * numberLength);
-    for (int i = 0; i < numberLength; i++)
-    {
-        randomNumberDigits[i] = 0;
-    }
-    numberToDigits(randomNumberDigits, randomNumber);
-
-    int* inputNumberDigits = malloc(sizeof(int) * numberLength);
-    for (int i = 0; i < numberLength; i++)
-    {
-        inputNumberDigits[i] = 0;
-    }
-    numberToDigits(inputNumberDigits, inputNumber);
-
-    int count = 0;
-    for (int i = 0; i < numberLength; i++)
-    {
-        if (randomNumberDigits[i] == inputNumberDigits[i])
-        {
-            count++;
-        }
-    }
-
-    free(inputNumberDigits);
-    free(randomNumberDigits);
-    return count;
 }
 
 int getRandomNumber()
@@ -194,8 +158,12 @@ int main()
             return 0;
         }
 
-        printf("Number of cows: %d \n", cowsCount(randomNumber, inputNumber));
-        printf("Number of bulls: %d \n", bullsCount(randomNumber, inputNumber));
+        int numberOfCows = 0;
+        int numberOfBulls = 0;
+        countingNumberOfCowsAndBulls(randomNumber, inputNumber, &numberOfCows, &numberOfBulls);
+
+        printf("Number of cows: %d \n", numberOfCows);
+        printf("Number of bulls: %d \n", numberOfBulls);
         moves++;
     }
 }
