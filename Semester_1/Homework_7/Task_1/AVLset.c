@@ -321,6 +321,7 @@ Node* removeElementFromSubtree(int value, Node* root)
 
         if (rightChild == NULL)
         {
+            free(root);
             return leftChild;
         }
 
