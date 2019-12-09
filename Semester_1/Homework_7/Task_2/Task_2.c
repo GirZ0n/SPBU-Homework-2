@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "ADTstring.h"
 
 String* conversionTest(char* string)
@@ -82,16 +83,17 @@ void getStringFromConsoleTest()
     String* input = getStringFromConsole();
     printf("Get string from console and print it: ");
     printString(input);
-    printf(" (Size = %d)\n", getStringLength(input));
+    printf(" (length = %d)\n", getStringLength(input));
     deleteString(input);
 }
 
-void getStringFromFileTest(String* testString, FILE* testFile)
+void getStringFromFileTest(FILE* testFile)
 {
     printf("Get string from file and print it: ");
-    testString = getStringFromFile(testFile);
+    String* testString = getStringFromFile(testFile);
     printString(testString);
-    printf(" (Size = %d)\n", getStringLength(testString));
+    printf(" (Length = %d)\n", getStringLength(testString));
+    deleteString(testString);
 }
 
 void test()
@@ -129,7 +131,7 @@ void test()
         printf("Can not open the file");
         return;
     }
-    getStringFromFileTest(testString, testFile);
+    getStringFromFileTest(testFile);
     fclose(testFile);
 
     deleteString(testString);
