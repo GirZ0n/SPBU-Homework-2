@@ -24,6 +24,7 @@ void resizeString(String* string, int newSize)
     }
 
     string->text = realloc(string->text, newSize);
+    string->length = newSize;
 }
 
 void deleteString(String* string)
@@ -64,13 +65,9 @@ String* convertStringToStructString(char* string)
         return 0;
     }
 
-    String* newString = createString(strlen(string));
-    int length = strlen(string);
-    for (int i = 0; i < length; i++)
-    {
-        newString->text[i] = string[i];
-    }
-    newString->length = strlen(string);
+    String* newString = createString((int) strlen(string));
+    strcpy(newString->text, string);
+    newString->length = (int) strlen(string);
 
     return newString;
 }
@@ -113,12 +110,7 @@ String* cloneString(String* string)
 
     String* newString = createString(getStringLength(string));
     newString->length = getStringLength(string);
-
-    int length = newString->length;
-    for (int i = 0; i < length; i++)
-    {
-        newString->text[i] = string->text[i];
-    }
+    strcpy(newString->text, string->text);
 
     return newString;
 }
@@ -137,7 +129,6 @@ void concatenateStrings(String* destination, String* source)
     {
         destination->text[i] = source->text[i - currentLength];
     }
-    destination->length = newLength;
 }
 
 String* getSubstring(String* string, int indexOfBegin, int indexOfEnd)
