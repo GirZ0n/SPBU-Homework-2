@@ -176,28 +176,31 @@ void printString(String* string)
 
 struct String* getStringFromConsole()
 {
+    int size = 0;
     int capacity = 2;
     String* newString = createString(capacity);
     char input = ' ';
     scanf("%c", &input);
     while (input != '\n')
     {
-        if (getStringLength(newString) == capacity)
+        if (size == capacity)
         {
             capacity *= 2;
             resizeString(newString, capacity);
         }
 
-        newString->text[getStringLength(newString)] = input;
-        newString->length++;
+        newString->text[size] = input;
+        size++;
         scanf("%c", &input);
     }
 
+    resizeString(newString, size);
     return newString;
 }
 
 struct String* getStringFromFile(FILE* input)
 {
+    int size = 0;
     int capacity = 2;
     String* newString = createString(capacity);
 
@@ -209,16 +212,17 @@ struct String* getStringFromFile(FILE* input)
     char inputChar = (char) fgetc(input);
     while (feof(input) == false && inputChar != '\n')
     {
-        if (getStringLength(newString) == capacity)
+        if (size == capacity)
         {
             capacity *= 2;
             resizeString(newString, capacity);
         }
 
-        newString->text[getStringLength(newString)] = inputChar;
-        newString->length++;
+        newString->text[size] = inputChar;
+        size++;
         inputChar = (char) fgetc(input);
     }
 
+    resizeString(newString, size);
     return newString;
 }
