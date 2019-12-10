@@ -1,8 +1,8 @@
 # SPBU-Homework
 Here you can find the conditions and solutions for the tasks
 ## Navigation menu
-[Semester №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#semester-1-arrow_up) |
------------ |
+[Semester №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#semester-1-arrow_up) | [Semester №2](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#semester-2-arrow_up)
+----------- | ----------- |
 [Homework №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-1-arrow_up) |
 [Homework №2](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-2-arrow_up) |
 [Homework №3](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-3-arrow_up) |
@@ -139,3 +139,6 @@ Result: +1.5029691162109375384*2^13
 2. -----------
 
 3. 1953 год. В связи с усилением влияния Запада и необходимостью предпринять ответные меры, Иосиф Сталин разрабатывает новый эффективный алгоритм внутрипартийной чистки: сначала расстреливаются `n` самых опасных членов, а затем оставшиеся упорядочиваются в алфавитном порядке и первые `m` отправляются в Сибирь. Л.П. Берия уже успел провести предварительные работы: определил степень лояльности к СССР среди членов партии и предоставил списки генеральному секретарю. На входе файл формата "фамилия - степень лояльности". `n` и `m` вводятся с клавиатуры. Задача: определить, кто будет расстрелян, кого отправят в Сибирь, кто останется невредим. Пока невредим. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Test_2/Task_3/Task_3.c)
+
+
+## Semester №2 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
