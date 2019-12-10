@@ -102,9 +102,9 @@ Semester №1 |
 [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Homework_6/Task_1/Task_1.c)
 ```
 Enter a number: -2.5
-Result: -1.25*21
+Result: -1.25*2^1
 Enter a number: 12312.323
-Result: +1.5029691162109375384*213
+Result: +1.5029691162109375384*2^13
 ```
 
 2. Ввести два числа, перевести в двоичное представление (в каком-либо из кодов) и в этом двоичном виде напечатать, сложить, вывести сумму в двоичном и десятичном виде (суммировать двоичные числа). [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Homework_6/Task_2/Task_2.c)
