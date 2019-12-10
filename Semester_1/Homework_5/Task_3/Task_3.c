@@ -211,20 +211,20 @@ char* convertInfixToPostfix(char* infixNotation, bool* isError)
 
 double calculatePostfixNotation(char* postfixNotation)
 {
-    struct StackOfDouble* stackOfDouble = createStackOfDouble();
+    struct StackOfDouble* stack = createStackOfDouble();
     int inputStringLength = (int) strlen(postfixNotation);
     for (int i = 0; i < inputStringLength; i++)
     {
         if (isOperator(postfixNotation, i))
         {
-            double operandB = popDouble(stackOfDouble);
-            double operandA = popDouble(stackOfDouble);
+            double operandB = popDouble(stack);
+            double operandA = popDouble(stack);
             double result = getResultOfOperation(operandA, operandB, postfixNotation[i]);
-            pushDouble(result, stackOfDouble);
+            pushDouble(result, stack);
         }
         else if (isUnaryNegative(postfixNotation, i) || isDigit(postfixNotation[i]))
         {
-            pushDouble(getNumberAsDouble(postfixNotation, &i), stackOfDouble);
+            pushDouble(getNumberAsDouble(postfixNotation, &i), stack);
         }
         else
         {
@@ -232,8 +232,8 @@ double calculatePostfixNotation(char* postfixNotation)
         }
     }
 
-    double result = popDouble(stackOfDouble);
-    deleteStackOfDouble(stackOfDouble);
+    double result = popDouble(stack);
+    deleteStackOfDouble(stack);
     return result;
 }
 
