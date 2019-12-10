@@ -45,7 +45,7 @@ Semester №1 |
 
 2. Напечатать в порядке возрастания все простые несократимые дроби, заключенные между 0 и 1, знаменатели которых не превышают `n`. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Homework_2/Task_2/Task_2.c)
 
-3. Реализовать консольную игру ["Быки и коровы"](http://goo.gl/J1LKti).
+3. Реализовать консольную игру ["Быки и коровы"](http://goo.gl/J1LKti). [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Homework_2/Task_3/Task_3.c)
 
 4. Найдите максимальный элемент массива, встречающийся более одного раза (массив неупорядоченный). [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Homework_2/Task_4/Task_4.c)
 
