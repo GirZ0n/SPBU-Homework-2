@@ -123,7 +123,7 @@ Result: +1.5029691162109375384*213
 [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Test_1/Task_2/Task_2.c)
 
 ### Test №2 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
-1. Реализовать функцию нахождения i-го числа Фибоначчи (линейную по скорости и константную по памяти).
+1. Реализовать функцию нахождения i-го числа Фибоначчи (линейную по скорости и константную по памяти). [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Test_2/Task_1/Task_1.c)
 
 2. -----------
 
