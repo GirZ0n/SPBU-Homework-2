@@ -68,7 +68,7 @@ void getStudents(int* studentA, int* studentB, int numberOfStudents)
 
 int main()
 {
-    printf("Enter the number of student (number > 0):\n");
+    printf("Enter the number of student (number >= 3):\n");
     int numberOfStudent = 0;
     getNumberOfStudents(&numberOfStudent);
 
