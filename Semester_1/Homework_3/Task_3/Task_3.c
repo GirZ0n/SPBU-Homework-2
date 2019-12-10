@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-void swap(int *array_a, int *array_b)
+void swap(int* elementA, int* elementB)
 {
-    int temp = *array_a;
-    *array_a = *array_b;
-    *array_b = temp;
+    int temp = *elementA;
+    *elementA = *elementB;
+    *elementB = temp;
 }
 
 void cleanStdin()
