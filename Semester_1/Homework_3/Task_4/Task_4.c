@@ -14,12 +14,7 @@ void cleanStdin()
 
 bool isNatural(int inputNumber, int numberOfVariablesRead)
 {
-    if (numberOfVariablesRead != 1 || inputNumber < 1)
-    {
-        return false;
-    }
-
-    return true;
+    return numberOfVariablesRead == 1 && inputNumber > 0;
 }
 
 void getNumberOfUsers(int* numberOfUsers)
