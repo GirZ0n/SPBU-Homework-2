@@ -110,7 +110,7 @@ int main()
             helpedCheat[studentA] = helpedCheat[studentB];
         }
 
-        for (int j = 1; j <= numberOfStudent + 1; j++)
+        for (int j = 1; j <= numberOfStudent; j++)
         {
             if (helpedCheat[j] == studentA)
             {
