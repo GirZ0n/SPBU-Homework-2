@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <string.h>
 #include <stdbool.h>
 
 char* getStringFromConsole()
@@ -153,12 +154,13 @@ int caseHandlingNumber7(char currentSymbol)
     }
 }
 
-bool isRealNumber(char* input)
+bool isRealNumber(char* string)
 {
     int iterator = 0;
     int state = 0;
-    char currentSymbol = input[iterator];
-    while (true)
+    char currentSymbol = string[iterator];
+    int stringLength = (int) strlen(string);
+    while (iterator < stringLength)
     {
         switch (state)
         {
@@ -211,7 +213,7 @@ bool isRealNumber(char* input)
                 return false;
             }
         }
-        currentSymbol = input[++iterator];
+        currentSymbol = string[++iterator];
     }
 }
 
