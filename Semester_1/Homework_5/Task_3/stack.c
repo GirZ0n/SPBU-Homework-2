@@ -18,7 +18,7 @@ struct StackOfCharElement
 
 StackOfChar* createStackOfChar()
 {
-    StackOfChar* stack = malloc(sizeof(struct StackOfChar));
+    StackOfChar* stack = malloc(sizeof(StackOfChar));
     stack->size = 0;
     stack->first = NULL;
     return stack;
@@ -51,7 +51,7 @@ bool pushChar(char value, StackOfChar* stack)
         return false;
     }
 
-    StackOfCharElement* pushed = malloc(sizeof(struct StackOfCharElement));
+    StackOfCharElement* pushed = malloc(sizeof(StackOfCharElement));
     pushed->value = value;
     pushed->next = stack->first;
     stack->first = pushed;
@@ -119,7 +119,7 @@ struct StackOfDoubleElement
 
 StackOfDouble* createStackOfDouble()
 {
-    StackOfDouble* stack = malloc(sizeof(struct StackOfDouble));
+    StackOfDouble* stack = malloc(sizeof(StackOfDouble));
     stack->size = 0;
     stack->first = NULL;
     return stack;
@@ -152,7 +152,7 @@ bool pushDouble(double value, StackOfDouble* stack)
         return false;
     }
 
-    StackOfDoubleElement* pushed = malloc(sizeof(struct StackOfDoubleElement));
+    StackOfDoubleElement* pushed = malloc(sizeof(StackOfDoubleElement));
     pushed->value = value;
     pushed->next = stack->first;
     stack->size++;
