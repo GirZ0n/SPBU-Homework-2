@@ -21,11 +21,7 @@ void cleanStdin()
 
 bool checkSize(int size, int numberOfVariablesRead)
 {
-    if (numberOfVariablesRead != 1 || size < 1)
-    {
-        return false;
-    }
-    return true;
+    return numberOfVariablesRead == 1 && size > 0;
 }
 
 void getSize(int* size)
