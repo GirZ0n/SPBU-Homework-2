@@ -53,24 +53,9 @@ int getNumberOfNearestCity(int indexOfCurrentCapital, int** states, int** distan
     return numberOfTheNearestCity;
 }
 
-bool getNumberOfCities(int* numberOfCities, FILE* input)
+bool getNumber(int* number, FILE* input)
 {
-    if (fscanf(input, "%d", numberOfCities) != 1 || *numberOfCities < 1)
-    {
-        return false;
-    }
-
-    return true;
-}
-
-bool getNumberOfRoads(int* numberOfRoads, FILE* input)
-{
-    if (fscanf(input, "%d", numberOfRoads) != 1 || *numberOfRoads < 1)
-    {
-        return false;
-    }
-
-    return true;
+    return fscanf(input, "%d", number) == 1 && *number > 0;
 }
 
 bool getCitiesAndDistance(int* cityA, int* cityB, int* distance, int numberOfCities, FILE* input)
@@ -82,27 +67,6 @@ bool getCitiesAndDistance(int* cityA, int* cityB, int* distance, int numberOfCit
     }
 
     return false;
-}
-
-bool getNumberOfCapitals(int* numberOfCapitals, int numberOfCities, FILE* input)
-{
-    if (fscanf(input, "%d", numberOfCapitals) != 1 || *numberOfCapitals < 1 ||
-        *numberOfCapitals > numberOfCities)
-    {
-        return false;
-    }
-
-    return true;
-}
-
-bool getCapital(int* capital, int numberOfCities, FILE* input)
-{
-    if (fscanf(input, "%d", capital) != 1 || *capital < 1 || *capital > numberOfCities)
-    {
-        return false;
-    }
-
-    return true;
 }
 
 bool graphInitialization(int numberOfRoads, int numberOfCities, int** graph, FILE* input)
@@ -128,7 +92,7 @@ bool statesInitialization(int numberOfCapitals, int numberOfCities, bool* isCity
     int capital = 0;
     for (int i = 0; i < numberOfCapitals; i++)
     {
-        if (getCapital(&capital, numberOfCities, input) == false)
+        if (getNumber(&capital, input) == false || capital > numberOfCities)
         {
             return false;
         }
@@ -204,14 +168,14 @@ int main()
     }
 
     int numberOfCities = 0;
-    if (getNumberOfCities(&numberOfCities, input) == false)
+    if (getNumber(&numberOfCities, input) == false)
     {
         printf("Invalid number of cities.");
         return 0;
     }
 
     int numberOfRoads = 0;
-    if (getNumberOfRoads(&numberOfRoads, input) == false)
+    if (getNumber(&numberOfRoads, input) == false)
     {
         printf("Invalid number of roads.");
         return 0;
@@ -226,7 +190,7 @@ int main()
     }
 
     int numberOfCapitals = 0;
-    if (getNumberOfCapitals(&numberOfCapitals, numberOfCities, input) == false)
+    if (getNumber(&numberOfCapitals, input) == false || numberOfCapitals > numberOfCities)
     {
         printf("Invalid number of capitals.");
         return 0;
