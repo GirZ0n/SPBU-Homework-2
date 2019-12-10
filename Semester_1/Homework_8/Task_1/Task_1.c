@@ -14,12 +14,7 @@ void cleanStdin()
 
 bool checkNumberOfStudents(int inputNumber, int numberOfVariablesRead)
 {
-    if (numberOfVariablesRead != 1 || inputNumber < 3)
-    {
-        return false;
-    }
-
-    return true;
+    return numberOfVariablesRead == 1 && inputNumber > 2;
 }
 
 void getNumberOfStudents(int* numberOfUsers)
