@@ -1,0 +1,7 @@
+Vlasov 15
+Andreev 4
+Pelts 13
+Ivanov 7
+Sidorov 83
+Grigirev 3
+Horov 3
