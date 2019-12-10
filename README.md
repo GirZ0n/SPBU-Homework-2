@@ -1,7 +1,7 @@
 # SPBU-Homework
 Here you can find the conditions and solutions for the tasks
 ## Navigation menu
-Semester №1 |
+[Semester №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#semester-1-arrow_up) |
 ----------- |
 [Homework №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-1-arrow_up) |
 [Homework №2](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-2-arrow_up) |
@@ -15,7 +15,7 @@ Semester №1 |
 [Test №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#test-1-arrow_up) |
 [Test №2](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#test-2-arrow_up) |
 
-## Semester №1
+## Semester №1 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
 
 ### Homework №1 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
 1. Написать программу, считающую значение формулы `x^4 + x^3 + x^2 + x + 1` за два умножения. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Homework_1/Task_1.c)
