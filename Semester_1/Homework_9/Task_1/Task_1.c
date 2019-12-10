@@ -4,6 +4,22 @@
 #include <string.h>
 #include <stdbool.h>
 
+typedef enum State State;
+
+enum State
+{
+    error = -1,
+    numberBegin,
+    numberSign,
+    integerPart,
+    dot,
+    fractionalPart,
+    exponentBegin,
+    exponentSign,
+    exponentPart,
+    end
+};
+
 char* getStringFromConsole()
 {
     int length = 0;
@@ -26,189 +42,190 @@ char* getStringFromConsole()
     return string;
 }
 
-int caseHandlingNumber0(char currentSymbol)
+int numberBeginHandling(char currentSymbol)
 {
     if (currentSymbol == '+' || currentSymbol == '-')
     {
-        return 1;
+        return numberSign;
     }
     else if (isdigit(currentSymbol))
     {
-        return 2;
+        return integerPart;
     }
     else
     {
-        return -1;
+        return error;
     }
 }
 
-int caseHandlingNumber1(char currentSymbol)
+int numberSignHandling(char currentSymbol)
 {
     if (isdigit(currentSymbol))
     {
-        return 2;
+        return integerPart;
     }
     else
     {
-        return -1;
+        return error;
     }
 }
 
-int caseHandlingNumber2(char currentSymbol)
+int integerPartHandling(char currentSymbol)
 {
     if (isdigit(currentSymbol))
     {
-        return 2;
+        return integerPart;
     }
     else if (currentSymbol == '.')
     {
-        return 3;
+        return dot;
     }
     else if (currentSymbol == 'E')
     {
-        return 5;
+        return exponentBegin;
     }
     else if (currentSymbol == '\0')
     {
-        return 8;
+        return end;
     }
     else
     {
-        return -1;
+        return error;
     }
 }
 
-int caseHandlingNumber3(char currentSymbol)
+int dotHandling(char currentSymbol)
 {
     if (isdigit(currentSymbol))
     {
-        return 4;
+        return fractionalPart;
     }
     else
     {
-        return -1;
+        return error;
     }
 }
 
-int caseHandlingNumber4(char currentSymbol)
+int fractionalPartHandling(char currentSymbol)
 {
     if (isdigit(currentSymbol))
     {
-        return 4;
+        return fractionalPart;
     }
     else if (currentSymbol == 'E')
     {
-        return 5;
+        return exponentBegin;
     }
     else if (currentSymbol == '\0')
     {
-        return 8;
+        return end;
     }
     else
     {
-        return -1;
+        return error;
     }
 }
 
-int caseHandlingNumber5(char currentSymbol)
+int exponentBeginHandling(char currentSymbol)
 {
     if (currentSymbol == '+' || currentSymbol == '-')
     {
-        return 6;
+        return exponentSign;
     }
     else if (isdigit(currentSymbol))
     {
-        return 7;
+        return exponentPart;
     }
     else
     {
-        return -1;
+        return error;
     }
 }
 
-int caseHandlingNumber6(char currentSymbol)
+int exponentSignHandling(char currentSymbol)
 {
     if (isdigit(currentSymbol))
     {
-        return 7;
+        return exponentPart;
     }
     else
     {
-        return -1;
+        return error;
     }
 }
 
-int caseHandlingNumber7(char currentSymbol)
+int exponentPartHandling(char currentSymbol)
 {
     if (isdigit(currentSymbol))
     {
-        return 7;
+        return exponentPart;
     }
     else if (currentSymbol == '\0')
     {
-        return 8;
+        return end;
     }
     else
     {
-        return -1;
+        return error;
     }
 }
 
 bool isRealNumber(char* string)
 {
+    State currentState;
+    currentState = numberBegin;
     int iterator = 0;
-    int state = 0;
     char currentSymbol = string[iterator];
     int stringLength = (int) strlen(string);
     while (iterator < stringLength)
     {
-        switch (state)
+        switch (currentState)
         {
-            case 0:
+            case numberBegin:
             {
-                state = caseHandlingNumber0(currentSymbol);
+                currentState = numberBeginHandling(currentSymbol);
                 break;
             }
-            case 1:
+            case numberSign:
             {
-                state = caseHandlingNumber1(currentSymbol);
+                currentState = numberSignHandling(currentSymbol);
                 break;
             }
-            case 2:
+            case integerPart:
             {
-                state = caseHandlingNumber2(currentSymbol);
+                currentState = integerPartHandling(currentSymbol);
                 break;
             }
-            case 3:
+            case dot:
             {
-                state = caseHandlingNumber3(currentSymbol);
+                currentState = dotHandling(currentSymbol);
                 break;
             }
-            case 4:
+            case fractionalPart:
             {
-                state = caseHandlingNumber4(currentSymbol);
+                currentState = fractionalPartHandling(currentSymbol);
                 break;
             }
-            case 5:
+            case exponentBegin:
             {
-                state = caseHandlingNumber5(currentSymbol);
+                currentState = exponentBeginHandling(currentSymbol);
                 break;
             }
-            case 6:
+            case exponentSign:
             {
-                state = caseHandlingNumber6(currentSymbol);
+                currentState = exponentSignHandling(currentSymbol);
                 break;
             }
-            case 7:
+            case exponentPart:
             {
-                state = caseHandlingNumber7(currentSymbol);
+                currentState = exponentPartHandling(currentSymbol);
                 break;
             }
-            case 8:
+            case end:
             {
                 return true;
             }
-            case -1:
+            case error:
             {
                 return false;
             }
@@ -227,7 +244,7 @@ int main()
     }
     else
     {
-        printf("This is not a real number");
+        printf("This is not a real number.");
     }
     free(input);
     return 0;
