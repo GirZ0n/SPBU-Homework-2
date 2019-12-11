@@ -11,7 +11,7 @@ struct String
 String* createString(int size)
 {
     String* newString = malloc(sizeof(String));
-    newString->text = calloc(sizeof(char), size);
+    newString->text = calloc(sizeof(char), size + 1);
     newString->length = 0;
     return newString;
 }
@@ -23,7 +23,7 @@ void resizeString(String* string, int newSize)
         return;
     }
 
-    string->text = realloc(string->text, newSize);
+    string->text = realloc(string->text, newSize + 1);
     string->length = newSize;
 }
 
