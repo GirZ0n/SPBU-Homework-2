@@ -3,84 +3,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "stack.h"
-
-bool isOpenBracket(char inputChar)
-{
-    return inputChar == '(';
-}
-
-bool isCloseBracket(char inputChar)
-{
-    return inputChar == ')';
-}
-
-bool isLessPriority(char operatorA, char operatorB)
-{
-    int priorityA = 0;
-    if (operatorA == '/' || operatorA == '*')
-    {
-        priorityA = 1;
-    }
-
-    int priorityB = 0;
-    if (operatorB == '/' || operatorB == '*')
-    {
-        priorityB = 1;
-    }
-
-    return priorityA <= priorityB;
-}
-
-bool isDigit(char inputChar)
-{
-    return inputChar - '0' >= 0 && inputChar - '0' <= 9;
-}
-
-double getNumberAsDouble(char* string, int* indexOfCurrentPosition)
-{
-    int number = 0;
-    if (isDigit(string[*indexOfCurrentPosition]))
-    {
-        number = string[*indexOfCurrentPosition] - '0';
-    }
-
-    int indexOfStart = *indexOfCurrentPosition;
-
-    int inputLength = (int) strlen(string);
-    while (*indexOfCurrentPosition + 1 < inputLength && isDigit(string[*indexOfCurrentPosition + 1]))
-    {
-        number = number * 10 + (string[*indexOfCurrentPosition + 1] - '0');
-        (*indexOfCurrentPosition)++;
-    }
-
-    if (string[indexOfStart] == '-')
-    {
-        number *= -1;
-    }
-
-    return (double) number;
-}
-
-bool isUnaryNegative(char* string, int indexOfCheck)
-{
-    if (string[indexOfCheck] == '-' && indexOfCheck + 1 < strlen(string))
-    {
-        return isDigit(string[indexOfCheck + 1]);
-    }
-
-    return false;
-}
-
-bool isOperator(char* string, int indexOfCheck)
-{
-    if (isUnaryNegative(string, indexOfCheck))
-    {
-        return false;
-    }
-
-    return string[indexOfCheck] == '+' || string[indexOfCheck] == '-' ||
-           string[indexOfCheck] == '*' || string[indexOfCheck] == '/';
-}
+#include "stringAndCharOparations.h"
 
 double getResultOfOperation(double valueA, double valueB, char operator)
 {
@@ -103,22 +26,6 @@ double getResultOfOperation(double valueA, double valueB, char operator)
             return valueA / valueB;
         }
     }
-}
-
-void writeNumberToString(char* infixNotation, int* indexOfStart, char* postfixNotation, int* sizeOfPostfix)
-{
-    postfixNotation[*sizeOfPostfix] = infixNotation[*indexOfStart];
-    (*sizeOfPostfix)++;
-
-    int inputLength = (int) strlen(infixNotation);
-    while (*indexOfStart + 1 < inputLength && isDigit(infixNotation[*indexOfStart + 1]))
-    {
-        postfixNotation[*sizeOfPostfix] = infixNotation[*indexOfStart + 1];
-        (*sizeOfPostfix)++;
-        (*indexOfStart)++;
-    }
-    postfixNotation[*sizeOfPostfix] = ' ';
-    (*sizeOfPostfix)++;
 }
 
 bool fillingPostfixNotation(char* postfixNotation, int* sizeOfPostfix, StackOfChar* stack)
