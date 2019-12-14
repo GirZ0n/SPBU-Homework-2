@@ -3,9 +3,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-typedef struct String String;
-
 struct String;
+typedef struct String String;
 
 String* createString(int size);
 void deleteString(String* string);
@@ -18,5 +17,5 @@ String* cloneString(String* string);
 void concatenateStrings(String* stringA, String* stringB);
 String* getSubstring(String* string, int indexOfBegin, int indexOfEnd);
 void printString(String* string);
-struct String* getStringFromConsole();
-struct String* getStringFromFile(FILE* input);
+String* getStringFromConsole();
+String* getStringFromFile(FILE* input);
