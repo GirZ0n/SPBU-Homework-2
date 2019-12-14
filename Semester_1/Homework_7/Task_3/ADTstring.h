@@ -18,5 +18,5 @@ String* cloneString(String* string);
 void concatenateStrings(String* stringA, String* stringB);
 String* getSubstring(String* string, int indexOfBegin, int indexOfEnd);
 void printString(String* string);
-struct String* getStringFromConsole();
-struct String* getStringFromFile(FILE* input); 
+String* getStringFromConsole();
+String* getStringFromFile(FILE* input);
