@@ -267,6 +267,24 @@ void changeBucketInHashTable(String* key, int newValue, HashTable* hashtable)
     oldBucket->value = newValue;
 }
 
+void printHashTable(HashTable* hashtable)
+{
+    if (hashtable == NULL)
+    {
+        printf("Hashtable doesn't exist.");
+        return;
+    }
+
+    for (int i = 0; i < hashtable->capacity; i++)
+    {
+        if (isExist(hashtable->arrayOfBuckets[i]))
+        {
+            printString(hashtable->arrayOfBuckets[i]->key);
+            printf("\n%d\n", hashtable->arrayOfBuckets[i]->value);
+        }
+    }
+}
+
 void printHashTableInfo(HashTable* hashtable)
 {
     if (hashtable == NULL)
