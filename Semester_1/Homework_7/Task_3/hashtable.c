@@ -113,7 +113,6 @@ int getHash(String* key, int base)
     {
         hash = (hash + (i + 1) * string[i]) % base;
     }
-    free(string);
     return hash;
 }
 
@@ -315,9 +314,8 @@ void printHashTableInfo(HashTable* hashtable)
     printf("Average number of collisions = %f\n", (double) collisions / (double) hashtable->size);
     if (maxCollisionBucket != NULL)
     {
-        printf("Bucket with the biggest collision factor: ");
+        printf("Bucket with the biggest collision factor (%d): ", maxCollision);
         printString(maxCollisionBucket->key);
         printf(" %d", maxCollisionBucket->value);
-        printf(" (collision factor: %d)\n", maxCollision);
     }
 }
