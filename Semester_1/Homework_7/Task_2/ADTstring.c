@@ -89,16 +89,7 @@ bool areStringsEqual(String* stringA, String* stringB)
         return false;
     }
 
-    int length = getStringLength(stringA);
-    for (int i = 0; i < length; i++)
-    {
-        if (stringA->text[i] != stringB->text[i])
-        {
-            return false;
-        }
-    }
-
-    return true;
+    return strcmp(stringA->text, stringB->text) == 0;
 }
 
 String* cloneString(String* string)
@@ -122,13 +113,9 @@ void concatenateStrings(String* destination, String* source)
         return;
     }
 
-    int currentLength = getStringLength(destination);
     int newLength = getStringLength(destination) + getStringLength(source);
     resizeString(destination, newLength);
-    for (int i = currentLength; i < newLength; i++)
-    {
-        destination->text[i] = source->text[i - currentLength];
-    }
+    strcat(destination->text, source->text);
 }
 
 String* getSubstring(String* string, int indexOfBegin, int indexOfEnd)
@@ -156,11 +143,8 @@ String* getSubstring(String* string, int indexOfBegin, int indexOfEnd)
     }
 
     String* substring = createString(indexOfEnd - indexOfBegin + 1);
-    for (int i = 0; i < indexOfEnd - indexOfBegin + 1; i++)
-    {
-        substring->text[i] = string->text[indexOfBegin + i];
-    }
     substring->length = indexOfEnd - indexOfBegin + 1;
+    strncpy(substring->text, string->text + indexOfBegin, substring->length);
     return substring;
 }
 
