@@ -12,4 +12,5 @@ void pushToHashTable(String* key, int value, HashTable* hashtable);
 int getValueFromHashTable(String* key, HashTable* hashtable);
 void deleteBucketFromHashTable(String* key, HashTable* hashtable);
 void changeBucketInHashTable(String* key, int newValue, HashTable* hashtable);
+void printHashTable(HashTable* hashtable);
 void printHashTableInfo(HashTable* hashtable);
