@@ -6,11 +6,10 @@ struct HashTable;
 typedef struct HashTable HashTable;
 
 HashTable* createHashTable(int size);
-void deleteHashTable(HashTable* hashTable);
-bool isInHashTable(String* key, HashTable* hashTable);
-void pushToHashTable(String* key, int value, HashTable* hashTable);
-int getValueFromHashTable(String* key, HashTable* hashTable);
-void deleteBucketFromHashTable(String* key, HashTable* hashTable);
-void changeBucketInHashTable(String* key, int newValue, HashTable* hashTable);
-bool setMaxLoadFactor(double newMaxLoadFactor, HashTable* hashTable);
-void printHashTableInfo(HashTable* hashTable);
+void deleteHashTable(HashTable* hashtable);
+bool isInHashTable(String* key, HashTable* hashtable);
+void pushToHashTable(String* key, int value, HashTable* hashtable);
+int getValueFromHashTable(String* key, HashTable* hashtable);
+void deleteBucketFromHashTable(String* key, HashTable* hashtable);
+void changeBucketInHashTable(String* key, int newValue, HashTable* hashtable);
+void printHashTableInfo(HashTable* hashtable);
