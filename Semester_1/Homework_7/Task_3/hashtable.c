@@ -1,7 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 #include "hashtable.h"
 #include "ADTstring.h"
+
+const int primeNumber = 53;
 
 struct Bucket
 {
@@ -100,7 +103,7 @@ void deleteHashTable(HashTable* hashtable)
     free(hashtable);
 }
 
-int getHash(String* key, int base)
+unsigned int getHash(String* key, int base)
 {
     if ((key == NULL) || (base < 1))
     {
@@ -108,10 +111,12 @@ int getHash(String* key, int base)
     }
 
     char* string = convertStringToCharPointer(key);
-    int hash = 0;
+    unsigned int hash = 0;
     for (int i = 0; string[i] != '\0'; i++)
     {
-        hash = (hash + (i + 1) * string[i]) % base;
+        hash = (unsigned int) (((unsigned long long) hash +
+                                (unsigned long long) string[i] * (unsigned long long) pow(primeNumber, i)) %
+                                (unsigned long long) base);
     }
     return hash;
 }
@@ -123,7 +128,7 @@ Bucket* searchForBucket(String* key, HashTable* hashtable)
         return NULL;
     }
 
-    int hash = getHash(key, hashtable->capacity);
+    unsigned int hash = getHash(key, hashtable->capacity);
     int attempts = 0;
     while (hashtable->arrayOfBuckets[hash] != NULL)
     {
@@ -151,7 +156,7 @@ void pushBucket(Bucket* bucket, Bucket** arrayOfBuckets, int base)
         return;
     }
 
-    int hash = getHash(bucket->key, base);
+    unsigned int hash = getHash(bucket->key, base);
     int attempts = 0;
     while (isExist(arrayOfBuckets[hash]))
     {
