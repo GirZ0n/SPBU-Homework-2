@@ -52,7 +52,7 @@ int main()
     HashTable* hashtable = createHashTable(50);
     int entries = 0;
 
-    while(feof(text) == false)
+    while (feof(text) == false)
     {
         char* word = getWordFromFile(text);
         formatWord(word);
@@ -61,7 +61,7 @@ int main()
             String* keyWord = convertStringToStructString(word);
             if (!isInHashTable(keyWord, hashtable))
             {
-                pushToHashTable(keyWord, 1, hashtable);
+                pushBucketToHashTable(keyWord, 1, hashtable);
             }
             else
             {

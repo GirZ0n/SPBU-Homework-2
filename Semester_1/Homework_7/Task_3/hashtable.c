@@ -53,7 +53,7 @@ Bucket* copyBucket(Bucket* bucket)
 
 bool isExist(Bucket* bucket)
 {
-    return (bucket != NULL) && (bucket->isDeleted == false);
+    return bucket != NULL && bucket->isDeleted == false;
 }
 
 
@@ -66,19 +66,19 @@ struct HashTable
     double maxLoadFactor;
 };
 
-HashTable* createHashTable(int size)
+HashTable* createHashTable(int capacity)
 {
-    if (size <= 0)
+    if (capacity <= 0)
     {
         return NULL;
     }
 
     HashTable* hashTable = malloc(sizeof(HashTable));
-    hashTable->capacity = size;
+    hashTable->capacity = capacity;
     hashTable->size = 0;
     hashTable->maxLoadFactor = 0.7; // Recommended level for open addressing hash tables
-    hashTable->arrayOfBuckets = malloc(size * sizeof(Bucket*));
-    for (int i = 0; i < size; i++)
+    hashTable->arrayOfBuckets = malloc(capacity * sizeof(Bucket*));
+    for (int i = 0; i < capacity; i++)
     {
         hashTable->arrayOfBuckets[i] = NULL;
     }
@@ -123,7 +123,7 @@ unsigned int getHash(String* key, int base)
 
 Bucket* searchForBucket(String* key, HashTable* hashtable)
 {
-    if ((hashtable == NULL) || (key == NULL))
+    if (hashtable == NULL || key == NULL)
     {
         return NULL;
     }
@@ -185,7 +185,7 @@ void expandHashTable(HashTable* hashtable)
     }
 
     int newCapacity = hashtable->capacity * 2;
-    Bucket** newArrayOfBuckets = malloc(newCapacity * sizeof(Bucket *));
+    Bucket** newArrayOfBuckets = malloc(newCapacity * sizeof(Bucket*));
     for (int i = 0; i < newCapacity; i++)
     {
         newArrayOfBuckets[i] = NULL;
@@ -195,8 +195,8 @@ void expandHashTable(HashTable* hashtable)
     {
         if (isExist(hashtable->arrayOfBuckets[i]))
         {
-            Bucket *newHashBucket = copyBucket(hashtable->arrayOfBuckets[i]);
-            pushBucket(newHashBucket, newArrayOfBuckets, newCapacity);
+            Bucket *newBucket = copyBucket(hashtable->arrayOfBuckets[i]);
+            pushBucket(newBucket, newArrayOfBuckets, newCapacity);
         }
     }
 
@@ -213,7 +213,7 @@ void expandHashTable(HashTable* hashtable)
     hashtable->capacity = newCapacity;
 }
 
-void pushToHashTable(String* key, int value, HashTable* hashtable)
+void pushBucketToHashTable(String* key, int value, HashTable* hashtable)
 {
     if (key == NULL || hashtable == NULL || isInHashTable(key, hashtable))
     {
@@ -268,7 +268,10 @@ void changeBucketInHashTable(String* key, int newValue, HashTable* hashtable)
     }
 
     Bucket* oldBucket = searchForBucket(key, hashtable);
-    oldBucket->value = newValue;
+    if (oldBucket != NULL)
+    {
+        oldBucket->value = newValue;
+    }
 }
 
 void printHashTable(HashTable* hashtable)
@@ -293,7 +296,7 @@ void printHashTableInfo(HashTable* hashtable)
 {
     if (hashtable == NULL)
     {
-        printf("Hashtable doesn't exist");
+        printf("Hash table doesn't exist");
         return;
     }
 
