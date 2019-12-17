@@ -55,9 +55,23 @@ int main()
     int numberOfLines = 0;
     printf("Enter the number of lines:\n");
     scanf("%d", &numberOfLines);
+
+    if (numberOfLines < 1)
+    {
+        printf("Error.");
+        return 0;
+    }
+
     int numberOfColumns = 0;
     printf("Enter the number of columns:\n");
     scanf("%d", &numberOfColumns);
+
+    if (numberOfColumns < 1)
+    {
+        printf("Error.");
+        return 0;
+    }
+
     double** array = createArray(numberOfLines, numberOfColumns);
     printf("Enter the array: \n");
     for (int i = 0; i < numberOfLines; i++)
