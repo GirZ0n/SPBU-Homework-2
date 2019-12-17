@@ -1,17 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int** createArray(int numberOfLines, int numberOfColumns)
+double** createArray(int numberOfLines, int numberOfColumns)
 {
-    int** array = malloc(numberOfLines * sizeof(int*));
+    double** array = malloc(numberOfLines * sizeof(double*));
     for (int i = 0; i < numberOfLines; i++)
     {
-        array[i] = calloc(numberOfColumns, sizeof(int));
+        array[i] = calloc(numberOfColumns, sizeof(double));
     }
     return array;
 }
 
-void deleteArray(int numberOfLines, int** array)
+void deleteArray(int numberOfLines, double** array)
 {
     for (int i = 0; i < numberOfLines; i++)
     {
@@ -20,14 +20,14 @@ void deleteArray(int numberOfLines, int** array)
     free(array);
 }
 
-int getMinimum(int elementA, int elementB)
+double getMinimum(double elementA, double elementB)
 {
     return elementA < elementB ? elementA : elementB;
 }
 
-int getMinimumInLine(int indexOfLine, int numberOfColumns, int** array)
+double getMinimumInLine(int indexOfLine, int numberOfColumns, double** array)
 {
-    int minimumInLine = array[indexOfLine][0];
+    double minimumInLine = array[indexOfLine][0];
     for (int j = 1; j < numberOfColumns; j++)
     {
         minimumInLine = getMinimum(minimumInLine, array[indexOfLine][j]);
@@ -35,14 +35,14 @@ int getMinimumInLine(int indexOfLine, int numberOfColumns, int** array)
     return minimumInLine;
 }
 
-int getMaximum(int elementA, int elementB)
+double getMaximum(double elementA, double elementB)
 {
     return elementA > elementB ? elementA : elementB;
 }
 
-int getMaximumInColumn(int numberOfLines, int indexOfColumn, int** array)
+double getMaximumInColumn(int numberOfLines, int indexOfColumn, double** array)
 {
-    int maximumInLine = array[0][indexOfColumn];
+    double maximumInLine = array[0][indexOfColumn];
     for (int i = 1; i < numberOfLines; i++)
     {
         maximumInLine = getMaximum(maximumInLine, array[i][indexOfColumn]);
@@ -58,19 +58,20 @@ int main()
     int numberOfColumns = 0;
     printf("Enter the number of columns:\n");
     scanf("%d", &numberOfColumns);
-    int** array = createArray(numberOfLines, numberOfColumns);
+    double** array = createArray(numberOfLines, numberOfColumns);
     printf("Enter the array: \n");
     for (int i = 0; i < numberOfLines; i++)
     {
         for (int j = 0; j < numberOfColumns; j++)
         {
-            scanf("%d", &array[i][j]);
+            scanf("%lf", &array[i][j]);
         }
     }
 
     printf("Saddle points:\n");
-    int minimumInLine = 0;
-    int maximumInColumn = 0;
+    double minimumInLine = 0;
+    double maximumInColumn = 0;
+    int count = 0;
     for (int i = 0; i < numberOfLines; i++)
     {
         minimumInLine = getMinimumInLine(i, numberOfColumns, array);
@@ -79,9 +80,15 @@ int main()
             maximumInColumn = getMaximumInColumn(numberOfLines, j, array);
             if (array[i][j] == minimumInLine && array[i][j] == maximumInColumn)
             {
-                printf("%d\n", array[i][j]);
+                printf("%lf (%d:%d)\n", array[i][j], i, j);
+                count++;
             }
         }
+    }
+
+    if (count == 0)
+    {
+        printf("There are no such points.");
     }
 
     deleteArray(numberOfLines, array);
