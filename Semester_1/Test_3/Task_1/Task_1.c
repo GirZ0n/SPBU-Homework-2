@@ -43,11 +43,6 @@ int main()
     }
 
     qsort(array, size, sizeof(int), byAscendingOrder);
-    for (int i = 0; i < size; i++)
-    {
-        printf("%d ", array[i]);
-    }
-    printf("\n");
 
     printf("Result:\n");
     printf("Form: number - amount\n");
