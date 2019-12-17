@@ -42,12 +42,12 @@ double getMaximum(double elementA, double elementB)
 
 double getMaximumInColumn(int numberOfLines, int indexOfColumn, double** array)
 {
-    double maximumInLine = array[0][indexOfColumn];
+    double maximumInColumn = array[0][indexOfColumn];
     for (int i = 1; i < numberOfLines; i++)
     {
-        maximumInLine = getMaximum(maximumInLine, array[i][indexOfColumn]);
+        maximumInColumn = getMaximum(maximumInColumn, array[i][indexOfColumn]);
     }
-    return maximumInLine;
+    return maximumInColumn;
 }
 
 int main()
@@ -58,7 +58,7 @@ int main()
 
     if (numberOfLines < 1)
     {
-        printf("Error.");
+        printf("Error. Enter the correct number (> 0).");
         return 0;
     }
 
@@ -68,7 +68,7 @@ int main()
 
     if (numberOfColumns < 1)
     {
-        printf("Error.");
+        printf("Error. Enter the correct number (> 0).");
         return 0;
     }
 
