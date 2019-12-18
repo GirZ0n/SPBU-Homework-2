@@ -18,24 +18,28 @@ String* createString(int size)
 
 void resizeString(String* string, int newSize)
 {
-    if (string == NULL)
+    if (string == NULL || string->text == NULL)
     {
         return;
     }
 
-    string->text = realloc(string->text, newSize + 1);
+    char* newText = calloc(newSize + 1, sizeof(char));
+    strcpy(newText, string->text);
+    free(string->text);
+    string->text = newText;
     string->length = newSize;
 }
 
 void deleteString(String* string)
 {
-    if (string == NULL)
+    if (string != NULL)
     {
-        return;
+        if (string->text != NULL)
+        {
+            free(string->text);
+        }
+        free(string);
     }
-
-    free(string->text);
-    free(string);
 }
 
 int getStringLength(String *string)

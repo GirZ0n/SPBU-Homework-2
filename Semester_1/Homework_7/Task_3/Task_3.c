@@ -37,6 +37,7 @@ char* getWordFromFile(FILE* input)
         size++;
         inputChar = (char) fgetc(input);
     }
+    word[size] = '\0';
     return word;
 }
 
