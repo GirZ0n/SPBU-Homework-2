@@ -91,6 +91,13 @@ bool closeBracketProcessing(char* postfixNotation, int* sizeOfPostfix, StackOfCh
     return true;
 }
 
+void numberProcessing(char* infixNotation, int* indexOfStart, char** postfixNotation, int* sizeOfPostfix,
+                      bool* isNextNumber)
+{
+    writeNumberToString(infixNotation, indexOfStart, *postfixNotation, sizeOfPostfix);
+    *isNextNumber = false;
+}
+
 void errorProcessing(bool* isError, char* postfixNotation, StackOfChar* stack, char* errorMessage)
 {
     printf("%s", errorMessage);
@@ -131,18 +138,11 @@ char* convertInfixToPostfix(char* infixNotation, bool* isError)
         }
         else if (isUnaryNegative(infixNotation, i) || isDigit(infixNotation[i]))
         {
-            if (!isNextNumber)
+            numberProcessing(infixNotation, &i, &postfixNotation, &sizeOfPostfix, &isNextNumber);
+            if (isNextNumber)
             {
-                printf("Missing operator. ");
-                *isError = true;
-                deleteStackOfChar(stack);
-                free(postfixNotation);
+                errorProcessing(isError, postfixNotation, stack, "Missing operator. ");
                 return "";
-            }
-            else
-            {
-                writeNumberToString(infixNotation, &i, postfixNotation, &sizeOfPostfix);
-                isNextNumber = false;
             }
         }
         else if (infixNotation[i] == ' ')
