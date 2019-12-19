@@ -25,6 +25,10 @@ double getResultOfOperation(double valueA, double valueB, char operator)
         {
             return valueA / valueB;
         }
+        default:
+        {
+            return 0;
+        }
     }
 }
 
@@ -174,7 +178,7 @@ char* getStringFromConsole()
     scanf("%c", &input);
     while (input != '\n')
     {
-        if (length == capacity)
+        if (length + 1 == capacity)
         {
             capacity *= 2;
             string = realloc(string, capacity * sizeof(char));
@@ -195,7 +199,7 @@ int main()
     bool isError = false;
     char* postfixNotation = convertInfixToPostfix(infixNotation, &isError);
 
-    if (isError == true)
+    if (isError)
     {
         printf("Try again.");
         free(infixNotation);
