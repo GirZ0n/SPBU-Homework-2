@@ -39,6 +39,8 @@ char* getStringFromConsole()
         length++;
         scanf("%c", &input);
     }
+    string = realloc(string, (length + 1) * sizeof(char));
+    string[length] = '\0';
     return string;
 }
 
