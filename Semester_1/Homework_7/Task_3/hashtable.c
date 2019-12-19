@@ -53,7 +53,7 @@ Bucket* copyBucket(Bucket* bucket)
 
 bool isExist(Bucket* bucket)
 {
-    return bucket != NULL && bucket->isDeleted == false;
+    return bucket != NULL && !bucket->isDeleted;
 }
 
 
@@ -132,7 +132,7 @@ Bucket* searchForBucket(String* key, HashTable* hashtable)
     int attempts = 0;
     while (hashtable->arrayOfBuckets[hash] != NULL)
     {
-        if (hashtable->arrayOfBuckets[hash]->isDeleted == false &&
+        if (!hashtable->arrayOfBuckets[hash]->isDeleted &&
             areStringsEqual(hashtable->arrayOfBuckets[hash]->key, key))
         {
             return hashtable->arrayOfBuckets[hash];
