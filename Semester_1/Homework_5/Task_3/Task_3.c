@@ -46,39 +46,55 @@ bool fillingPostfixNotation(char* postfixNotation, int* sizeOfPostfix, StackOfCh
     return true;
 }
 
+void operatorProcessing(char* infixNotation, int currentIndex, char* postfixNotation, int* sizeOfPostfix,
+                        StackOfChar* stack)
+{
+    while (!stackOfCharIsEmpty(stack) && isLessPriority(infixNotation[currentIndex], stackOfCharTop(stack))
+           && !isOpenBracket(stackOfCharTop(stack)))
+    {
+        postfixNotation[(*sizeOfPostfix)++] = popChar(stack);
+        postfixNotation[(*sizeOfPostfix)++] = ' ';
+    }
+
+    pushChar(infixNotation[currentIndex], stack);
+}
+
+bool closeBracketProcessing(char* postfixNotation, int* sizeOfPostfix, StackOfChar* stack)
+{
+    while (!stackOfCharIsEmpty(stack) && !isOpenBracket(stackOfCharTop(stack)))
+    {
+        postfixNotation[(*sizeOfPostfix)++] = popChar(stack);
+        postfixNotation[(*sizeOfPostfix)++] = ' ';
+    }
+
+    if (!stackOfCharIsEmpty(stack))
+    {
+        popChar(stack);
+    }
+    else
+    {
+        return false;
+    }
+
+    return true;
+}
+
 char* convertInfixToPostfix(char* infixNotation, bool* isError)
 {
     StackOfChar* stack = createStackOfChar();
     int sizeOfPostfix = 0;
-    char* postfixNotation = calloc(strlen(infixNotation) * 2, sizeof(char));
+    char* postfixNotation = calloc(strlen(infixNotation) * 2 + 1, sizeof(char));
 
     int inputStringLength = (int) strlen(infixNotation);
     for (int i = 0; i < inputStringLength; i++)
     {
         if (isOperator(infixNotation, i))
         {
-            while (!stackOfCharIsEmpty(stack) && isLessPriority(infixNotation[i], stackOfCharTop(stack))
-                   && !isOpenBracket(stackOfCharTop(stack)))
-            {
-                postfixNotation[sizeOfPostfix++] = popChar(stack);
-                postfixNotation[sizeOfPostfix++] = ' ';
-            }
-
-            pushChar(infixNotation[i], stack);
+            operatorProcessing(infixNotation, i, postfixNotation, &sizeOfPostfix, stack);
         }
         else if (isCloseBracket(infixNotation[i]))
         {
-            while (!stackOfCharIsEmpty(stack) && !isOpenBracket(stackOfCharTop(stack)))
-            {
-                postfixNotation[sizeOfPostfix++] = popChar(stack);
-                postfixNotation[sizeOfPostfix++] = ' ';
-            }
-
-            if (!stackOfCharIsEmpty(stack))
-            {
-                popChar(stack);
-            }
-            else
+            if (!closeBracketProcessing(postfixNotation, &sizeOfPostfix, stack))
             {
                 printf("Missing bracket.");
                 *isError = true;
