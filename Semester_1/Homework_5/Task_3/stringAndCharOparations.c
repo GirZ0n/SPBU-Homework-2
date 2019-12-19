@@ -102,8 +102,8 @@ char* getNumberAsString(char* string, int* indexOfStart)
         size++;
         (*indexOfStart)++;
     }
-
-    number = realloc(number, size + 1);
+    number = realloc(number, sizeof(char) * (size + 1));
+    number[size] = '\0';
     return number;
 }
 

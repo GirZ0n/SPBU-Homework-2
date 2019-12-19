@@ -163,6 +163,7 @@ char* getStringFromConsole()
         length++;
         scanf("%c", &input);
     }
+    string[length] = '\0';
     return string;
 }
 
