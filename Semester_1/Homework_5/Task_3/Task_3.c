@@ -91,11 +91,17 @@ bool closeBracketProcessing(char* postfixNotation, int* sizeOfPostfix, StackOfCh
     return true;
 }
 
-void numberProcessing(char* infixNotation, int* indexOfStart, char** postfixNotation, int* sizeOfPostfix,
+bool numberProcessing(char* infixNotation, int* indexOfStart, char** postfixNotation, int* sizeOfPostfix,
                       bool* isNextNumber)
 {
+    if (!(*isNextNumber))
+    {
+        return false;
+    }
+
     writeNumberToString(infixNotation, indexOfStart, *postfixNotation, sizeOfPostfix);
     *isNextNumber = false;
+    return true;
 }
 
 void errorProcessing(bool* isError, char* postfixNotation, StackOfChar* stack, char* errorMessage)
@@ -138,8 +144,7 @@ char* convertInfixToPostfix(char* infixNotation, bool* isError)
         }
         else if (isUnaryNegative(infixNotation, i) || isDigit(infixNotation[i]))
         {
-            numberProcessing(infixNotation, &i, &postfixNotation, &sizeOfPostfix, &isNextNumber);
-            if (isNextNumber)
+            if (!numberProcessing(infixNotation, &i, &postfixNotation, &sizeOfPostfix, &isNextNumber))
             {
                 errorProcessing(isError, postfixNotation, stack, "Missing operator. ");
                 return "";
@@ -156,6 +161,12 @@ char* convertInfixToPostfix(char* infixNotation, bool* isError)
         }
     }
 
+    if (isNextNumber)
+    {
+        errorProcessing(isError, postfixNotation, stack, "Missing number. ");
+        return " ";
+    }
+
     if (fillingPostfixNotation(postfixNotation, &sizeOfPostfix, stack) == false)
     {
         errorProcessing(isError, postfixNotation, stack, "Missing bracket. ");
@@ -166,6 +177,14 @@ char* convertInfixToPostfix(char* infixNotation, bool* isError)
     return postfixNotation;
 }
 
+void operatorProcessingInCalculatePostfixNotation(char* postfixNotation, int index, StackOfDouble* stack)
+{
+    double operandB = popDouble(stack);
+    double operandA = popDouble(stack);
+    double result = getResultOfOperation(operandA, operandB, postfixNotation[index]);
+    pushDouble(result, stack);
+}
+
 double calculatePostfixNotation(char* postfixNotation)
 {
     struct StackOfDouble* stack = createStackOfDouble();
@@ -174,10 +193,7 @@ double calculatePostfixNotation(char* postfixNotation)
     {
         if (isOperator(postfixNotation, i))
         {
-            double operandB = popDouble(stack);
-            double operandA = popDouble(stack);
-            double result = getResultOfOperation(operandA, operandB, postfixNotation[i]);
-            pushDouble(result, stack);
+            operatorProcessingInCalculatePostfixNotation(postfixNotation, i, stack);
         }
         else if (isUnaryNegative(postfixNotation, i) || isDigit(postfixNotation[i]))
         {
@@ -194,6 +210,15 @@ double calculatePostfixNotation(char* postfixNotation)
     return result;
 }
 
+void expandString(int length, int* capacity, char** string)
+{
+    if (length + 1 == *capacity)
+    {
+        *capacity *= 2;
+        *string = realloc(*string, *capacity * sizeof(char));
+    }
+}
+
 char* getStringFromConsole()
 {
     int length = 0;
@@ -203,12 +228,7 @@ char* getStringFromConsole()
     scanf("%c", &input);
     while (input != '\n')
     {
-        if (length + 1 == capacity)
-        {
-            capacity *= 2;
-            string = realloc(string, capacity * sizeof(char));
-        }
-
+        expandString(length, &capacity, &string);
         string[length] = input;
         length++;
         scanf("%c", &input);

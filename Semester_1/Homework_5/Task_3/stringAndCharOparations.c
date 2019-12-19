@@ -81,6 +81,15 @@ double getNumberAsDouble(char* string, int* indexOfCurrentPosition)
     return (double) number;
 }
 
+void expandNumber(int size, int* capacity, char** number)
+{
+    if (size == *capacity)
+    {
+        *capacity *= 2;
+        *number = realloc(*number, *capacity * sizeof(char));
+    }
+}
+
 char* getNumberAsString(char* string, int* indexOfStart)
 {
     int size = 0;
@@ -92,12 +101,7 @@ char* getNumberAsString(char* string, int* indexOfStart)
     int inputLength = (int) strlen(string);
     while (*indexOfStart + 1 < inputLength && isDigit(string[*indexOfStart + 1]))
     {
-        if (size == capacity)
-        {
-            capacity *= 2;
-            number = realloc(number, capacity * sizeof(char));
-        }
-
+        expandNumber(size, &capacity, &number);
         number[size] = string[*indexOfStart + 1];
         size++;
         (*indexOfStart)++;
