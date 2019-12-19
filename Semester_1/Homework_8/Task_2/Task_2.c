@@ -168,14 +168,14 @@ int main()
     }
 
     int numberOfCities = 0;
-    if (getNumber(&numberOfCities, input) == false)
+    if (!getNumber(&numberOfCities, input))
     {
         printf("Invalid number of cities.");
         return 0;
     }
 
     int numberOfRoads = 0;
-    if (getNumber(&numberOfRoads, input) == false)
+    if (!getNumber(&numberOfRoads, input))
     {
         printf("Invalid number of roads.");
         return 0;
@@ -183,14 +183,14 @@ int main()
 
     int** distanceBetweenCities =
             createMatrix(numberOfCities + 1, numberOfCities + 1, INT_MAX);
-    if (graphInitialization(numberOfRoads, numberOfCities, distanceBetweenCities, input) == false)
+    if (!graphInitialization(numberOfRoads, numberOfCities, distanceBetweenCities, input))
     {
         printf("Invalid line.");
         return 0;
     }
 
     int numberOfCapitals = 0;
-    if (getNumber(&numberOfCapitals, input) == false || numberOfCapitals > numberOfCities)
+    if (!getNumber(&numberOfCapitals, input) || numberOfCapitals > numberOfCities)
     {
         printf("Invalid number of capitals.");
         return 0;
@@ -200,7 +200,7 @@ int main()
     int numberOfUnusedCities = numberOfCities - numberOfCapitals;
 
     int** states = createMatrix(numberOfCapitals, numberOfCities - numberOfCapitals + 1, 0);
-    if (statesInitialization(numberOfCapitals, numberOfCities, isCityFree, states, input) == false)
+    if (!statesInitialization(numberOfCapitals, numberOfCities, isCityFree, states, input))
     {
         printf("Invalid capital.");
         return 0;
