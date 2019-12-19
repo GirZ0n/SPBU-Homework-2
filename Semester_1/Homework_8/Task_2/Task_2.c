@@ -186,6 +186,7 @@ int main()
     if (!graphInitialization(numberOfRoads, numberOfCities, distanceBetweenCities, input))
     {
         printf("Invalid line.");
+        deleteMatrix(distanceBetweenCities, numberOfCities + 1);
         return 0;
     }
 
@@ -193,6 +194,7 @@ int main()
     if (!getNumber(&numberOfCapitals, input) || numberOfCapitals > numberOfCities)
     {
         printf("Invalid number of capitals.");
+        deleteMatrix(distanceBetweenCities, numberOfCities + 1);
         return 0;
     }
 
@@ -203,6 +205,9 @@ int main()
     if (!statesInitialization(numberOfCapitals, numberOfCities, isCityFree, states, input))
     {
         printf("Invalid capital.");
+        deleteMatrix(distanceBetweenCities, numberOfCities + 1);
+        free(isCityFree);
+        deleteMatrix(states, numberOfCapitals);
         return 0;
     }
 
