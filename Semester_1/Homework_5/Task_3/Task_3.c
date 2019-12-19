@@ -82,6 +82,8 @@ char* convertInfixToPostfix(char* infixNotation, bool* isError)
             {
                 printf("Missing bracket.");
                 *isError = true;
+                deleteStackOfChar(stack);
+                free(postfixNotation);
                 return " ";
             }
         }
@@ -101,6 +103,8 @@ char* convertInfixToPostfix(char* infixNotation, bool* isError)
         {
             printf("Invalid character.");
             *isError = true;
+            deleteStackOfChar(stack);
+            free(postfixNotation);
             return " ";
         }
     }
@@ -109,6 +113,8 @@ char* convertInfixToPostfix(char* infixNotation, bool* isError)
     {
         printf("Missing bracket.");
         *isError = true;
+        deleteStackOfChar(stack);
+        free(postfixNotation);
         return " ";
     }
 
@@ -156,7 +162,7 @@ char* getStringFromConsole()
         if (length == capacity)
         {
             capacity *= 2;
-            string = realloc(string, capacity);
+            string = realloc(string, capacity * sizeof(char));
         }
 
         string[length] = input;
@@ -169,7 +175,6 @@ char* getStringFromConsole()
 
 int main()
 {
-
     printf("Enter an expression in the infix notation:\n");
     char* infixNotation = getStringFromConsole();
     bool isError = false;
@@ -178,6 +183,7 @@ int main()
     if (isError == true)
     {
         printf("Try again.");
+        free(infixNotation);
         return 0;
     }
 
