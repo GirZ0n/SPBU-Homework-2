@@ -79,6 +79,14 @@ bool closeBracketProcessing(char* postfixNotation, int* sizeOfPostfix, StackOfCh
     return true;
 }
 
+void errorProcessing(bool* isError, char* postfixNotation, StackOfChar* stack, char* errorMessage)
+{
+    printf("%s", errorMessage);
+    *isError = true;
+    deleteStackOfChar(stack);
+    free(postfixNotation);
+}
+
 char* convertInfixToPostfix(char* infixNotation, bool* isError)
 {
     StackOfChar* stack = createStackOfChar();
@@ -96,10 +104,7 @@ char* convertInfixToPostfix(char* infixNotation, bool* isError)
         {
             if (!closeBracketProcessing(postfixNotation, &sizeOfPostfix, stack))
             {
-                printf("Missing bracket.");
-                *isError = true;
-                deleteStackOfChar(stack);
-                free(postfixNotation);
+                errorProcessing(isError, postfixNotation, stack, "Missing bracket. ");
                 return " ";
             }
         }
@@ -117,20 +122,14 @@ char* convertInfixToPostfix(char* infixNotation, bool* isError)
         }
         else
         {
-            printf("Invalid character.");
-            *isError = true;
-            deleteStackOfChar(stack);
-            free(postfixNotation);
+            errorProcessing(isError, postfixNotation, stack, "Invalid character. ");
             return " ";
         }
     }
 
     if (fillingPostfixNotation(postfixNotation, &sizeOfPostfix, stack) == false)
     {
-        printf("Missing bracket.");
-        *isError = true;
-        deleteStackOfChar(stack);
-        free(postfixNotation);
+        errorProcessing(isError, postfixNotation, stack, "Missing bracket. ");
         return " ";
     }
 
