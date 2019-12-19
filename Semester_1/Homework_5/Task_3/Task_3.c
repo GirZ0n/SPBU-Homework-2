@@ -50,8 +50,8 @@ bool fillingPostfixNotation(char* postfixNotation, int* sizeOfPostfix, StackOfCh
     return true;
 }
 
-void operatorProcessing(char* infixNotation, int currentIndex, char* postfixNotation, int* sizeOfPostfix,
-                        StackOfChar* stack)
+bool operatorProcessing(char* infixNotation, int currentIndex, char* postfixNotation, int* sizeOfPostfix,
+                        StackOfChar* stack, bool* isNextNumber)
 {
     while (!stackOfCharIsEmpty(stack) && isLessPriority(infixNotation[currentIndex], stackOfCharTop(stack))
            && !isOpenBracket(stackOfCharTop(stack)))
@@ -61,6 +61,14 @@ void operatorProcessing(char* infixNotation, int currentIndex, char* postfixNota
     }
 
     pushChar(infixNotation[currentIndex], stack);
+
+    if (*isNextNumber)
+    {
+        return false;
+    }
+
+    *isNextNumber = true;
+    return true;
 }
 
 bool closeBracketProcessing(char* postfixNotation, int* sizeOfPostfix, StackOfChar* stack)
@@ -95,6 +103,7 @@ char* convertInfixToPostfix(char* infixNotation, bool* isError)
 {
     StackOfChar* stack = createStackOfChar();
     int sizeOfPostfix = 0;
+    bool isNextNumber = true;
     char* postfixNotation = calloc(strlen(infixNotation) * 2 + 1, sizeof(char));
 
     int inputStringLength = (int) strlen(infixNotation);
@@ -102,7 +111,11 @@ char* convertInfixToPostfix(char* infixNotation, bool* isError)
     {
         if (isOperator(infixNotation, i))
         {
-            operatorProcessing(infixNotation, i, postfixNotation, &sizeOfPostfix, stack);
+            if(!operatorProcessing(infixNotation, i, postfixNotation, &sizeOfPostfix, stack, &isNextNumber))
+            {
+                errorProcessing(isError, postfixNotation, stack, "Missing number. ");
+                return " ";
+            }
         }
         else if (isCloseBracket(infixNotation[i]))
         {
@@ -118,7 +131,19 @@ char* convertInfixToPostfix(char* infixNotation, bool* isError)
         }
         else if (isUnaryNegative(infixNotation, i) || isDigit(infixNotation[i]))
         {
-            writeNumberToString(infixNotation, &i, postfixNotation, &sizeOfPostfix);
+            if (!isNextNumber)
+            {
+                printf("Missing operator. ");
+                *isError = true;
+                deleteStackOfChar(stack);
+                free(postfixNotation);
+                return "";
+            }
+            else
+            {
+                writeNumberToString(infixNotation, &i, postfixNotation, &sizeOfPostfix);
+                isNextNumber = false;
+            }
         }
         else if (infixNotation[i] == ' ')
         {
