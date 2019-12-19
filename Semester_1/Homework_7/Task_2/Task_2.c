@@ -129,6 +129,7 @@ void test()
     if (testFile == NULL)
     {
         printf("Can not open the file");
+        deleteString(testString);
         return;
     }
     getStringFromFileTest(testFile);
