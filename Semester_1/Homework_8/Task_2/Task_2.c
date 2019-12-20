@@ -158,26 +158,46 @@ void cityDistribution(int* numberOfUnusedCities, int numberOfCities, int numberO
     }
 }
 
-int main()
+bool dataInit(FILE* input, int* numberOfCities, int* numberOfRoads)
 {
-    FILE* input = fopen("input.txt", "r");
     if (input == NULL)
     {
         printf("Can't open the file.");
-        return 0;
+        return false;
     }
 
-    int numberOfCities = 0;
-    if (!getNumber(&numberOfCities, input))
+    if (!getNumber(numberOfCities, input))
     {
         printf("Invalid number of cities.");
-        return 0;
+        return false;
     }
 
-    int numberOfRoads = 0;
-    if (!getNumber(&numberOfRoads, input))
+    if (!getNumber(numberOfRoads, input))
     {
         printf("Invalid number of roads.");
+        return false;
+    }
+
+    return true;
+}
+
+void freeMemory(int** distanceBetweenCities, int numberOfCities, bool* isCityFree, int** states, int numberOfCapitals,
+                FILE* input)
+{
+    deleteMatrix(distanceBetweenCities, numberOfCities + 1);
+    free(isCityFree);
+    deleteMatrix(states, numberOfCapitals);
+    fclose(input);
+}
+
+int main()
+{
+    FILE* input = fopen("input.txt", "r");
+    int numberOfCities = 0;
+    int numberOfRoads = 0;
+
+    if (!dataInit(input, &numberOfCities, &numberOfRoads))
+    {
         return 0;
     }
 
@@ -215,10 +235,6 @@ int main()
                      distanceBetweenCities, isCityFree);
 
     outputResult(numberOfCapitals, states);
-
-    deleteMatrix(distanceBetweenCities, numberOfCities + 1);
-    free(isCityFree);
-    deleteMatrix(states, numberOfCapitals);
-    fclose(input);
+    freeMemory(distanceBetweenCities, numberOfCities, isCityFree, states, numberOfCapitals, input);
     return 0;
 }
