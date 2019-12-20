@@ -29,29 +29,48 @@ void getNumberOfStudents(int* numberOfUsers)
     cleanStdin();
 }
 
-bool checkStudents(int studentA, int studentB, int numberOfVariablesRead, int numberOfStudents)
+bool checkInput(int studentA, int studentB, int numberOfVariablesRead)
 {
     if (numberOfVariablesRead != 2 || studentA < 1 || (studentB < 1 && studentB != -1))
     {
         return false;
     }
+    return true;
+}
 
+bool checkStudentNumber(int studentA, int studentB, int numberOfStudents)
+{
     if (studentA > numberOfStudents || studentB > numberOfStudents)
     {
         return false;
     }
+    return true;
+}
 
-    if (studentA > 3 && studentA == studentB)
-    {
-        return false;
-    }
-
+bool checkFirstThreeStudents(int studentA, int studentB)
+{
     if (studentA <= 3 && studentA != studentB)
     {
         return false;
     }
-
     return true;
+}
+
+bool checkOtherStudents(int studentA, int studentB)
+{
+    if (studentA > 3 && studentA == studentB)
+    {
+        return false;
+    }
+    return true;
+}
+
+bool checkStudents(int studentA, int studentB, int numberOfVariablesRead, int numberOfStudents)
+{
+    return checkInput(studentA, studentB, numberOfVariablesRead) &&
+           checkStudentNumber(studentA, studentB, numberOfStudents) &&
+           checkFirstThreeStudents(studentA, studentB) &&
+           checkOtherStudents(studentA, studentB);
 }
 
 void getStudents(int* studentA, int* studentB, int numberOfStudents)
@@ -66,15 +85,10 @@ void getStudents(int* studentA, int* studentB, int numberOfStudents)
     cleanStdin();
 }
 
-int main()
+int* helpedCheatInit(int numberOfStudents)
 {
-    printf("Enter the number of student (number >= 3):\n");
-    int numberOfStudent = 0;
-    getNumberOfStudents(&numberOfStudent);
-
-    // helpedCheat[i] = the number of the student whose student "i" wrote off.
-    int* helpedCheat = malloc(sizeof(int) * (numberOfStudent + 1));
-    for (int i = 0; i < numberOfStudent + 1; i++)
+    int* helpedCheat = malloc(sizeof(int) * (numberOfStudents + 1));
+    for (int i = 0; i < numberOfStudents + 1; i++)
     {
         helpedCheat[i] = -1; // -1 means the student did not try to write off.
     }
@@ -82,14 +96,53 @@ int main()
     helpedCheat[1] = 1;
     helpedCheat[2] = 2;
     helpedCheat[3] = 3;
+    return helpedCheat;
+}
+
+bool cycleCheck(int numberOfStudents, const int* helpedCheat)
+{
+    for (int i = 0; i < numberOfStudents; i++)
+    {
+        if (helpedCheat[i] != 1 && helpedCheat[i] != 2 && helpedCheat[i] != 3 && helpedCheat[i] != -1)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+void printAnswer(int numberOfStudents, const int* helpedCheat)
+{
+    if (!cycleCheck(numberOfStudents, helpedCheat))
+    {
+        printf("A loop was found in the graph. Make sure the data entered is correct.");
+        return;
+    }
+
+    printf("Answer:\n");
+    for (int i = 1; i < numberOfStudents + 1; i++)
+    {
+        printf("%d - %d\n", i, helpedCheat[i]);
+    }
+}
+
+int main()
+{
+    printf("Enter the number of student (number >= 3):\n");
+    int numberOfStudents = 0;
+    getNumberOfStudents(&numberOfStudents);
+
+    // helpedCheat[i] = the number of the student whose student "i" wrote off.
+    int* helpedCheat = helpedCheatInit(numberOfStudents);
 
     printf("Enter student number (number > 0) and the number of student, "
            "who helped cheat (number > 0 || = -1):\n");
-    for (int i = 0; i < numberOfStudent; i++)
+    for (int i = 0; i < numberOfStudents; i++)
     {
         int studentA = 0;
         int studentB = 0;
-        getStudents(&studentA, &studentB, numberOfStudent);
+        getStudents(&studentA, &studentB, numberOfStudents);
 
         if (studentB == -1)
         {
@@ -105,7 +158,7 @@ int main()
             helpedCheat[studentA] = helpedCheat[studentB];
         }
 
-        for (int j = 1; j <= numberOfStudent; j++)
+        for (int j = 1; j <= numberOfStudents; j++)
         {
             if (helpedCheat[j] == studentA)
             {
@@ -114,11 +167,7 @@ int main()
         }
     }
 
-    printf("Answer:\n");
-    for (int i = 1; i < numberOfStudent + 1; i++)
-    {
-        printf("%d - %d\n", i, helpedCheat[i]);
-    }
+    printAnswer(numberOfStudents, helpedCheat);
     free(helpedCheat);
     return 0;
 }
