@@ -60,13 +60,8 @@ bool getNumber(int* number, FILE* input)
 
 bool getCitiesAndDistance(int* cityA, int* cityB, int* distance, int numberOfCities, FILE* input)
 {
-    if (fscanf(input,"%d %d %d", cityA, cityB, distance) == 3 && *cityA > 0 && *cityB > 0 &&
-        *cityA != *cityB && *cityA <= numberOfCities && *cityB <= numberOfCities && *distance > 0)
-    {
-        return true;
-    }
-
-    return false;
+    return fscanf(input,"%d %d %d", cityA, cityB, distance) == 3 && *cityA > 0 && *cityB > 0 &&
+           *cityA != *cityB && *cityA <= numberOfCities && *cityB <= numberOfCities && *distance > 0;
 }
 
 bool graphInitialization(int numberOfRoads, int numberOfCities, int** graph, FILE* input)
