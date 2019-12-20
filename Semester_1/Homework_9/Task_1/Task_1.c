@@ -231,9 +231,15 @@ bool isRealNumber(char* string)
             {
                 return false;
             }
+            default:
+            {
+                return false;
+            }
         }
         currentSymbol = string[++iterator];
     }
+
+    return false;
 }
 
 int main()
