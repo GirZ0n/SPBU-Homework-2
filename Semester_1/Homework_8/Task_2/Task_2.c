@@ -164,12 +164,14 @@ bool dataInit(FILE* input, int* numberOfCities, int* numberOfRoads)
     if (!getNumber(numberOfCities, input))
     {
         printf("Invalid number of cities.");
+        free(input);
         return false;
     }
 
     if (!getNumber(numberOfRoads, input))
     {
         printf("Invalid number of roads.");
+        free(input);
         return false;
     }
 
@@ -190,14 +192,14 @@ int main()
     FILE* input = fopen("input.txt", "r");
     int numberOfCities = 0;
     int numberOfRoads = 0;
+    int** distanceBetweenCities =
+            createMatrix(numberOfCities + 1, numberOfCities + 1, INT_MAX);
 
     if (!dataInit(input, &numberOfCities, &numberOfRoads))
     {
         return 0;
     }
 
-    int** distanceBetweenCities =
-            createMatrix(numberOfCities + 1, numberOfCities + 1, INT_MAX);
     if (!graphInitialization(numberOfRoads, numberOfCities, distanceBetweenCities, input))
     {
         printf("Invalid line.");
