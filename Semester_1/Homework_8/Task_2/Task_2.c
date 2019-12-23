@@ -153,26 +153,73 @@ void cityDistribution(int* numberOfUnusedCities, int numberOfCities, int numberO
     }
 }
 
-bool dataInit(FILE* input, int* numberOfCities, int* numberOfRoads)
+bool getNumberOfCitiesErrorHandling()
 {
-    if (input == NULL)
-    {
-        printf("Can't open the file.");
-        return false;
-    }
+    printf("Invalid number of cities.");
+    return false;
+}
 
+bool getNumberOfRoadsErrorHandling()
+{
+    printf("Invalid number of cities.");
+    return false;
+}
+
+bool graphInitErrorHandling(int*** distanceBetweenCities, int numberOfCities)
+{
+    printf("Invalid line.");
+    deleteMatrix(*distanceBetweenCities, numberOfCities + 1);
+    return false;
+}
+
+bool getNumberOfCapitalsErrorHandling(int*** distanceBetweenCities, int numberOfCities)
+{
+    printf("Invalid number of capitals.");
+    deleteMatrix(*distanceBetweenCities, numberOfCities + 1);
+    return false;
+}
+
+bool statesInitErrorHandling(int*** distanceBetweenCities, int numberOfCities, bool** isCityFree, int*** states,
+                             int numberOfCapitals)
+{
+    printf("Invalid capital.");
+    deleteMatrix(*distanceBetweenCities, numberOfCities + 1);
+    free(*isCityFree);
+    deleteMatrix(*states, numberOfCapitals);
+    return false;
+}
+
+bool dataInit(FILE* input, int* numberOfCities, int* numberOfRoads, int*** distanceBetweenCities,
+              int* numberOfCapitals, bool** isCityFree, int* numberOfUnusedCities, int*** states)
+{
     if (!getNumber(numberOfCities, input))
     {
-        printf("Invalid number of cities.");
-        free(input);
-        return false;
+        return getNumberOfCitiesErrorHandling();
     }
 
     if (!getNumber(numberOfRoads, input))
     {
-        printf("Invalid number of roads.");
-        free(input);
-        return false;
+        return getNumberOfRoadsErrorHandling();
+    }
+
+    *distanceBetweenCities = createMatrix(*numberOfCities + 1, *numberOfCities + 1, INT_MAX);
+    if (!graphInitialization(*numberOfRoads, *numberOfCities, *distanceBetweenCities, input))
+    {
+        return graphInitErrorHandling(distanceBetweenCities, *numberOfCities);
+    }
+
+    if (!getNumber(numberOfCapitals, input) || *numberOfCapitals > *numberOfCities)
+    {
+        return getNumberOfCapitalsErrorHandling(distanceBetweenCities, *numberOfCities);
+    }
+
+    *isCityFree = calloc(sizeof(bool), *numberOfCities + 1);
+    *numberOfUnusedCities = *numberOfCities - *numberOfCapitals;
+
+    *states = createMatrix(*numberOfCapitals, *numberOfCities - *numberOfCapitals + 2, 0);
+    if (!statesInitialization(*numberOfCapitals, *numberOfCities, *isCityFree, *states, input))
+    {
+        return statesInitErrorHandling(distanceBetweenCities, *numberOfCities, isCityFree, states, *numberOfCapitals);
     }
 
     return true;
@@ -190,41 +237,24 @@ void freeMemory(int** distanceBetweenCities, int numberOfCities, bool* isCityFre
 int main()
 {
     FILE* input = fopen("input.txt", "r");
+    if (input == NULL)
+    {
+        printf("Can't open the file.");
+        return 0;
+    }
+
     int numberOfCities = 0;
     int numberOfRoads = 0;
-    int** distanceBetweenCities =
-            createMatrix(numberOfCities + 1, numberOfCities + 1, INT_MAX);
-
-    if (!dataInit(input, &numberOfCities, &numberOfRoads))
-    {
-        return 0;
-    }
-
-    if (!graphInitialization(numberOfRoads, numberOfCities, distanceBetweenCities, input))
-    {
-        printf("Invalid line.");
-        deleteMatrix(distanceBetweenCities, numberOfCities + 1);
-        return 0;
-    }
-
+    int** distanceBetweenCities = NULL;
     int numberOfCapitals = 0;
-    if (!getNumber(&numberOfCapitals, input) || numberOfCapitals > numberOfCities)
-    {
-        printf("Invalid number of capitals.");
-        deleteMatrix(distanceBetweenCities, numberOfCities + 1);
-        return 0;
-    }
+    bool* isCityFree = NULL;
+    int numberOfUnusedCities = 0;
+    int** states = NULL;
 
-    bool* isCityFree = calloc(sizeof(bool), numberOfCities + 1);
-    int numberOfUnusedCities = numberOfCities - numberOfCapitals;
-
-    int** states = createMatrix(numberOfCapitals, numberOfCities - numberOfCapitals + 1, 0);
-    if (!statesInitialization(numberOfCapitals, numberOfCities, isCityFree, states, input))
+    if (!dataInit(input, &numberOfCities, &numberOfRoads, &distanceBetweenCities, &numberOfCapitals, &isCityFree,
+                  &numberOfUnusedCities, &states))
     {
-        printf("Invalid capital.");
-        deleteMatrix(distanceBetweenCities, numberOfCities + 1);
-        free(isCityFree);
-        deleteMatrix(states, numberOfCapitals);
+        fclose(input);
         return 0;
     }
 
