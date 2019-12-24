@@ -21,7 +21,7 @@ int** graphInit(int numberOfLines, int numberOfColumns)
     return graph;
 }
 
-bool** isReachableInit(int numberOfLines)
+bool** createIsReachable(int numberOfLines)
 {
     bool** matrix = malloc(sizeof(bool*) * numberOfLines);
     for (int i = 0; i < numberOfLines; i++)
@@ -35,6 +35,79 @@ bool** isReachableInit(int numberOfLines)
     }
 
     return matrix;
+}
+
+bool** isReachableInit(int numberOfLines, int numberOfColumns, int** graph)
+{
+    bool** isReachable = createIsReachable(numberOfLines);
+    for (int i = 0; i < numberOfLines; i++)
+    {
+        for (int j = 0; j < numberOfColumns; j++)
+        {
+            if (graph[i][j] == -1)
+            {
+                for (int k = 0; k < numberOfLines; k++)
+                {
+                    if (graph[k][j] == 1 && k != i)
+                    {
+                        isReachable[i][k] = true;
+                    }
+                }
+            }
+        }
+    }
+    return isReachable;
+}
+
+void fillIsReachable(int numberOfLines, bool** isReachable)
+{
+    for (int l = 0; l < numberOfLines; l++)
+    {
+        for (int i = 0; i < numberOfLines; i++)
+        {
+            for (int j = 0; j < numberOfLines; j++)
+            {
+                if (isReachable[i][j])
+                {
+                    for (int k = 0; k < numberOfLines; k++)
+                    {
+                        if (isReachable[j][k])
+                        {
+                            isReachable[i][k] = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+void printAnswer(int numberOfLines, bool** isReachable)
+{
+    printf("Reachable nodes:\n");
+    int numberOfReachableNodes = 0;
+    for (int i = 0; i < numberOfLines; i++)
+    {
+        int count = 0;
+        for (int j = 0; j < numberOfLines; j++)
+        {
+            if (isReachable[i][j])
+            {
+                count++;
+            }
+        }
+
+        if (count == numberOfLines)
+        {
+            printf("%d ", i + 1);
+            numberOfReachableNodes++;
+        }
+    }
+
+    if (numberOfReachableNodes == 0)
+    {
+        printf("Doesn't exists");
+    }
 }
 
 void deleteGraph(int numberOfLines, int** graph)
@@ -63,6 +136,7 @@ int main()
     if (numberOfLines < 1)
     {
         printf("Error. Enter correct number (> 0)");
+        return 0;
     }
 
     int numberOfColumns = 0;
@@ -71,87 +145,16 @@ int main()
     if (numberOfColumns < 1)
     {
         printf("Error. Enter correct number (> 0)");
+        return 0;
     }
 
     printf("Enter the matrix:\n");
     int** graph = graphInit(numberOfLines, numberOfColumns);
-    bool** isReachable = isReachableInit(numberOfLines);
-    for (int i = 0; i < numberOfLines; i++)
-    {
-        for (int j = 0; j < numberOfColumns; j++)
-        {
-            if (graph[i][j] == 1)
-            {
-                for (int k = 0; k < numberOfLines; k++)
-                {
-                    if (graph[k][j] == -1 && k != i)
-                    {
-                        isReachable[i][k] = true;
-                    }
-                }
-            }
-        }
-    }
+    bool** isReachable = isReachableInit(numberOfLines, numberOfColumns, graph);
+    fillIsReachable(numberOfLines, isReachable);
 
-/*    for (int i = 0; i < numberOfLines; i++)
-    {
-        for (int j = 0; j < numberOfColumns; j++)
-        {
-            printf("%d ", isReachable[i][j]);
-        }
-        printf("\n");
-    }*/
-
-    for (int i = 0; i < numberOfLines; i++)
-    {
-        for (int j = 0; j < numberOfLines; j++)
-        {
-            if (isReachable[i][j] && i != j)
-            {
-                for (int k = 0; k < numberOfLines; k++)
-                {
-                    isReachable[i][k] = true;
-                }
-            }
-        }
-    }
-
-    printf("Reachable nodes:\n");
-    int numberOfReachableNodes = 0;
-    for (int i = 0; i < numberOfLines; i++)
-    {
-        int count = 0;
-        for (int j = 0; j < numberOfLines; j++)
-        {
-            if (isReachable[i][j])
-            {
-                count++;
-            }
-        }
-
-        if (count == numberOfLines)
-        {
-            printf("%d ", i + 1);
-            numberOfReachableNodes++;
-        }
-    }
-
-    if (numberOfReachableNodes == 0)
-    {
-        printf("Doesn't exists");
-    }
-
+    printAnswer(numberOfLines, isReachable);
     deleteGraph(numberOfLines, graph);
     deleteIsReachable(numberOfLines, isReachable);
     return 0;
 }
-
-/*
- * 1 0 0 0 1 0 0
-1 1 0 0 0 1 0
-0 1 1 0 0 0 0
-0 0 1 1 0 0 1
-0 0 0 1 1 1 0
-0 0 0 0 0 0 1
- *
- */
