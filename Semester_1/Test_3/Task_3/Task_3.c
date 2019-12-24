@@ -21,27 +21,38 @@ int** graphInit(int numberOfLines, int numberOfColumns)
     return graph;
 }
 
-int** createReachabilityMatrix(int numberOfLines)
+bool** isReachableInit(int numberOfLines)
 {
-    int** matrix = malloc(sizeof(int*) * numberOfLines);
+    bool** matrix = malloc(sizeof(bool*) * numberOfLines);
     for (int i = 0; i < numberOfLines; i++)
     {
-        matrix[i] = malloc(sizeof(int*) * (numberOfLines - 1));
-        for (int j = 0; j < numberOfLines - 1; j++)
-        {
-            matrix[i][j] = -1;
-        }
+        matrix[i] = calloc(numberOfLines, sizeof(bool));
     }
+
+    for (int i = 0; i < numberOfLines; i++)
+    {
+        matrix[i][i] = true;
+    }
+
     return matrix;
 }
 
-void deleteMatrix(int numberOfLines, int** graph)
+void deleteGraph(int numberOfLines, int** graph)
 {
     for (int i = 0; i < numberOfLines; i++)
     {
         free(graph[i]);
     }
     free(graph);
+}
+
+void deleteIsReachable(int numberOfLines, bool** matrix)
+{
+    for (int i = 0; i < numberOfLines; i++)
+    {
+        free(matrix[i]);
+    }
+    free(matrix);
 }
 
 int main()
@@ -64,90 +75,74 @@ int main()
 
     printf("Enter the matrix:\n");
     int** graph = graphInit(numberOfLines, numberOfColumns);
-    int** reachabilityMatrix = createReachabilityMatrix(numberOfLines);
+    bool** isReachable = isReachableInit(numberOfLines);
     for (int i = 0; i < numberOfLines; i++)
     {
-        int currentPosition = 0;
         for (int j = 0; j < numberOfColumns; j++)
         {
             if (graph[i][j] == 1)
             {
                 for (int k = 0; k < numberOfLines; k++)
                 {
-                    if (graph[k][j] == 1 && k != i)
+                    if (graph[k][j] == -1 && k != i)
                     {
-                        reachabilityMatrix[i][currentPosition] = k;
-                        currentPosition++;
+                        isReachable[i][k] = true;
                     }
                 }
             }
         }
     }
 
-    for (int i = 0; i < numberOfLines; i++)
+/*    for (int i = 0; i < numberOfLines; i++)
     {
-        for (int j = 0; j < numberOfLines - 1; j++)
+        for (int j = 0; j < numberOfColumns; j++)
         {
-            printf("%d ", reachabilityMatrix[i][j]);
+            printf("%d ", isReachable[i][j]);
         }
         printf("\n");
-    }
+    }*/
 
-    bool* isReachable = calloc(numberOfLines, sizeof(bool));
     for (int i = 0; i < numberOfLines; i++)
     {
-        for (int j = 0; j < numberOfLines - 1; j++)
+        for (int j = 0; j < numberOfLines; j++)
         {
-            int currentNode = reachabilityMatrix[i][j];
-
-            if (isReachable[currentNode])
+            if (isReachable[i][j] && i != j)
             {
-                isReachable[i] = true;
-            }
-
-            if (currentNode != -1)
-            {
-                for (int k = 0; k < numberOfLines - 1; k++)
+                for (int k = 0; k < numberOfLines; k++)
                 {
-                    int currentCheckNode = reachabilityMatrix[currentNode][k];
-                    int l = 0;
-                    if (currentCheckNode != -1)
-                    {
-                        for (l = 0; l < numberOfLines - 1; l++)
-                        {
-                            if (currentCheckNode == reachabilityMatrix[i][l])
-                            {
-                                break;
-                            }
-                        }
-                    }
-
-                    if (l < numberOfLines - 1 && reachabilityMatrix[i][l] == -1)
-                    {
-                        reachabilityMatrix[i][l] = currentCheckNode;
-                    }
+                    isReachable[i][k] = true;
                 }
             }
-        }
-
-        if (reachabilityMatrix[i][numberOfLines - 1] != -1)
-        {
-            isReachable[i] = true;
         }
     }
 
     printf("Reachable nodes:\n");
+    int numberOfReachableNodes = 0;
     for (int i = 0; i < numberOfLines; i++)
     {
-        if (isReachable[i])
+        int count = 0;
+        for (int j = 0; j < numberOfLines; j++)
+        {
+            if (isReachable[i][j])
+            {
+                count++;
+            }
+        }
+
+        if (count == numberOfLines)
         {
             printf("%d ", i + 1);
+            numberOfReachableNodes++;
         }
     }
 
-    deleteMatrix(numberOfLines, graph);
-    deleteMatrix(numberOfLines, reachabilityMatrix);
-    free(isReachable);
+    if (numberOfReachableNodes == 0)
+    {
+        printf("Doesn't exists");
+    }
+
+    deleteGraph(numberOfLines, graph);
+    deleteIsReachable(numberOfLines, isReachable);
     return 0;
 }
 
