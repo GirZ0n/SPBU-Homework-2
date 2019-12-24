@@ -20,7 +20,7 @@ bool checkNumberOfStudents(int inputNumber, int numberOfVariablesRead)
 void getNumberOfStudents(int* numberOfUsers)
 {
     int numberOfVariablesRead = scanf("%d", numberOfUsers);
-    while (checkNumberOfStudents(*numberOfUsers, numberOfVariablesRead) == false)
+    while (!checkNumberOfStudents(*numberOfUsers, numberOfVariablesRead))
     {
         cleanStdin();
         printf("Enter the correct number of students:\n");
@@ -31,38 +31,22 @@ void getNumberOfStudents(int* numberOfUsers)
 
 bool checkInput(int studentA, int studentB, int numberOfVariablesRead)
 {
-    if (numberOfVariablesRead != 2 || studentA < 1 || (studentB < 1 && studentB != -1))
-    {
-        return false;
-    }
-    return true;
+    return numberOfVariablesRead == 2 && studentA >= 1 && (studentB >= 1 || studentB == -1);
 }
 
 bool checkStudentNumber(int studentA, int studentB, int numberOfStudents)
 {
-    if (studentA > numberOfStudents || studentB > numberOfStudents)
-    {
-        return false;
-    }
-    return true;
+    return studentA <= numberOfStudents && studentB <= numberOfStudents;
 }
 
 bool checkFirstThreeStudents(int studentA, int studentB)
 {
-    if (studentA <= 3 && studentA != studentB)
-    {
-        return false;
-    }
-    return true;
+    return studentA > 3 || studentA == studentB;
 }
 
 bool checkOtherStudents(int studentA, int studentB)
 {
-    if (studentA > 3 && studentA == studentB)
-    {
-        return false;
-    }
-    return true;
+    return studentA <= 3 || studentA != studentB;
 }
 
 bool checkStudents(int studentA, int studentB, int numberOfVariablesRead, int numberOfStudents)
@@ -76,7 +60,7 @@ bool checkStudents(int studentA, int studentB, int numberOfVariablesRead, int nu
 void getStudents(int* studentA, int* studentB, int numberOfStudents)
 {
     int numberOfVariablesRead = scanf("%d %d", studentA, studentB);
-    while (checkStudents(*studentA, *studentB, numberOfVariablesRead, numberOfStudents) == false)
+    while (!checkStudents(*studentA, *studentB, numberOfVariablesRead, numberOfStudents))
     {
         cleanStdin();
         printf("Enter the correct pair of students:\n");
