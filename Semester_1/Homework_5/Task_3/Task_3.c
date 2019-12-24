@@ -2,7 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "stack.h"
+#include "stackOfChar.h"
+#include "stackOfDouble.h"
 #include "stringAndCharOparations.h"
 
 double getResultOfOperation(double valueA, double valueB, char operator)
