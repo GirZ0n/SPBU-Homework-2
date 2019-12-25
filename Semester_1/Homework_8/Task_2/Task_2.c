@@ -71,7 +71,7 @@ bool graphInitialization(int numberOfRoads, int numberOfCities, int** graph, FIL
     int length = 0;
     for (int i = 0; i < numberOfRoads; i++)
     {
-        if (getCitiesAndDistance(&cityA, &cityB, &length, numberOfCities, input) == false)
+        if (!getCitiesAndDistance(&cityA, &cityB, &length, numberOfCities, input))
         {
             return false;
         }
@@ -87,7 +87,7 @@ bool statesInitialization(int numberOfCapitals, int numberOfCities, bool* isCity
     int capital = 0;
     for (int i = 0; i < numberOfCapitals; i++)
     {
-        if (getNumber(&capital, input) == false || capital > numberOfCities)
+        if (!getNumber(&capital, input) || capital > numberOfCities)
         {
             return false;
         }
