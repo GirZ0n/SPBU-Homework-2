@@ -18,13 +18,13 @@ int main()
     for (int i = 0; i < numberOfElements; i++)
     {
         scanf("%d", &input);
-        pushBack(input, list);
+        insertToList(list, input, i);
     }
 
     printf("Unsotrted list:\n");
     printList(list);
     printf("Sorted list:\n");
-    sortList(list);
+    insertionSort(list);
     printList(list);
     deleteList(list);
 }
