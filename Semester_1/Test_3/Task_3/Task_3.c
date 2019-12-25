@@ -1,154 +1,247 @@
 #include <stdio.h>
-#include <stdbool.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+#include <stdbool.h>
 
-int** graphInit(int numberOfLines, int numberOfColumns)
+typedef enum State State;
+
+enum State
 {
-    int** graph = malloc(sizeof(int*) * numberOfLines);
-    for (int i = 0; i < numberOfLines; i++)
-    {
-        graph[i] = calloc(numberOfColumns, sizeof(int));
-    }
+    error = -1,
+    numberBegin,
+    numberFirstDigit,
+    numberSecondDigit,
+    letter,
+    groupFirstDigit,
+    groupSecondDigit,
+    hyphen,
+    firstM,
+    secondM,
+    end,
+};
 
-    for (int i = 0; i < numberOfLines; i++)
+char* getStringFromConsole()
+{
+    int length = 0;
+    int capacity = 2;
+    char* string = calloc(capacity, sizeof(char));
+    char input = ' ';
+    scanf("%c", &input);
+    while (input != '\n')
     {
-        for (int j = 0; j < numberOfColumns; j++)
+        if (length + 1 == capacity)
         {
-            scanf("%d", &graph[i][j]);
+            capacity *= 2;
+            string = realloc(string, capacity);
         }
-    }
 
-    return graph;
+        string[length] = input;
+        length++;
+        scanf("%c", &input);
+    }
+    string[length] = '\0';
+    return string;
 }
 
-bool** createIsReachable(int numberOfLines)
+int numberBeginHandling(char currentSymbol)
 {
-    bool** matrix = malloc(sizeof(bool*) * numberOfLines);
-    for (int i = 0; i < numberOfLines; i++)
+    if (isdigit(currentSymbol))
     {
-        matrix[i] = calloc(numberOfLines, sizeof(bool));
+        return numberFirstDigit;
     }
-
-    for (int i = 0; i < numberOfLines; i++)
+    else
     {
-        matrix[i][i] = true;
+        return error;
     }
-
-    return matrix;
 }
 
-bool** isReachableInit(int numberOfLines, int numberOfColumns, int** graph)
+int numberFirstDigitHandling(char currentSymbol)
 {
-    bool** isReachable = createIsReachable(numberOfLines);
-    for (int i = 0; i < numberOfLines; i++)
+    if (isdigit(currentSymbol))
     {
-        for (int j = 0; j < numberOfColumns; j++)
+        return numberSecondDigit;
+    }
+    else
+    {
+        return error;
+    }
+}
+
+int numberSecondDigitHandling(char currentSymbol)
+{
+    if (currentSymbol == 'B' || currentSymbol == 'M' || currentSymbol == 'S')
+    {
+        return letter;
+    }
+    else
+    {
+        return error;
+    }
+}
+
+int letterHandling(char currentSymbol)
+{
+    if (currentSymbol == '1')
+    {
+        return groupFirstDigit;
+    }
+    else if (currentSymbol - '1' > 0 && currentSymbol - '9' <= 0)
+    {
+        return groupSecondDigit;
+    }
+    else
+    {
+        return error;
+    }
+}
+
+int groupFirstDigitHandling(char currentSymbol)
+{
+    if (currentSymbol == '0')
+    {
+        return groupSecondDigit;
+    }
+    else
+    {
+        return error;
+    }
+}
+
+int groupSecondDigitHandling(char currentSymbol)
+{
+    if (currentSymbol == '-')
+    {
+        return hyphen;
+    }
+    else
+    {
+        return error;
+    }
+}
+
+int hyphenHandling(char currentSymbol)
+{
+    if (currentSymbol == 'm')
+    {
+        return firstM;
+    }
+    else
+    {
+        return error;
+    }
+}
+
+int firstMHandling(char currentSymbol)
+{
+    if (currentSymbol == 'm')
+    {
+        return secondM;
+    }
+    else
+    {
+        return error;
+    }
+}
+
+int secondMHandling(char currentSymbol)
+{
+    if (currentSymbol == '\0' || currentSymbol == '\n')
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool isGroupNumber(char* string)
+{
+    State currentState;
+    currentState = numberBegin;
+    int iterator = 0;
+    char currentSymbol = string[iterator];
+    int stringLength = (int) strlen(string);
+    while (iterator < stringLength + 1)
+    {
+        switch (currentState)
         {
-            if (graph[i][j] == -1)
+            case numberBegin:
             {
-                for (int k = 0; k < numberOfLines; k++)
-                {
-                    if (graph[k][j] == 1 && k != i)
-                    {
-                        isReachable[i][k] = true;
-                    }
-                }
+                currentState = numberBeginHandling(currentSymbol);
+                break;
+            }
+            case numberFirstDigit:
+            {
+                currentState = numberFirstDigitHandling(currentSymbol);
+                break;
+            }
+            case numberSecondDigit:
+            {
+                currentState = numberSecondDigitHandling(currentSymbol);
+                break;
+            }
+            case letter:
+            {
+                currentState = letterHandling(currentSymbol);
+                break;
+            }
+            case groupFirstDigit:
+            {
+                currentState = groupFirstDigitHandling(currentSymbol);
+                break;
+            }
+            case groupSecondDigit:
+            {
+                currentState = groupSecondDigitHandling(currentSymbol);
+                break;
+            }
+            case hyphen:
+            {
+                currentState = hyphenHandling(currentSymbol);
+                break;
+            }
+            case firstM:
+            {
+                currentState = firstMHandling(currentSymbol);
+                break;
+            }
+            case secondM:
+            {
+                return secondMHandling(currentSymbol);
+            }
+            case end:
+            {
+                return true;
+            }
+            case error:
+            {
+                return false;
+            }
+            default:
+            {
+                return false;
             }
         }
-    }
-    return isReachable;
-}
-
-void findAllReachableNodes(int numberOfLines, bool** isReachable)
-{
-    for (int k = 0; k < numberOfLines; k++)
-    {
-        for (int i = 0; i < numberOfLines; i++)
-        {
-            for (int j = 0; j < numberOfLines; j++)
-            {
-                if (isReachable[i][k] && isReachable[k][j])
-                {
-                    isReachable[i][j] = true;
-                }
-            }
-        }
-    }
-}
-
-void printAnswer(int numberOfLines, bool** isReachable)
-{
-    printf("Reachable nodes:\n");
-    int numberOfReachableNodes = 0;
-    for (int i = 0; i < numberOfLines; i++)
-    {
-        int count = 0;
-        for (int j = 0; j < numberOfLines; j++)
-        {
-            if (isReachable[i][j])
-            {
-                count++;
-            }
-        }
-
-        if (count == numberOfLines)
-        {
-            printf("%d ", i + 1);
-            numberOfReachableNodes++;
-        }
+        currentSymbol = string[++iterator];
     }
 
-    if (numberOfReachableNodes == 0)
-    {
-        printf("Doesn't exists");
-    }
-}
-
-void deleteGraph(int numberOfLines, int** graph)
-{
-    for (int i = 0; i < numberOfLines; i++)
-    {
-        free(graph[i]);
-    }
-    free(graph);
-}
-
-void deleteIsReachable(int numberOfLines, bool** matrix)
-{
-    for (int i = 0; i < numberOfLines; i++)
-    {
-        free(matrix[i]);
-    }
-    free(matrix);
+    return false;
 }
 
 int main()
 {
-    int numberOfLines = 0;
-    printf("Enter the number of lines:\n");
-    scanf("%d", &numberOfLines);
-    if (numberOfLines < 1)
+    printf("Enter the string:\n");
+    char* input = getStringFromConsole();
+    if (isGroupNumber(input))
     {
-        printf("Error. Enter correct number (> 0)");
-        return 0;
+        printf("This is the group number.");
     }
-
-    int numberOfColumns = 0;
-    printf("Enter the number of columns:\n");
-    scanf("%d", &numberOfColumns);
-    if (numberOfColumns < 1)
+    else
     {
-        printf("Error. Enter correct number (> 0)");
-        return 0;
+        printf("This is not the group number.");
     }
-
-    printf("Enter the matrix:\n");
-    int** graph = graphInit(numberOfLines, numberOfColumns);
-    bool** isReachable = isReachableInit(numberOfLines, numberOfColumns, graph);
-    findAllReachableNodes(numberOfLines, isReachable);
-
-    printAnswer(numberOfLines, isReachable);
-    deleteGraph(numberOfLines, graph);
-    deleteIsReachable(numberOfLines, isReachable);
+    free(input);
     return 0;
 }
