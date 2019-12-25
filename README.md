@@ -16,6 +16,8 @@ Here you can find the conditions and solutions for the tasks
 [Test №2](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#test-2-arrow_up) |
 [Test №3](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#test-3-arrow_up) |
 
+
+
 ## Semester №1 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
 
 ### Homework №1 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
@@ -146,5 +148,9 @@ Result: +1.5029691162109375384*2^13
 1. Написать программу, которая вводит с клавиатуры набор целых чисел (в любом порядке, конец — число `0`), и выводящую числа из этого набора в порядке возрастания и без повторений, с указанием того, сколько каждое число раз встретилось в этом наборе. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Test_3/Task_1/Task_1.c)
 
 2. Написать программу поиска седловых точек двумерного массива. Седловая точка — это элемент, наименьший в своей строке и наибольший в своем столбце. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Test_3/Task_2/Task_2.c)
+
+3. Реализовать конечный автомат, проверяющий, является ли строка корректным номером группы на матмехе. Номер группы начинается с последних двух цифр года поступления, Дальше "B" (бакалавры), "M" (магистры) или "S" (специалисты), дальше номер группы (число от 1 до 10), дальше строка "-mm". Например, "17B10-mm" является корректным номером группы. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Test_3/Task_3/Task_3.c)
+
+
 
 ## Semester №2 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
