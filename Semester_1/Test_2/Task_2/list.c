@@ -182,19 +182,18 @@ int getListSize(List* list)
 
 void deleteList(List* list)
 {
-    ListElement* tempElement = list->first;
+    ListElement* temp = list->first;
     ListElement* deletedElement = NULL;
 
-    while (tempElement != NULL)
+    while (temp != NULL)
     {
-        deletedElement = tempElement;
-        tempElement = tempElement->next;
+        deletedElement = temp;
+        temp = temp->next;
         free(deletedElement);
     }
 
     free(list);
 }
-
 
 void printList(List* list)
 {
