@@ -138,7 +138,7 @@ Result: +1.5029691162109375384*2^13
 [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Test_1/Task_2/Task_2.c)
 
 ### Test №2 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
-1. Реализовать функцию нахождения i-го числа Фибоначчи (линейную по скорости и константную по памяти). [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Test_2/Task_1/Task_1.c)
+1. Реализовать функцию нахождения `i`-го числа Фибоначчи (линейную по скорости и константную по памяти). [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Test_2/Task_1/Task_1.c)
 
 2. Реализовать сортировку вставками односвязного линейного списка. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Test_2/Task_2)
 
@@ -149,7 +149,7 @@ Result: +1.5029691162109375384*2^13
 
 2. Написать программу поиска седловых точек двумерного массива. Седловая точка — это элемент, наименьший в своей строке и наибольший в своем столбце. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Test_3/Task_2/Task_2.c)
 
-3. Реализовать конечный автомат, проверяющий, является ли строка корректным номером группы на матмехе. Номер группы начинается с последних двух цифр года поступления, Дальше "B" (бакалавры), "M" (магистры) или "S" (специалисты), дальше номер группы (число от 1 до 10), дальше строка "-mm". Например, "17B10-mm" является корректным номером группы. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Test_3/Task_3/Task_3.c)
+3. Реализовать конечный автомат, проверяющий, является ли строка корректным номером группы на матмехе. Номер группы начинается с последних двух цифр года поступления, Дальше `B` (бакалавры), `M` (магистры) или `S` (специалисты), дальше номер группы (число от `1` до `10`), дальше строка `-mm`. Например, `17B10-mm` является корректным номером группы. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/Semester_1/Test_3/Task_3/Task_3.c)
 
 
 
