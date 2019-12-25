@@ -1,17 +1,22 @@
 #pragma once
 
-#include <stdbool.h>
+#include "stdbool.h"
 
-typedef struct List List;
 struct List;
+typedef struct List List;
 
 List* createList();
-bool isListEmpty(List* list);
-bool insertToList(List *list, int value, int index);
-bool deleteFromList(List* list, int index);
-int locateOfListElement(List *list, int value);
-int retrieveValueFromList(List* list, int index);
-int getListSize(List* list);
 void deleteList(List* list);
-void insertionSort(List* list);
+bool isEmpty(List* list);
+void pushBack(int value, List* list);
+void pushFront(int value, List* list);
+void popBack(List* list);
+void popFront(List* list);
+int getBack(List* list);
+int getFront(List* list);
+int getSize(List* list);
+int getValue(int index, List* list);
+void pop(int index, List* list);
+void push(int value, int index, List* list);
 void printList(List* list);
+void sortList(List* list);

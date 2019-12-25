@@ -1,212 +1,322 @@
-#include <stdio.h>
-#include <stdbool.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "list.h"
 
 typedef struct ListElement ListElement;
+
+struct List
+{
+    int size;
+    ListElement* front;
+    ListElement* back;
+};
+
 struct ListElement
 {
     int value;
     ListElement* next;
 };
 
-struct List
+List* createList()
 {
-    ListElement* first;
-    int size;
-};
+    List* new = malloc(sizeof(List));
+    new->size = 0;
+    new->back = NULL;
+    new->front = NULL;
+}
 
 ListElement* createListElement(int value)
 {
-    ListElement* newElement = (ListElement*) malloc(sizeof(ListElement));
-    newElement->value = value;
-    newElement->next = NULL;
-    return newElement;
+    ListElement* new = malloc(sizeof(ListElement));
+    new->value = value;
+    new->next = NULL;
 }
 
-List* createList()
-{
-    List* list = (List*) malloc(sizeof(List));
-    list->first = NULL;
-    list->size = 0;
-    return list;
-}
-
-bool isListEmpty(List* list)
-{
-    return list == NULL || list->first == NULL;
-}
-
-ListElement* getElement(List* list, int index)
-{
-    if (isListEmpty(list) || index >= list->size || index < 0)
-    {
-        return NULL;
-    }
-
-    ListElement* returnElement = list->first;
-
-    for (int i = 0; i < index; i++)
-    {
-        returnElement = returnElement->next;
-    }
-    return returnElement;
-}
-
-void insertionSort(List* list)
-{
-
-    ListElement* newRoot = NULL;
-    ListElement* currentRoot = list->first;
-
-    while (currentRoot != NULL)
-    {
-        ListElement* nodalElement = currentRoot;
-        currentRoot = currentRoot->next;
-
-        if (newRoot == NULL || nodalElement->value < newRoot->value)
-        {
-            nodalElement->next = newRoot;
-            newRoot = nodalElement;
-        }
-        else
-        {
-            ListElement* currentElement = newRoot;
-            while (currentElement->next != NULL && nodalElement->value >= currentElement->next->value)
-            {
-                currentElement = currentElement->next;
-            }
-
-            nodalElement->next = currentElement->next;
-            currentElement->next = nodalElement;
-        }
-    }
-
-    list->first = newRoot;
-}
-
-bool insertToList(List* list, int value, int index)
-{
-    if (list == NULL || index > list->size || index < 0)
-    {
-        return false;
-    }
-
-    ListElement* newElement = createListElement(value);
-
-    if (list->first == NULL)
-    {
-        list->first = newElement;
-    }
-    else if (index == 0)
-    {
-        newElement->next = list->first;
-        list->first = newElement;
-    }
-    else
-    {
-        ListElement* tempElement = getElement(list, index - 1);
-        newElement->next = tempElement->next;
-        tempElement->next = newElement;
-    }
-
-    list->size++;
-    return true;
-}
-
-bool deleteFromList(List* list, int index)
-{
-    if (isListEmpty(list) || index >= list->size || index < 0)
-    {
-        return false;
-    }
-
-    ListElement* deletedElement = NULL;
-    if (index == 0)
-    {
-        deletedElement = list->first;
-        list->first = deletedElement->next;
-    }
-    else
-    {
-        ListElement* tempElement = getElement(list, index - 1);
-        deletedElement = tempElement->next;
-        tempElement->next = deletedElement->next;
-    }
-
-    free(deletedElement);
-    list->size--;
-    return true;
-}
-
-int locateOfListElement(List* list, int value)
+int getSize(List* list)
 {
     if (list == NULL)
-    {
-        return -2;
-    }
-
-    int returnIndex = 0;
-    ListElement* tempElement = list->first;
-    while (tempElement != NULL)
-    {
-        if (tempElement->value == value)
-        {
-            return returnIndex;
-        }
-        returnIndex++;
-        tempElement = tempElement->next;
-    }
-
-    return -1;
-}
-
-int retrieveValueFromList(List* list, int index)
-{
-    if (isListEmpty(list) || index >= list->size || index < 0)
     {
         return 0;
     }
-    ListElement* returnedElement = getElement(list, index);
-    return returnedElement->value;
+    else
+    {
+        return list->size;
+    }
 }
 
-int getListSize(List* list)
+bool isEmpty(struct List* list)
+{
+    return getSize(list) == 0;
+}
+
+void pushBack(int value, struct List* list)
 {
     if (list == NULL)
     {
+        return;
+    }
+
+    ListElement* new = createListElement(value);
+    if (isEmpty(list))
+    {
+        list->front = new;
+        list->back = new;
+    }
+    else
+    {
+        list->back->next = new;
+        list->back = new;
+    }
+    list->size++;
+}
+
+void pushFront(int value, struct List* list)
+{
+    if (list == NULL)
+    {
+        return;
+    }
+
+    ListElement* new = createListElement(value);
+    if (isEmpty(list))
+    {
+        list->front = new;
+        list->back = new;
+    }
+    else
+    {
+        new->next = list->front;
+        list->front = new;
+    }
+    list->size++;
+}
+
+void popBack(struct List* list)
+{
+    if (list == NULL)
+    {
+        return;
+    }
+
+    ListElement* removable = list->back;
+    if (removable == NULL)
+    {
+        return;
+    }
+
+    ListElement* newBack = list->front;
+    for (int i = 0; i < list->size - 2; i++)
+    {
+        newBack = newBack->next;
+    }
+
+    list->back = newBack;
+
+    if (getSize(list) == 1)
+    {
+        list->front = NULL;
+    }
+
+    list->size--;
+    free(removable);
+}
+
+void popFront(struct List* list)
+{
+    if (list == NULL)
+    {
+        return;
+    }
+
+    ListElement* removable = list->front;
+    if (removable == NULL)
+    {
+        return;
+    }
+
+    list->front = removable->next;
+    if (getSize(list) == 1)
+    {
+        list->back = NULL;
+    }
+
+    list->size--;
+    free(removable);
+}
+
+int getBack(List* list)
+{
+    if (list == NULL || list->back == NULL)
+    {
         return -1;
     }
-    return list->size;
+    return list->back->value;
+}
+
+int getFront(List* list)
+{
+    if (list == NULL || list->front == NULL)
+    {
+        return -1;
+    }
+    return list->front->value;
 }
 
 void deleteList(List* list)
 {
-    ListElement* temp = list->first;
-    ListElement* deletedElement = NULL;
-
-    while (temp != NULL)
+    if (list == NULL)
     {
-        deletedElement = temp;
-        temp = temp->next;
-        free(deletedElement);
+        return;
+    }
+
+    while (!isEmpty(list))
+    {
+        popBack(list);
     }
 
     free(list);
 }
 
-void printList(List* list)
+int getValue(int index, List* list)
 {
-    if (isListEmpty(list))
+    if (list == NULL)
     {
-        printf("List is empty.");
+        return -1;
+    }
+
+    if (index < 0 || index >= getSize(list))
+    {
+        return -1;
+    }
+
+    ListElement* current = list->front;
+    for (int i = 0; i < index; i++)
+    {
+        current = current->next;
+    }
+
+    return current->value;
+}
+
+ListElement* getElement(int index, List* list)
+{
+    if (list == NULL)
+    {
+        return NULL;
+    }
+
+    if (index < 0 || index >= getSize(list))
+    {
+        return NULL;
+    }
+
+    ListElement* current = list->front;
+    for (int i = 0; i < index; i++)
+    {
+        current = current->next;
+    }
+
+    return current;
+}
+
+void pop(int index, List* list)
+{
+    if (list == NULL)
+    {
         return;
     }
-    ListElement* current = list->first;
-    while (current != NULL)
+
+    if (index < 0 || index >= getSize(list) || getSize(list) == 0)
+    {
+        return;
+    }
+
+    ListElement* prevCurrent = NULL;
+    ListElement* current = list->front;
+    for (int i = 0; i < index; i++)
+    {
+        prevCurrent = current;
+        current = current->next;
+    }
+
+    if (prevCurrent != NULL)
+    {
+        prevCurrent->next = current->next;
+    }
+    else
+    {
+        list->front = current->next;
+    }
+
+    if (getSize(list) == 1)
+    {
+        list->front = NULL;
+        list->back = NULL;
+    }
+
+    list->size--;
+    free(current);
+}
+
+void push(int value, int index, List* list)
+{
+    if (list == NULL)
+    {
+        return;
+    }
+
+    if (index < 0 || index > getSize(list))
+    {
+        return;
+    }
+
+    ListElement* new = createListElement(value);
+
+    ListElement* prevCurrent = NULL;
+    ListElement* current = list->front;
+    for (int i = 0; i < index; i++)
+    {
+        prevCurrent = current;
+        current = current->next;
+    }
+
+    new->next = current;
+    if (prevCurrent != NULL)
+    {
+        prevCurrent->next = new;
+    }
+    else
+    {
+        list->front = new;
+    }
+    list->size++;
+}
+
+void printList(List* list)
+{
+    ListElement* current = list->front;
+    for (int i = 0; i < getSize(list); i++)
     {
         printf("%d ", current->value);
         current = current->next;
     }
     printf("\n");
+}
+
+void sortList(List* list)
+{
+    for (int i = 1; i < list->size; i++)
+    {
+        int key = getValue(i, list);
+        int j = i;
+        ListElement* temp = NULL;
+        while (j > 0 && getValue(j - 1, list) > key)
+        {
+            temp = getElement(j, list);
+            temp->value = getValue(j - 1, list);
+            j -= 1;
+        }
+        temp = getElement(j, list);
+        temp->value = key;
+    }
 }
