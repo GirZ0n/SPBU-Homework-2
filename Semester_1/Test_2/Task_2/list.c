@@ -37,7 +37,6 @@ bool isListEmpty(List* list)
     return list == NULL || list->first == NULL;
 }
 
-/* If the list is empty or the index is incorrect, the function will return NULL. */
 ListElement* getElement(List* list, int index)
 {
     if (isListEmpty(list) || index >= list->size || index < 0)
