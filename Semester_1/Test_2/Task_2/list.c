@@ -201,12 +201,13 @@ void printList(List* list)
     if (isListEmpty(list))
     {
         printf("List is empty.");
+        return;
     }
-    ListElement* printedElement = list->first;
-    while (printedElement != NULL)
+    ListElement* current = list->first;
+    while (current != NULL)
     {
-        printf("%d ", printedElement->value);
-        printedElement = printedElement->next;
+        printf("%d ", current->value);
+        current = current->next;
     }
     printf("\n");
 }
