@@ -1,6 +1,5 @@
 import java.util.*
 
-
 fun recursiveFactorial(number: Int): Long {
     if (number == 0)
         return 1
