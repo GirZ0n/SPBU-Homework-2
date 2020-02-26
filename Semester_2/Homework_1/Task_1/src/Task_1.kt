@@ -35,15 +35,6 @@ fun getArray(length: Int): Array<Int> {
     return array
 }
 
-fun reverse(array: Array<Int>, begin: Int, end: Int) {
-    val lengthOfSegment = end - begin
-    for (i in 0 until lengthOfSegment / 2) {
-        val tmp = array[begin + i]
-        array[begin + i] = array[end - i - 1]
-        array[end - i - 1] = tmp
-    }
-}
-
 fun main() {
     println("Enter the value of N:")
     val numberN = getNumber()
@@ -51,9 +42,9 @@ fun main() {
     val numberM = getNumber()
     println("Enter the array:")
     val array = getArray(numberN + numberM)
-    reverse(array, 0, numberN)
-    reverse(array, numberN, numberN + numberM)
-    reverse(array, 0, numberN + numberM)
+
     println("Answer:")
-    println(array.contentToString())
+    array.reverse()
+    print(array.slice(0 until numberM).reversed().joinToString(" ") + " ")
+    print(array.slice(numberM until numberM + numberN).reversed().joinToString(" "))
 }
