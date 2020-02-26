@@ -13,13 +13,22 @@ fun iterativeFactorial(number: Int): Long {
     return result
 }
 
-fun getNumber(): Int {
-    val scan = Scanner(System.`in`)
+fun getInt(): Int {
+    var scan = Scanner(System.`in`)
     while (!scan.hasNextInt()) {
         println("Input Error. Try again:")
-        scan.nextLine()
+        scan = Scanner(System.`in`)
     }
     return scan.nextInt()
+}
+
+fun getNumber(): Int {
+    var number = getInt()
+    while (number < 0) {
+        println("Error. Enter the number >= 0:")
+        number = getInt()
+    }
+    return number
 }
 
 fun main() {
