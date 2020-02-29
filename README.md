@@ -2,21 +2,6 @@
 Here you can find the conditions and solutions for the tasks
 ## Navigation menu
 [Semester №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#semester-1-arrow_up) | [Semester №2](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#semester-2-arrow_up)
------------ | ----------- |
-[Homework №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-1-arrow_up) | [Homework №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-1-arrow_up)
-[Homework №2](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-2-arrow_up) |
-[Homework №3](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-3-arrow_up) |
-[Homework №4](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-4-arrow_up) |
-[Homework №5](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-5-arrow_up) |
-[Homework №6](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-6-arrow_up) |
-[Homework №7](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-7-arrow_up) |
-[Homework №8](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-8-arrow_up) |
-[Homework №9](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-9-arrow_up) |
-[Test №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#test-1-arrow_up) |
-[Test №2](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#test-2-arrow_up) |
-[Test №3](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#test-3-arrow_up) |
-
-
 
 ## Semester №1 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
 
