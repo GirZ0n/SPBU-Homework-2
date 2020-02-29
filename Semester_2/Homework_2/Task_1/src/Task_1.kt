@@ -20,5 +20,5 @@ fun main() {
     val scan = Scanner(System.`in`)
     val inputString = scan.nextLine()
     println("You need to remove ${countXToBeDeleted(inputString)} lines " +
-            "so that the string doesn't contain the substring \"xxx\"")
+            "so that the string doesn't contain the substring \"xxx\"" )
 }
