@@ -3,7 +3,7 @@ Here you can find the conditions and solutions for the tasks
 ## Navigation menu
 [Semester №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#semester-1-arrow_up) | [Semester №2](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#semester-2-arrow_up)
 ----------- | ----------- |
-[Homework №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-1-arrow_up) |
+[Homework №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-1-arrow_up) | [Homework №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-1-arrow_up)
 [Homework №2](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-2-arrow_up) |
 [Homework №3](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-3-arrow_up) |
 [Homework №4](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-4-arrow_up) |
@@ -154,3 +154,19 @@ Result: +1.5029691162109375384*2^13
 
 
 ## Semester №2 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
+
+### Homework №1 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
+1. Дан массив целых чисел `x[1]...x[m+n]`, рассматриваемый как соединение двух его отрезков: начала `x[1]...x[m]` длины `m` и конца `x[m+1]...x[m+n]` длины `n`. Не используя дополнительных массивов, переставить начало и конец.
+
+2. Реализовать подсчет факториала (рекурсивно и итеративно). 
+
+3. Заданы две строки: `s1` и `s2`. Найти количество вхождений `s2` в `s1` как подстроки.
+
+4. Реализовать программу, проверяющую, является ли строка палинромом.
+
+5. Написать программу, которая считает количество непустых строк в исходном файле. Строка считается пустой, если состоит только из пробелов и табуляций (символ `\t`), или в ней нет символов вообще.
+
+### Homework №2 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
+1. Определите минимальное количество символов, которые нужно удалить из строки так, чтобы она не содержала `«xxx»` в качестве подстроки. Выведите `0`, если строка изначально не содержит запрещенной подстроки `«xxx»`. Удалять символы можно в произвольных позициях (не обязательно подряд).
+
+2. Удалите из массива все повторяющиеся элементы. Необходимо оставить только правое вхождение, относительный порядок оставшихся элементов не должен быть изменён.
