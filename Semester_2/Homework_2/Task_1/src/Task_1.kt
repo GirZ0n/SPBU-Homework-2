@@ -1,10 +1,10 @@
 import java.util.*
 
-fun deleteForbiddenSubstrings(inputString: String): Int {
+fun countXToBeDeleted(inputString: String): Int {
     var answer = 0
     var sequenceLength = 0
-    for (i in inputString.indices) {
-        if (inputString[i] == 'x')
+    for (element in inputString) {
+        if (element == 'x')
             sequenceLength++
         else {
             answer += if (sequenceLength > 2) sequenceLength - 2 else 0
@@ -19,5 +19,6 @@ fun main() {
     println("Enter the string:")
     val scan = Scanner(System.`in`)
     val inputString = scan.nextLine()
-    println("Answer: ${deleteForbiddenSubstrings(inputString)}")
+    println("You need to remove ${countXToBeDeleted(inputString)} lines " +
+            "so that the string doesn't contain the substring \"xxx\"")
 }
