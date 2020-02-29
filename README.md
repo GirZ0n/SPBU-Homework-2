@@ -4,7 +4,7 @@ Here you can find the conditions and solutions for the tasks
 [Semester №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#semester-1-arrow_up) | [Semester №2](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#semester-2-arrow_up)
 ----------- | ----------- |
 [Homework №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-1-arrow_up) | [Homework №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-1-arrow_up-1)
-[Homework №2](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-2-arrow_up) | [Homework №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-2-arrow_up-1)
+[Homework №2](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-2-arrow_up) | [Homework №2](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-2-arrow_up-1)
 [Homework №3](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-3-arrow_up) |
 [Homework №4](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-4-arrow_up) |
 [Homework №5](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-5-arrow_up) |
