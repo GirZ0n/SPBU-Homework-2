@@ -1,8 +1,8 @@
 import java.util.*
 
-fun areEqual(source: String, substring: String, begin: Int): Boolean {
+fun areEqual(source: String, substring: String, index: Int): Boolean {
     for (i in substring.indices) {
-        if (source[begin + i] != substring[i])
+        if (source[index + i] != substring[i])
             return false
     }
     return true
