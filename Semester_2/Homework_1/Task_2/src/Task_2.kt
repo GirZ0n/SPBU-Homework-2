@@ -34,5 +34,5 @@ fun getNumber(): Int {
 fun main() {
     println("Enter N:")
     val number = getNumber()
-    println("N! = ${recursiveFactorial(number)} (Recursive), ${iterativeFactorial(number)} (Iterative)")
+    println("$number! = ${recursiveFactorial(number)} (Recursive), ${iterativeFactorial(number)} (Iterative)")
 }
