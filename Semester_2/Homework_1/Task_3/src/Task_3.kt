@@ -10,7 +10,7 @@ fun getNumberOfOccurrences(source: String, substring: String): Int {
             answer++
     }
 
-    return answer
+    return if (substringLength == 0) 0 else answer
 }
 
 fun main() {
