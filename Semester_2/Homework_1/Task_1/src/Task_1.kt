@@ -19,10 +19,10 @@ fun getNumber(): Int {
 }
 
 fun getArray(length: Int): Array<Int> {
-    val array = Array(length) {0}
+    val array = Array(length) { 0 }
     var scan = Scanner(System.`in`)
     var i = 0
-    while (i < length){
+    while (i < length) {
         while (!scan.hasNextInt()) {
             println("Input Error. Re-enter the array:")
             scan = Scanner(System.`in`)
@@ -35,16 +35,21 @@ fun getArray(length: Int): Array<Int> {
     return array
 }
 
+fun swapSegments(array: Array<Int>, lengthA: Int, lengthB: Int): Array<Int> {
+    val firstSegment = Array(lengthA) { i -> array[i] }.reversedArray()
+    val secondSegment = Array(lengthB) { i -> array[i + lengthA] }.reversedArray()
+    return (firstSegment + secondSegment).reversedArray()
+}
+
 fun main() {
     println("Enter the value of N:")
     val numberN = getNumber()
     println("Enter the value of M:")
     val numberM = getNumber()
     println("Enter the array:")
-    val array = getArray(numberN + numberM)
+    var array = getArray(numberN + numberM)
 
     println("Answer:")
-    array.reverse()
-    print(array.slice(0 until numberM).reversed().joinToString(" ") + " ")
-    print(array.slice(numberM until numberM + numberN).reversed().joinToString(" "))
+    array = swapSegments(array, numberN, numberM)
+    print(array.joinToString(" "))
 }
