@@ -2,7 +2,7 @@ import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
 
-internal class Task_4KtTest {
+internal class Task4Test {
 
     @Test
     fun IsPalindrome_PalindromeString1_MustWork() {
