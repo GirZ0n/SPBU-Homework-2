@@ -20,7 +20,10 @@ fun getArray(size: Int): Array<Int> {
     return array
 }
 
-fun reverse(array: Array<Int>, begin: Int, end: Int) {
+fun reverse(array: Array<Int>, indexOfBegin: Int, indexOfEnd: Int) {
+    val begin = if (indexOfBegin < 0) 0 else indexOfBegin
+    val end = if (indexOfEnd > array.size) array.size else indexOfEnd
+
     val lengthOfSegment = end - begin
     for (i in 0 until lengthOfSegment / 2) {
         val temp = array[begin + i]
