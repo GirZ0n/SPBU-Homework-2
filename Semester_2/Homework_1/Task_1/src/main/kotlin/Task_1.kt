@@ -37,7 +37,6 @@ fun main() {
     val numberN = getNumber()
     println("Enter the value of M:")
     val numberM = getNumber()
-
     println("Enter the array:")
     val array = getArray(numberN + numberM)
 
