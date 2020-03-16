@@ -1,7 +1,7 @@
 import java.io.File
 import java.util.*
 
-fun countEmptyLines(input: File): Int {
+fun countNonEmptyLines(input: File): Int {
     val scan = Scanner(input)
     var numberOfNonEmptyLines = 0
     while (scan.hasNextLine()) {
@@ -18,5 +18,5 @@ fun main() {
         return
     }
     else
-        println("The number of non-empty lines = ${countEmptyLines(input)}")
+        println("The number of non-empty lines = ${countNonEmptyLines(input)}")
 }
