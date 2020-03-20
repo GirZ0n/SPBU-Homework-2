@@ -20,8 +20,7 @@ fun main() {
     println("Enter the string:")
     val scan = Scanner(System.`in`)
     val inputString = scan.nextLine()
-    println(
-        "You need to remove ${countXToBeDeleted(inputString)} symbols " +
-                "so that the string doesn't contain the substring \"xxx\""
+    println("You need to remove ${countXToBeDeleted(inputString)} symbols " +
+            "so that the string doesn't contain the substring \"xxx\""
     )
 }
