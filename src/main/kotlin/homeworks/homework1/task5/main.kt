@@ -17,6 +17,5 @@ fun main() {
     if (!input.exists()) {
         println("Can't open the file")
         return
-    } else
-        println("The number of non-empty lines = ${countNonEmptyLines(input)}")
+    } else println("The number of non-empty lines = ${countNonEmptyLines(input)}")
 }
