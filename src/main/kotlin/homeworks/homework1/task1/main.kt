@@ -1,6 +1,6 @@
 package homeworks.homework1.task1
 
-import java.util.*
+import java.util.Scanner
 import kotlin.system.exitProcess
 
 fun getNumber(): Int {
