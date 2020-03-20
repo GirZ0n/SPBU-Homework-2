@@ -15,7 +15,7 @@ fun getNumber(): Int {
 
 fun getArray(size: Int): IntArray {
     val scan = Scanner(System.`in`)
-    val array = IntArray(size) {0}
+    val array = IntArray(size) { 0 }
     for (i in array.indices) {
         array[i] = scan.nextInt()
     }
