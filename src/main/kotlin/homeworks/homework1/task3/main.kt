@@ -8,8 +8,7 @@ fun getNumberOfOccurrences(source: String, substring: String): Int {
     val substringLength = substring.length
 
     for (i in 0 until sourceLength - substringLength + 1) {
-        if (source.slice(i until i + substringLength) == substring)
-            answer++
+        if (source.slice(i until i + substringLength) == substring) answer++
     }
 
     return if (substringLength == 0) 0 else answer
