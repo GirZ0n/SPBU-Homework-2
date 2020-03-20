@@ -3,8 +3,7 @@ package homeworks.homework1.task2
 import java.util.Scanner
 
 fun recursiveFactorial(number: Int): Long {
-    if (number == 0)
-        return 1
+    if (number == 0) return 1
     return number * recursiveFactorial(number - 1)
 }
 
