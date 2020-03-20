@@ -8,7 +8,7 @@ internal class Task2Test {
 
     @Test
     fun recursiveFactorial_FactorialOfTheNumber0_MustWork() {
-        assertEquals(1, recursiveFactorial(0))
+        assertEquals(-1, recursiveFactorial(0))
     }
 
     @Test
