@@ -13,16 +13,16 @@ fun getNumber(): Int {
     return number
 }
 
-fun getArray(size: Int): Array<Int> {
+fun getArray(size: Int): IntArray {
     val scan = Scanner(System.`in`)
-    val array = Array(size) { 0 }
+    val array = IntArray(size) {0}
     for (i in array.indices) {
         array[i] = scan.nextInt()
     }
     return array
 }
 
-fun reverse(array: Array<Int>, indexOfBegin: Int, indexOfEnd: Int) {
+fun reverse(array: IntArray, indexOfBegin: Int, indexOfEnd: Int) {
     val begin = if (indexOfBegin < 0) 0 else indexOfBegin
     val end = if (indexOfEnd > array.size) array.size else indexOfEnd
 
