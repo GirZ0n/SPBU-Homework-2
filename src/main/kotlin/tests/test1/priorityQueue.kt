@@ -25,7 +25,7 @@ class PriorityQueue<T> {
     fun print() {
         println(
             if (list.isNotEmpty()) list.joinToString(" ") else throw
-                ArrayIndexOutOfBoundsException("Priority Queue is empty\n")
+            ArrayIndexOutOfBoundsException("Priority Queue is empty\n")
         )
     }
 }
