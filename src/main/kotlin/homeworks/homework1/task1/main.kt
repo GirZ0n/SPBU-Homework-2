@@ -36,9 +36,9 @@ fun main() {
     val beginSegmentLength: Int
     val endSegmentLength: Int
     try {
-        println("Enter the value of N:")
+        println("Enter the value of begin segment:")
         beginSegmentLength = getNumber()
-        println("Enter the value of M:")
+        println("Enter the value of end segment:")
         endSegmentLength = getNumber()
     } catch (exception: IllegalArgumentException) {
         println(exception.message)
@@ -71,5 +71,5 @@ fun main() {
     }
 
     println("Result:")
-    print(array.subList(0, beginSegmentLength + endSegmentLength).joinToString(" "))
+    print(array.joinToString(" "))
 }
