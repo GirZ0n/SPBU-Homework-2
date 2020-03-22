@@ -2,6 +2,8 @@ package homeworks.homework1.task1
 
 import java.lang.RuntimeException
 import java.util.Scanner
+import java.util.InputMismatchException
+import kotlin.NoSuchElementException
 import kotlin.system.exitProcess
 
 fun getNumber(): Int {
@@ -40,7 +42,13 @@ fun main() {
         beginSegmentLength = getNumber()
         println("Enter the value of M:")
         endSegmentLength = getNumber()
-    } catch (exception: RuntimeException) {
+    } catch (exception: IllegalArgumentException) {
+        println(exception.message)
+        exitProcess(0)
+    } catch (exception: InputMismatchException) {
+        println("You must enter a number")
+        exitProcess(0)
+    } catch (exception: NoSuchElementException) {
         println("You must enter a number")
         exitProcess(0)
     }
@@ -49,7 +57,10 @@ fun main() {
     try {
         println("Enter the array:")
         array = readLine()!!.split(' ').map { it.toInt() }
-    } catch (exception: RuntimeException) {
+    } catch (exception: NumberFormatException) {
+        println("You need to enter an array of integers")
+        exitProcess(0)
+    } catch (exception: KotlinNullPointerException) {
         println("You need to enter an array of integers")
         exitProcess(0)
     }
