@@ -2,8 +2,6 @@ package homeworks.homework1.task1
 
 import java.lang.RuntimeException
 import java.util.Scanner
-import java.util.InputMismatchException
-import kotlin.NoSuchElementException
 import kotlin.system.exitProcess
 
 fun getNumber(): Int {
