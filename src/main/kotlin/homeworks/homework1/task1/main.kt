@@ -35,7 +35,6 @@ fun swapStartAndEnd(array: List<Int>, beginLength: Int, endLength: Int): List<In
 fun main() {
     val beginSegmentLength: Int
     val endSegmentLength: Int
-
     try {
         println("Enter the value of N:")
         beginSegmentLength = getNumber()
