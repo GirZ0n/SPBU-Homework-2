@@ -12,7 +12,7 @@ fun getNumber(): Int {
     return number
 }
 
-fun getData(): Pair<Int, Int> {
+fun getInputData(): Pair<Int, Int> {
     val beginSegmentLength: Int
     val endSegmentLength: Int
     try {
@@ -73,7 +73,7 @@ fun swapBeginAndEnd(array: List<Int>, beginLength: Int, endLength: Int): List<In
 }
 
 fun main() {
-    val (beginSegmentLength, endSegmentLength) = getData()
+    val (beginSegmentLength, endSegmentLength) = getInputData()
     var array = getArray()
 
     try {
