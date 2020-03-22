@@ -12,27 +12,7 @@ fun getNumber(): Int {
     return number
 }
 
-fun reverse(array: List<Int>, indexOfBegin: Int, indexOfEnd: Int): List<Int> {
-    val begin = if (indexOfBegin < 0) 0 else indexOfBegin
-    val end = if (indexOfEnd > array.size) array.size else indexOfEnd
-
-    val beginSegment = array.subList(0, begin)
-    val reversedSegment = array.subList(begin, end).reversed()
-    val endSegment = array.subList(end, array.size)
-
-    return beginSegment + reversedSegment + endSegment
-}
-
-fun swapStartAndEnd(array: List<Int>, beginLength: Int, endLength: Int): List<Int> {
-    require(beginLength + endLength == array.size) { "The array should be long: ${beginLength + endLength}" }
-    var answer = array
-    answer = reverse(answer, 0, beginLength)
-    answer = reverse(answer, beginLength, beginLength + endLength)
-    answer = reverse(answer, 0, beginLength + endLength)
-    return answer
-}
-
-fun main() {
+fun getData(): Pair<Int, Int> {
     val beginSegmentLength: Int
     val endSegmentLength: Int
     try {
@@ -50,8 +30,12 @@ fun main() {
         println("You must enter a number")
         exitProcess(0)
     }
+    return Pair(beginSegmentLength, endSegmentLength)
+}
 
-    var array: List<Int>
+fun getArray(): List<Int> {
+    val array: List<Int>
+
     try {
         println("Enter the array:")
         array = readLine()!!.split(' ').map { it.toInt() }
@@ -63,8 +47,37 @@ fun main() {
         exitProcess(0)
     }
 
+    return array
+}
+
+fun reverse(array: List<Int>, indexOfBegin: Int, indexOfEnd: Int): List<Int> {
+    val begin = if (indexOfBegin < 0) 0 else indexOfBegin
+    val end = if (indexOfEnd > array.size) array.size else indexOfEnd
+
+    val beginSegment = array.subList(0, begin)
+    val reversedSegment = array.subList(begin, end).reversed()
+    val endSegment = array.subList(end, array.size)
+
+    return beginSegment + reversedSegment + endSegment
+}
+
+fun swapBeginAndEnd(array: List<Int>, beginLength: Int, endLength: Int): List<Int> {
+    require(beginLength + endLength == array.size) { "The array should be long: ${beginLength + endLength}" }
+
+    var answer = array
+    answer = reverse(answer, 0, beginLength)
+    answer = reverse(answer, beginLength, beginLength + endLength)
+    answer = reverse(answer, 0, beginLength + endLength)
+
+    return answer
+}
+
+fun main() {
+    val (beginSegmentLength, endSegmentLength) = getData()
+    var array = getArray()
+
     try {
-        array = swapStartAndEnd(array, beginSegmentLength, endSegmentLength)
+        array = swapBeginAndEnd(array, beginSegmentLength, endSegmentLength)
     } catch (exception: IllegalArgumentException) {
         println(exception.message)
         exitProcess(0)
