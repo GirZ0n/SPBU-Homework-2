@@ -16,9 +16,9 @@ fun getInputData(): Pair<Int, Int> {
     val beginSegmentLength: Int
     val endSegmentLength: Int
     try {
-        println("Enter the value of begin segment:")
+        println("Enter the length of begin segment:")
         beginSegmentLength = getNumber()
-        println("Enter the value of end segment:")
+        println("Enter the length of end segment:")
         endSegmentLength = getNumber()
     } catch (exception: IllegalArgumentException) {
         println(exception.message)
@@ -51,12 +51,18 @@ fun getArray(): List<Int> {
 }
 
 fun reverse(array: List<Int>, indexOfBegin: Int, indexOfEnd: Int): List<Int> {
-    val begin = if (indexOfBegin < 0) 0 else indexOfBegin
-    val end = if (indexOfEnd > array.size) array.size else indexOfEnd
+    if (array.isEmpty()) return emptyList()
 
-    val beginSegment = array.subList(0, begin)
-    val reversedSegment = array.subList(begin, end).reversed()
-    val endSegment = array.subList(end, array.size)
+    require(indexOfBegin >= 0 && indexOfBegin < array.size)
+    { "Index of begin mustn't go beyond the bounds of the array" }
+    require(indexOfEnd > 0 && indexOfEnd <= array.size)
+    { "Index of end mustn't go beyond the bounds of the array" }
+    require(indexOfBegin <= indexOfEnd)
+    { "Index of begin must not be greater than index of end" }
+
+    val beginSegment = array.subList(0, indexOfBegin)
+    val reversedSegment = array.subList(indexOfBegin, indexOfEnd).reversed()
+    val endSegment = array.subList(indexOfEnd, array.size)
 
     return beginSegment + reversedSegment + endSegment
 }
