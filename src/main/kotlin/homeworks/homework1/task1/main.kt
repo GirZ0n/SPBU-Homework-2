@@ -15,6 +15,7 @@ fun getNumber(): Int {
 fun getInputData(): Pair<Int, Int> {
     val beginSegmentLength: Int
     val endSegmentLength: Int
+
     try {
         println("Enter the length of begin segment:")
         beginSegmentLength = getNumber()
@@ -30,6 +31,7 @@ fun getInputData(): Pair<Int, Int> {
         println("You must enter a number")
         exitProcess(0)
     }
+
     return Pair(beginSegmentLength, endSegmentLength)
 }
 
