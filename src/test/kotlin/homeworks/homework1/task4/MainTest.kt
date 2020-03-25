@@ -42,7 +42,7 @@ internal class Task4Test {
     }
 
     @Test
-    fun IsPalindrome_ZeroLengthString_MustWork() {
+    fun IsPalindrome_EmptyString_MustWork() {
         assertEquals(true, isPalindrome(""))
     }
 
