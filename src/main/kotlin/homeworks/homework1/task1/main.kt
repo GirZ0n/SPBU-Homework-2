@@ -55,10 +55,10 @@ fun getArray(): List<Int> {
 fun reverse(array: List<Int>, indexOfBegin: Int, indexOfEnd: Int): List<Int> {
     if (array.isEmpty()) return emptyList()
 
-    require(indexOfBegin >= 0 && indexOfBegin < array.size) {
+    require(indexOfBegin >= 0 && indexOfBegin <= array.size) {
         "Index of begin mustn't go beyond the bounds of the array"
     }
-    require(indexOfEnd > 0 && indexOfEnd <= array.size) {
+    require(indexOfEnd >= 0 && indexOfEnd <= array.size) {
         "Index of end mustn't go beyond the bounds of the array"
     }
     require(indexOfBegin <= indexOfEnd) { "Index of begin must not be greater than index of end" }
