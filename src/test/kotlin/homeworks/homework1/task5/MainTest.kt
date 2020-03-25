@@ -4,8 +4,17 @@ import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
 import java.io.File
+import java.io.FileNotFoundException
 
 internal class Task5Test {
+
+    @Test
+    fun CountNonEmptyLines_FileDoesNotExist_MustWork() {
+        val input = File("")
+        assertThrows(FileNotFoundException::class.java) {
+            assertEquals(0, countNonEmptyLines(input))
+        }
+    }
 
     @Test
     fun CountNonEmptyLines_EmptyFile_MustWork() {
@@ -59,11 +68,5 @@ internal class Task5Test {
     fun CountNonEmptyLines_NonEmptyFile5_MustWork() {
         val input = File("./src/test/kotlin/homeworks/homework1/task5/testFiles/NonEmpty5.txt")
         assertEquals(30, countNonEmptyLines(input))
-    }
-
-    @Test
-    fun CountNonEmptyLines_NonEmptyFile6_MustWork() {
-        val input = File("./src/test/kotlin/homeworks/homework1/task5/testFiles/NonEmpty6.txt")
-        assertEquals(9, countNonEmptyLines(input))
     }
 }
