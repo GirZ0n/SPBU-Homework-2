@@ -13,16 +13,11 @@ internal class Task3Test {
 
     @Test
     fun GetNumberOfOccurrences_SubstringIsContainedInSource2_MustWork() {
-        assertEquals(7, getNumberOfOccurrences("abababababababa", "aba"))
-    }
-
-    @Test
-    fun GetNumberOfOccurrences_SubstringIsContainedInSource3_MustWork() {
         assertEquals(1, getNumberOfOccurrences("zdkgnsdj", "zdk"))
     }
 
     @Test
-    fun GetNumberOfOccurrences_SubstringIsContainedInSource4_MustWork() {
+    fun GetNumberOfOccurrences_SubstringIsContainedInSource3_MustWork() {
         assertEquals(1, getNumberOfOccurrences("qwerty", "qwerty"))
     }
 
@@ -42,17 +37,22 @@ internal class Task3Test {
     }
 
     @Test
-    fun GetNumberOfOccurrences_SubstringIsNotContainedInSource4_MustWork() {
-        assertEquals(0, getNumberOfOccurrences("abababababababa", "q"))
-    }
-
-    @Test
     fun GetNumberOfOccurrences_TwoEmptyStrings_MustWork() {
-        assertEquals(0, getNumberOfOccurrences("ndfnsaf", "fasnfdn"))
+        assertEquals(0, getNumberOfOccurrences("", ""))
     }
 
     @Test
     fun GetNumberOfOccurrences_TwoBlankStrings_MustWork() {
         assertEquals(6, getNumberOfOccurrences("        ", "   "))
+    }
+
+    @Test
+    fun GetNumberOfOccurrences_EmptyString_MustWork() {
+        assertEquals(0, getNumberOfOccurrences("", "dsdg"))
+    }
+
+    @Test
+    fun GetNumberOfOccurrences_EmptySubstring_MustWork() {
+        assertEquals(0, getNumberOfOccurrences("qwerty", ""))
     }
 }
