@@ -135,8 +135,8 @@ internal class Task1Test {
 
     @Test
     fun SwapBeginAndEnd_SimpleArray1_ExceptionThrown() {
-        val expected = List(158) {it + 42} + List(42) {it}
-        var actual = List(200) {it}
+        val expected = List(158) { it + 42 } + List(42) { it }
+        var actual = List(200) { it }
         actual = swapBeginAndEnd(actual, 42, 158)
         assertEquals(expected, actual)
     }
