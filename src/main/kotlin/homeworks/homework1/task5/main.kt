@@ -5,12 +5,14 @@ import java.io.FileNotFoundException
 import java.util.Scanner
 
 fun countNonEmptyLines(input: File): Int {
-    if (!input.exists()) throw FileNotFoundException("Can't open the file")
+    if (!input.exists())
+        throw FileNotFoundException("Can't open the file")
 
     val scan = Scanner(input)
     var numberOfNonEmptyLines = 0
     while (scan.hasNextLine()) {
-        if (!scan.nextLine().isBlank()) numberOfNonEmptyLines++
+        if (!scan.nextLine().isBlank())
+            numberOfNonEmptyLines++
     }
     return numberOfNonEmptyLines
 }
