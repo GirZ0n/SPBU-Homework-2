@@ -37,22 +37,28 @@ internal class Task3Test {
     }
 
     @Test
-    fun GetNumberOfOccurrences_TwoEmptyStrings_MustWork() {
-        assertEquals(0, getNumberOfOccurrences("", ""))
-    }
-
-    @Test
     fun GetNumberOfOccurrences_TwoBlankStrings_MustWork() {
         assertEquals(6, getNumberOfOccurrences("        ", "   "))
     }
 
     @Test
-    fun GetNumberOfOccurrences_EmptyString_MustWork() {
-        assertEquals(0, getNumberOfOccurrences("", "dsdg"))
+    fun GetNumberOfOccurrences_TwoEmptyStrings_ExceptionThrown() {
+        assertThrows(IllegalArgumentException::class.java) {
+            getNumberOfOccurrences("", "")
+        }
     }
 
     @Test
-    fun GetNumberOfOccurrences_EmptySubstring_MustWork() {
-        assertEquals(0, getNumberOfOccurrences("qwerty", ""))
+    fun GetNumberOfOccurrences_EmptyString_ExceptionThrown() {
+        assertThrows(IllegalArgumentException::class.java) {
+            getNumberOfOccurrences("", "dsdg")
+        }
+    }
+
+    @Test
+    fun GetNumberOfOccurrences_EmptySubstring_ExceptionThrown() {
+        assertThrows(IllegalArgumentException::class.java) {
+            getNumberOfOccurrences("qwerty", "")
+        }
     }
 }
