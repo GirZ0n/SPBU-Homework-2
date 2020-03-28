@@ -42,8 +42,10 @@ internal class Task4Test {
     }
 
     @Test
-    fun IsPalindrome_EmptyString_MustWork() {
-        assert(isPalindrome(""))
+    fun IsPalindrome_EmptyString_ExceptionThrown() {
+        assertThrows(IllegalArgumentException::class.java) {
+            isPalindrome("")
+        }
     }
 
     @Test
