@@ -7,8 +7,10 @@ import org.junit.jupiter.api.Assertions.*
 internal class Task1Test {
 
     @Test
-    fun CountXToBeDeleted_EmptyString_MustWork() {
-        assertEquals(0, countXToBeDeleted(""))
+    fun CountXToBeDeleted_EmptyString_ExceptionThrown() {
+        assertThrows(IllegalArgumentException::class.java) {
+            countXToBeDeleted("")
+        }
     }
 
     @Test
