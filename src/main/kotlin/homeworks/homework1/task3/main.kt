@@ -4,8 +4,8 @@ import java.lang.IllegalArgumentException
 import java.util.Scanner
 
 fun getNumberOfOccurrences(source: String, substring: String): Int {
-    require(source.isNotEmpty()) {"The source string mustn't be empty"}
-    require(substring.isNotEmpty()) {"The substring mustn't be empty"}
+    require(source.isNotEmpty()) { "The source string mustn't be empty" }
+    require(substring.isNotEmpty()) { "The substring mustn't be empty" }
 
     var answer = 0
     val sourceLength = source.length
