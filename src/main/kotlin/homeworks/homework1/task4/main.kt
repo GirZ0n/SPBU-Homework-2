@@ -5,9 +5,7 @@ import java.util.Scanner
 fun isPalindrome(inputString: String): Boolean {
     val stringLength = inputString.length
     for (i in 0 until stringLength / 2) {
-        if (inputString[i] != inputString[stringLength - i - 1]) {
-            return false
-        }
+        if (inputString[i] != inputString[stringLength - i - 1]) return false
     }
     return true
 }
