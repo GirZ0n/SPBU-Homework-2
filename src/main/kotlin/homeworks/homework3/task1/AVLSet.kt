@@ -3,6 +3,7 @@ package homeworks.homework3.task1
 class AVLSet<K, V> where K : Comparable<K>, V : Comparable<V> {
     private var root: Node<K, V>? = null
     private var size = 0
+    var length = 0
 
     fun printKeys() {
         root?.printKeys() ?: print("Null")
