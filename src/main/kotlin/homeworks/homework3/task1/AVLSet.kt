@@ -1,5 +1,4 @@
 package homeworks.homework3.task1
-
 class AVLSet<K, V> where K : Comparable<K>, V : Comparable<V> {
     private var root: Node<K, V>? = null
     private var size = 0
@@ -7,8 +6,6 @@ class AVLSet<K, V> where K : Comparable<K>, V : Comparable<V> {
     fun printKeys() = root?.printKeys() ?: print("Null")
 
     fun containsKey(key: K): Boolean {
-        if (root == null) return false
-
         var current = root
         while (current != null) {
             current = when {
