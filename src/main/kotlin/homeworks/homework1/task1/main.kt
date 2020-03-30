@@ -35,12 +35,12 @@ fun getInputData(): Pair<Int, Int> {
     return Pair(beginSegmentLength, endSegmentLength)
 }
 
-fun getArray(): List<Int> {
-    val array: List<Int>
+fun getArray(): MutableList<Int> {
+    val array: MutableList<Int>
 
     try {
         println("Enter the array:")
-        array = readLine()!!.split(' ').map { it.toInt() }
+        array = readLine()!!.split(' ').map { it.toInt() }.toMutableList()
     } catch (exception: NumberFormatException) {
         println("You need to enter an array of integers")
         exitProcess(0)
@@ -52,41 +52,32 @@ fun getArray(): List<Int> {
     return array
 }
 
-fun reverse(array: List<Int>, indexOfBegin: Int, indexOfEnd: Int): List<Int> {
-    if (array.isEmpty()) return emptyList()
-
-    require(indexOfBegin >= 0 && indexOfBegin <= array.size) {
+fun MutableList<Int>.reverse(indexOfBegin: Int, indexOfEnd: Int) {
+    require(indexOfBegin in 0..(this.size)) {
         "Index of begin mustn't go beyond the bounds of the array"
     }
-    require(indexOfEnd >= 0 && indexOfEnd <= array.size) {
+    require(indexOfEnd in 0..(this.size)) {
         "Index of end mustn't go beyond the bounds of the array"
     }
     require(indexOfBegin <= indexOfEnd) { "Index of begin must not be greater than index of end" }
 
-    val beginSegment = array.subList(0, indexOfBegin)
-    val reversedSegment = array.subList(indexOfBegin, indexOfEnd).reversed()
-    val endSegment = array.subList(indexOfEnd, array.size)
-
-    return beginSegment + reversedSegment + endSegment
+    this.subList(indexOfBegin, indexOfEnd).reverse()
 }
 
-fun swapBeginAndEnd(array: List<Int>, beginLength: Int, endLength: Int): List<Int> {
+fun swapBeginAndEnd(array: MutableList<Int>, beginLength: Int, endLength: Int) {
     require(beginLength + endLength == array.size) { "The array should be long: ${beginLength + endLength}" }
 
-    var answer = array
-    answer = reverse(answer, 0, beginLength)
-    answer = reverse(answer, beginLength, beginLength + endLength)
-    answer = reverse(answer, 0, beginLength + endLength)
-
-    return answer
+    array.reverse(0, beginLength)
+    array.reverse(beginLength, beginLength + endLength)
+    array.reverse(0, beginLength + endLength)
 }
 
 fun main() {
     val (beginSegmentLength, endSegmentLength) = getInputData()
-    var array = getArray()
+    val array = getArray()
 
     try {
-        array = swapBeginAndEnd(array, beginSegmentLength, endSegmentLength)
+        swapBeginAndEnd(array, beginSegmentLength, endSegmentLength)
     } catch (exception: IllegalArgumentException) {
         println(exception.message)
         exitProcess(0)
