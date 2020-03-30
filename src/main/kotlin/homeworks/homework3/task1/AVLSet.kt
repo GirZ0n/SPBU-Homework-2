@@ -84,22 +84,27 @@ class AVLSet<K, V> where K : Comparable<K>, V : Comparable<V> {
             updateHeight()
             val rightChildBalanceFactor = rightChild?.getBalanceFactor() ?: -1
             val leftChildBalanceFactor = leftChild?.getBalanceFactor() ?: -1
+            val balanceFactor = getBalanceFactor()
 
-            if (getBalanceFactor() == 2) {
+            if (balanceFactor == 2) {
                 if (rightChildBalanceFactor < 0) {
                     rightChild = rightChild?.rotateRight()
                 }
                 return rotateLeft()
             }
 
-            if (getBalanceFactor() == -2) {
+            if (balanceFactor == -2) {
                 if (leftChildBalanceFactor > 0) {
                     leftChild = leftChild?.rotateLeft()
                 }
                 return rotateRight()
             }
 
-            return this
+            return when(balanceFactor) {
+                2 -> rotateLeft()
+                -2 -> rotateRight()
+                else -> this
+            }
         }
     }
 }
