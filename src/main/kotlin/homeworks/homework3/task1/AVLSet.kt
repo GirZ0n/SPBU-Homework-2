@@ -3,7 +3,6 @@ package homeworks.homework3.task1
 class AVLSet<K, V> where K : Comparable<K>, V : Comparable<V> {
     private var root: Node<K, V>? = null
     private var size = 0
-
     fun printKeys() {
         root?.printKeys() ?: print("Null")
     }
@@ -34,7 +33,6 @@ class AVLSet<K, V> where K : Comparable<K>, V : Comparable<V> {
         private var height = 0
         var leftChild: Node<K, V>? = null
         var rightChild: Node<K, V>? = null
-
         private fun updateHeight() {
             val leftChildHeight = leftChild?.height ?: -1
             val rightChildHeight = rightChild?.height ?: -1
