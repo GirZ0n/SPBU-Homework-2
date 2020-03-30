@@ -8,10 +8,6 @@ class AVLSet<K, V> where K : Comparable<K>, V : Comparable<V> {
         root?.printKeys() ?: print("Null")
     }
 
-    fun containsValue(value: V): Boolean {
-        TODO()
-    }
-
     fun containsKey(key: K): Boolean {
         var current = root
         while (current != null) {
