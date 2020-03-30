@@ -31,6 +31,7 @@ class AVLSet<K, V> where K : Comparable<K>, V : Comparable<V> {
     }
 
     class Node<K, V>(val key: K, var value: V) where K : Comparable<K> {
+
         private var height = 0
         var leftChild: Node<K, V>? = null
         var rightChild: Node<K, V>? = null
@@ -104,6 +105,7 @@ class AVLSet<K, V> where K : Comparable<K>, V : Comparable<V> {
 
             return this
         }
+
     }
 
 }
