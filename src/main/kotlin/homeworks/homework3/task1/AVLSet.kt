@@ -1,5 +1,6 @@
 package homeworks.homework3.task1
-class AVLSet<K, V> where K : Comparable<K>, V : Comparable<V> {
+
+class AVLSet <K, V> where K : Comparable<K>, V : Comparable<V> {
     private var root: Node<K, V>? = null
     private var size = 0
 
@@ -14,7 +15,6 @@ class AVLSet<K, V> where K : Comparable<K>, V : Comparable<V> {
                 else -> current.rightChild
             }
         }
-
         return false
     }
 
@@ -58,7 +58,6 @@ class AVLSet<K, V> where K : Comparable<K>, V : Comparable<V> {
             } else if (this.key < key) {
                 rightChild = rightChild?.add(key, value) ?: Node(key, value)
             }
-
             return balance()
         }
 
@@ -99,7 +98,6 @@ class AVLSet<K, V> where K : Comparable<K>, V : Comparable<V> {
                 }
                 rotateRight()
             }
-
             return this
         }
     }
