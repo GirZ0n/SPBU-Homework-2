@@ -1,10 +1,11 @@
 package homeworks.homework3.task1
 
-class AVLSet <K, V> where K : Comparable<K>, V : Comparable<V> {
+class AVLSet<K, V> where K : Comparable<K>, V : Comparable<V> {
     private var root: Node<K, V>? = null
     private var size = 0
-
-    fun printKeys() = root?.printKeys() ?: print("Null")
+    fun printKeys() {
+        root?.printKeys() ?: print("Null")
+    }
 
     fun containsKey(key: K): Boolean {
         var current = root
@@ -98,6 +99,7 @@ class AVLSet <K, V> where K : Comparable<K>, V : Comparable<V> {
                 }
                 rotateRight()
             }
+
             return this
         }
     }
