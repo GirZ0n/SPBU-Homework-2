@@ -1,5 +1,7 @@
 package homeworks.homework3.task1
+
 class AVLSet<K, V> where K : Comparable<K>, V : Comparable<V> {
+
     private var root: Node<K, V>? = null
     private var size = 0
 
@@ -29,6 +31,7 @@ class AVLSet<K, V> where K : Comparable<K>, V : Comparable<V> {
     }
 
     class Node<K, V>(val key: K, var value: V) where K : Comparable<K> {
+
         private var height = 0
         var leftChild: Node<K, V>? = null
         var rightChild: Node<K, V>? = null
@@ -90,21 +93,17 @@ class AVLSet<K, V> where K : Comparable<K>, V : Comparable<V> {
                 if (rightChildBalanceFactor < 0) {
                     rightChild = rightChild?.rotateRight()
                 }
-                return rotateLeft()
+                rotateLeft()
             }
 
             if (balanceFactor == -2) {
                 if (leftChildBalanceFactor > 0) {
                     leftChild = leftChild?.rotateLeft()
                 }
-                return rotateRight()
+                rotateRight()
             }
 
-            return when(balanceFactor) {
-                2 -> rotateLeft()
-                -2 -> rotateRight()
-                else -> this
-            }
+            return this
         }
     }
 }
