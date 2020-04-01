@@ -118,10 +118,7 @@ class AVLSet<K, V> where K : Comparable<K> {
         }
 
         fun removeMinimumNodeFromRightSubtree(): Node<K, V>? {
-            if (leftChild == null) {
-                return rightChild
-            }
-            leftChild = leftChild?.removeMinimumNodeFromRightSubtree()
+            leftChild = leftChild?.removeMinimumNodeFromRightSubtree() ?: return rightChild
             return balance()
         }
 
@@ -151,7 +148,6 @@ class AVLSet<K, V> where K : Comparable<K> {
         }
     }
 }
-
 
 /*fun main() {
     val a = AVLSet<Int, Int>()
