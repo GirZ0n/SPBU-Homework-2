@@ -1,5 +1,8 @@
 package homeworks.homework3.task1
 
+private const val BALANCE_FACTOR_NEEDED_FOR_LEFT_TURN = 2
+private const val BALANCE_FACTOR_NEEDED_FOR_RIGHT_TURN = -2
+
 class AVLSet<K, V> where K : Comparable<K>, V : Comparable<V> {
     private var root: Node<K, V>? = null
     private var size = 0
@@ -35,7 +38,7 @@ class AVLSet<K, V> where K : Comparable<K>, V : Comparable<V> {
         private fun updateHeight() {
             val leftChildHeight = leftChild?.height ?: -1
             val rightChildHeight = rightChild?.height ?: -1
-            this.height = maxOf(leftChildHeight, rightChildHeight) + 1
+            height = maxOf(leftChildHeight, rightChildHeight) + 1
         }
 
         fun getBalanceFactor(): Int {
@@ -83,22 +86,23 @@ class AVLSet<K, V> where K : Comparable<K>, V : Comparable<V> {
             val rightChildBalanceFactor = rightChild?.getBalanceFactor() ?: -1
             val leftChildBalanceFactor = leftChild?.getBalanceFactor() ?: -1
             val balanceFactor = getBalanceFactor()
+            var result: Node<K, V>? = this
 
-            if (balanceFactor == 2) {
+            if (balanceFactor == BALANCE_FACTOR_NEEDED_FOR_LEFT_TURN) {
                 if (rightChildBalanceFactor < 0) {
                     rightChild = rightChild?.rotateRight()
                 }
-                rotateLeft()
+                result = rotateLeft()
             }
 
-            if (balanceFactor == -2) {
+            if (balanceFactor == BALANCE_FACTOR_NEEDED_FOR_RIGHT_TURN) {
                 if (leftChildBalanceFactor > 0) {
                     leftChild = leftChild?.rotateLeft()
                 }
-                rotateRight()
+                result = rotateRight()
             }
 
-            return this
+            return result
         }
     }
 }
