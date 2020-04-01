@@ -126,29 +126,34 @@ class AVLSet<K, V> where K : Comparable<K> {
         }
 
         fun removeKey(key: K): Node<K, V>? {
-            var result: Node<K, V>? = null
+            when {
+                key < this.key -> leftChild = leftChild?.removeKey(key)
+                key > this.key -> rightChild = rightChild?.removeKey(key)
+                else -> {
+                    val result: Node<K, V>?
+                    val leftChild = leftChild
+                    val rightChild = rightChild
 
-            if (key < this.key) {
-                leftChild = leftChild?.removeKey(key)
-            } else if (key > this.key) {
-                rightChild = rightChild?.removeKey(key)
-            } else {
-                val leftChild = leftChild
-                val rightChild = rightChild ?: return leftChild
+                    if (rightChild == null) {
+                        result = leftChild
+                    } else {
+                        val minimum = rightChild.getMinimumNodeFromRightSubtree()
+                        minimum.rightChild = rightChild.removeMinimumNodeFromRightSubtree()
+                        minimum.leftChild = leftChild
+                        result = minimum.balance()
+                    }
 
-                val minimum = rightChild.getMinimumNodeFromRightSubtree()
-                minimum.rightChild = rightChild.removeMinimumNodeFromRightSubtree()
-                minimum.leftChild = leftChild
-                result = minimum.balance()
+                    return result
+                }
             }
 
-            return result ?: balance()
+            return balance()
         }
     }
 }
 
-/*
-fun main() {
+
+/*fun main() {
     val a = AVLSet<Int, Int>()
     for (i in 1..10)
         a.add(i, i*i)
