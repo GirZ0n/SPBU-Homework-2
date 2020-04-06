@@ -1,7 +1,7 @@
 package tests.test1
 
 fun main() {
-    val queue = PriorityQueue<String> ()
+    val queue = PriorityQueue<String>()
     println("Queue empty? ${queue.isEmpty()}")
     queue.enqueue("q", 1)
     queue.enqueue("b", 10)

@@ -8,13 +8,13 @@ internal class Test1KtTest {
 
     @Test
     fun PriorityQueueEmpty_EmptyQueue_MustWork() {
-        val queue = PriorityQueue<String> ()
+        val queue = PriorityQueue<String>()
         assertEquals(true, queue.isEmpty())
     }
 
     @Test
     fun PriorityQueueEmpty_NonEmptyQueue1_MustWork() {
-        val queue = PriorityQueue<String> ()
+        val queue = PriorityQueue<String>()
         queue.enqueue("a", 1)
         queue.enqueue("q", 1)
         queue.enqueue("asdg", 1)
@@ -29,7 +29,7 @@ internal class Test1KtTest {
 
     @Test
     fun PriorityQueueEmpty_NonEmptyQueue2_MustWork() {
-        val queue = PriorityQueue<Int> ()
+        val queue = PriorityQueue<Int>()
         queue.enqueue(1, 23536)
         queue.enqueue(2, 35)
         queue.enqueue(5, 0)
@@ -46,7 +46,7 @@ internal class Test1KtTest {
 
     @Test
     fun PriorityQueueEmpty_NonEmptyQueue3_MustWork() {
-        val queue = PriorityQueue<Boolean> ()
+        val queue = PriorityQueue<Boolean>()
         queue.enqueue(true, 1)
         queue.enqueue(false, 12)
         queue.enqueue(true, 132)
@@ -59,7 +59,7 @@ internal class Test1KtTest {
 
     @Test
     fun PriorityQueueEmpty_NonEmptyQueue4_MustWork() {
-        val queue = PriorityQueue<Double> ()
+        val queue = PriorityQueue<Double>()
         queue.enqueue(3.2352, 12)
         queue.enqueue(23552.0, 0)
         queue.enqueue(212.43, 235)
@@ -73,7 +73,7 @@ internal class Test1KtTest {
 
     @Test
     fun PriorityQueuePeek_NonEmptyQueue1_MustWork() {
-        val queue = PriorityQueue<String> ()
+        val queue = PriorityQueue<String>()
         queue.enqueue("a", 1)
         queue.enqueue("q", 1)
         queue.enqueue("asdg", 1)
@@ -88,7 +88,7 @@ internal class Test1KtTest {
 
     @Test
     fun PriorityQueuePeek_NonEmptyQueue2_MustWork() {
-        val queue = PriorityQueue<Int> ()
+        val queue = PriorityQueue<Int>()
         queue.enqueue(1, 23536)
         queue.enqueue(2, 35)
         queue.enqueue(5, 0)
@@ -105,7 +105,7 @@ internal class Test1KtTest {
 
     @Test
     fun PriorityQueuePeek_NonEmptyQueue3_MustWork() {
-        val queue = PriorityQueue<Boolean> ()
+        val queue = PriorityQueue<Boolean>()
         queue.enqueue(true, 1)
         queue.enqueue(false, 12)
         queue.enqueue(true, 132)
@@ -118,7 +118,7 @@ internal class Test1KtTest {
 
     @Test
     fun PriorityQueuePeek_NonEmptyQueue4_MustWork() {
-        val queue = PriorityQueue<Double> ()
+        val queue = PriorityQueue<Double>()
         queue.enqueue(3.2352, 12)
         queue.enqueue(23552.0, 0)
         queue.enqueue(212.43, 235)
