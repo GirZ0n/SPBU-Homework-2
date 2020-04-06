@@ -1,12 +1,12 @@
 package tests.test1
 
 fun main() {
-    val queue = PriorityQueue<String>()
+    val queue = PriorityQueue<Char>()
     println("Queue empty? ${queue.isEmpty()}")
-    queue.enqueue("q", 1)
-    queue.enqueue("b", 10)
-    queue.enqueue("c", 3)
-    queue.enqueue("a", 1)
+    queue.enqueue('q', 'q'.toInt())
+    queue.enqueue('b', 'b'.toInt())
+    queue.enqueue('c', 'c'.toInt())
+    queue.enqueue('a', 'a'.toInt())
     queue.print()
     queue.dequeue()
     queue.dequeue()

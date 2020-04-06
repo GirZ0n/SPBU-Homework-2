@@ -13,13 +13,19 @@ class PriorityQueue<T> {
     }
 
     fun dequeue() {
-        if (list.isNotEmpty()) list.removeAt(0) else
+        if (list.isNotEmpty()) {
+            list.removeAt(0)
+        } else {
             throw ArrayIndexOutOfBoundsException("Priority Queue is empty\n")
+        }
     }
 
     fun peek(): T {
-        return if (list.isNotEmpty()) list[0].second else
+        return if (list.isNotEmpty()) {
+            list[0].second
+        } else {
             throw ArrayIndexOutOfBoundsException("Priority Queue is empty\n")
+        }
     }
 
     fun print() {
