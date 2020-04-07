@@ -1,5 +1,6 @@
 package homeworks.homework1.task1
 
+import java.lang.IllegalStateException
 import java.util.Scanner
 import java.util.InputMismatchException
 import kotlin.NoSuchElementException
@@ -12,9 +13,17 @@ fun getNumber(): Int {
     return number
 }
 
-fun getInputData(): Pair<Int, Int> {
+fun getArray(size: Int): MutableList<Int> {
+    val array: MutableList<Int> = readLine()?.split(' ')?.map { it.toInt() }?.toMutableList()
+        ?: emptyList<Int>().toMutableList()
+    check(size == array.size) { "The array should be long: $size" }
+    return array
+}
+
+fun getInputData(): Triple<Int, Int, MutableList<Int>> {
     val beginSegmentLength: Int
     val endSegmentLength: Int
+    val array: MutableList<Int>
 
     try {
         println("Enter the length of begin segment:")
@@ -32,24 +41,18 @@ fun getInputData(): Pair<Int, Int> {
         exitProcess(0)
     }
 
-    return Pair(beginSegmentLength, endSegmentLength)
-}
-
-fun getArray(): MutableList<Int> {
-    val array: MutableList<Int>
-
     try {
         println("Enter the array:")
-        array = readLine()!!.split(' ').map { it.toInt() }.toMutableList()
+        array = getArray(beginSegmentLength + endSegmentLength)
     } catch (exception: NumberFormatException) {
         println("You need to enter an array of integers")
         exitProcess(0)
-    } catch (exception: KotlinNullPointerException) {
-        println("You need to enter an array of integers")
+    } catch (exception: IllegalStateException) {
+        println(exception)
         exitProcess(0)
     }
 
-    return array
+    return Triple(beginSegmentLength, endSegmentLength, array)
 }
 
 fun MutableList<Int>.reverse(indexOfBegin: Int, indexOfEnd: Int) {
@@ -65,16 +68,13 @@ fun MutableList<Int>.reverse(indexOfBegin: Int, indexOfEnd: Int) {
 }
 
 fun swapBeginAndEnd(array: MutableList<Int>, beginLength: Int, endLength: Int) {
-    require(beginLength + endLength == array.size) { "The array should be long: ${beginLength + endLength}" }
-
     array.reverse(0, beginLength)
     array.reverse(beginLength, beginLength + endLength)
     array.reverse(0, beginLength + endLength)
 }
 
 fun main() {
-    val (beginSegmentLength, endSegmentLength) = getInputData()
-    val array = getArray()
+    val (beginSegmentLength, endSegmentLength, array) = getInputData()
 
     try {
         swapBeginAndEnd(array, beginSegmentLength, endSegmentLength)
