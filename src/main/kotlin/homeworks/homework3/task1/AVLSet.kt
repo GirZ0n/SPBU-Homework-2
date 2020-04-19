@@ -110,7 +110,6 @@ class AVLSet<K, V> where K : Comparable<K> {
                 }
                 return true
             }
-
         }
     }
 
