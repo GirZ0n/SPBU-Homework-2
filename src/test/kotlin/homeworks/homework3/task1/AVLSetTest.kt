@@ -80,4 +80,33 @@ internal class AVLSetTest {
         }
         assertNull(testTree.getValue(1001))
     }
+
+    @Test
+    fun addAndRemove_EmptyTree_MustWork() {
+        val expected = AVLSet<Int, Char>()
+        val actual = AVLSet<Int, Char>()
+        for (i in 1..100) {
+            actual.add(i, i.toChar())
+        }
+        for (i in 1..100) {
+            actual.remove(i)
+        }
+        assert(expected.equalsTo(actual))
+    }
+
+    @Test
+    fun addAndRemove_NonEmpty_MustWork() {
+        val expected = AVLSet<Int, Char>()
+        expected.add(1, 'a')
+        expected.add(2, 'b')
+        expected.add(3, 'c')
+        val actual = AVLSet<Int, Char>()
+        actual.add(1, 'a')
+        actual.add(3, 'c')
+        actual.add(235, 'q')
+        actual.add(2, 'b')
+        actual.remove(235)
+
+        assert(expected.equalsTo(actual))
+    }
 }

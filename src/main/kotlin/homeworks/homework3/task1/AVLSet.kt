@@ -93,6 +93,31 @@ class AVLSet<K, V> where K : Comparable<K> {
         return node.balance()
     }
 
+    private fun subtreeEquals(firstRoot: Node<K, V>?, secondRoot: Node<K, V>?): Boolean {
+        if (firstRoot == null) {
+            return secondRoot == null
+        } else {
+            if (secondRoot == null) {
+                return false
+            } else {
+                if (firstRoot.key != secondRoot.key || firstRoot.value != secondRoot.value) {
+                    return false
+                }
+                if (!subtreeEquals(firstRoot.leftChild, secondRoot.leftChild) ||
+                    !subtreeEquals(firstRoot.rightChild, secondRoot.rightChild)
+                ) {
+                    return false
+                }
+                return true
+            }
+
+        }
+    }
+
+    fun equalsTo(tree: AVLSet<K, V>): Boolean {
+        return subtreeEquals(this.root, tree.root)
+    }
+
     private class Node<K, V>(val key: K, var value: V) where K : Comparable<K> {
         private var height = 0
         var leftChild: Node<K, V>? = null
