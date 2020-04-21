@@ -1,9 +1,13 @@
 package homeworks.homework4.task1
 
+import java.io.File
+import java.io.FileNotFoundException
+import java.util.Scanner
 import kotlin.math.pow
 
 const val INIT_SIZE = 1024
 const val PRIME_NUMBER = 1073676287.0
+const val FILE_PATH = "./src/main/kotlin/homeworks/homework4/task1/input.txt"
 
 fun main() {
     printHelp()
@@ -35,6 +39,7 @@ fun printHelp() {
 
 fun interactWithTable(hashTable: HashTable<String, Int>) {
     var input: String
+    val inputFile = File(FILE_PATH)
     while (true) {
         print("> ")
         input = readLine() ?: "exit"
@@ -45,6 +50,7 @@ fun interactWithTable(hashTable: HashTable<String, Int>) {
             Commands.FIND.code -> findCodeProcessing(hashTable)
             Commands.CHANGE_HASH_FUNCTION.code -> changeHashFunctionCodeProcessing(hashTable)
             Commands.PRINT_STATISTICS.code -> hashTable.printStatistics()
+            Commands.IMPORT.code -> importCodeProcessing(hashTable, inputFile)
             Commands.EXIT.code -> return
             else -> println("Type `${Commands.HELP.code}` to see help list")
         }
@@ -85,6 +91,20 @@ fun changeHashFunctionCodeProcessing(hashTable: HashTable<String, Int>) {
             println("You have selected a polynomial hash function")
         }
         else -> return
+    }
+}
+
+fun importCodeProcessing(hashTable: HashTable<String, Int>, input: File) {
+    if (!input.exists()) {
+        throw FileNotFoundException("Can't open the file")
+    }
+
+    val scan = Scanner(input)
+    while (scan.hasNext()) {
+        val key = scan.next()
+        scan.next()
+        val value = scan.nextInt()
+        hashTable.add(key, value)
     }
 }
 
