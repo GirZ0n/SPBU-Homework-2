@@ -154,15 +154,15 @@ Result: +1.5029691162109375384*2^13
 ## Semester №2 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
 
 ### Homework №1 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
-1. Дан массив целых чисел `x[1]...x[m+n]`, рассматриваемый как соединение двух его отрезков: начала `x[1]...x[m]` длины `m` и конца `x[m+1]...x[m+n]` длины `n`. Не используя дополнительных массивов, переставить начало и конец. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/src/main/koltin/homeworks/homework1/task1/main.kt)
+1. Дан массив целых чисел `x[1]...x[m+n]`, рассматриваемый как соединение двух его отрезков: начала `x[1]...x[m]` длины `m` и конца `x[m+1]...x[m+n]` длины `n`. Не используя дополнительных массивов, переставить начало и конец. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/src/main/kotlin/homeworks/homework1/task1/main.kt)
 
-2. Реализовать подсчет факториала (рекурсивно и итеративно). [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/src/main/koltin/homeworks/homework1/task2/main.kt)
+2. Реализовать подсчет факториала (рекурсивно и итеративно). [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/src/main/kotlin/homeworks/homework1/task2/main.kt)
 
-3. Заданы две строки: `s1` и `s2`. Найти количество вхождений `s2` в `s1` как подстроки. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/src/main/koltin/homeworks/homework1/task3/main.kt)
+3. Заданы две строки: `s1` и `s2`. Найти количество вхождений `s2` в `s1` как подстроки. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/src/main/kotlin/homeworks/homework1/task3/main.kt)
 
-4. Реализовать программу, проверяющую, является ли строка палинромом. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/src/main/koltin/homeworks/homework1/task4/main.kt)
+4. Реализовать программу, проверяющую, является ли строка палинромом. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/src/main/kotlin/homeworks/homework1/task4/main.kt)
 
-5. Написать программу, которая считает количество непустых строк в исходном файле. Строка считается пустой, если состоит только из пробелов и табуляций (символ `\t`), или в ней нет символов вообще. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/src/main/koltin/homeworks/homework1/task5/main.kt)
+5. Написать программу, которая считает количество непустых строк в исходном файле. Строка считается пустой, если состоит только из пробелов и табуляций (символ `\t`), или в ней нет символов вообще. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/src/main/kotlin/homeworks/homework1/task5/main.kt)
 
 ### Homework №2 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
 1. Определите минимальное количество символов, которые нужно удалить из строки так, чтобы она не содержала `«xxx»` в качестве подстроки. Выведите `0`, если строка изначально не содержит запрещенной подстроки `«xxx»`. Удалять символы можно в произвольных позициях (не обязательно подряд).
