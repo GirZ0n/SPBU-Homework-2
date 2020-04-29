@@ -1,7 +1,13 @@
 package homeworks.homework5.task1
 
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
+import java.lang.StringBuilder
+import java.util.Scanner
+
 class Trie {
-    private val root = Node()
+    private var root = Node()
     var size = 0
         private set
 
@@ -77,21 +83,61 @@ class Trie {
         return currentNode?.howManyStartWithPrefix ?: 0
     }
 
+    private fun getAllWords(root: Node, words: MutableList<String>, prefix: StringBuilder, position: Int) {
+        if (root.isTerminal) {
+            words.add(prefix.substring(0, position))
+        }
+
+        for (pair in root.children) {
+            if (prefix.length <= position) {
+                prefix.append(pair.first)
+            } else {
+                prefix[position] = pair.first
+            }
+            getAllWords(pair.second, words, prefix, position + 1)
+        }
+    }
+
+    fun serialise(output: OutputStream) {
+        val words = emptyList<String>().toMutableList()
+        val prefix = StringBuilder()
+        getAllWords(root, words, prefix, 0)
+        output.write((words.joinToString(" ") { "'$it'" }).toByteArray())
+        output.close()
+    }
+
+    private fun String.isWord(): Boolean {
+        for (symbol in this) {
+            if (!symbol.isLetterOrDigit()) {
+                return false
+            }
+        }
+        return true
+    }
+
+    fun deserialise(input: InputStream) {
+        val inputString = input.bufferedReader().readLine()
+        val scan = Scanner(inputString)
+        var currentWord: String
+        root = Node()
+        try {
+            while (scan.hasNext()) {
+                currentWord = scan.next()
+                currentWord = currentWord.substring(1, currentWord.length - 1)
+                if (currentWord.isWord()) {
+                    add(currentWord)
+                } else {
+                    throw IOException("Expected word")
+                }
+            }
+        } catch (exception: IOException) {
+            println(exception.message)
+        }
+    }
+
     private data class Node(
         var isTerminal: Boolean = false,
         var howManyStartWithPrefix: Int = 0,
         val children: MutableList<Pair<Char, Node>> = mutableListOf()
     )
-}
-
-fun main() {
-    val test = Trie()
-    test.add("")
-    test.add("qwerty")
-    test.add("qwert")
-    test.add("wqf")
-    test.add("wsdf")
-    test.add("qw")
-    test.remove("qwert")
-    println(test.howManyStartWithPrefix("qwertyfg"))
 }
