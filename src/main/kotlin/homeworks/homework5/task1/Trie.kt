@@ -18,7 +18,7 @@ class Trie {
 
         var currentNode: Node? = root
         for (symbol in element) {
-            currentNode = currentNode?.children?.find { it.first == symbol }?.second
+            currentNode = currentNode?.children?.get(symbol)
         }
 
         return currentNode?.isTerminal ?: false
@@ -32,10 +32,10 @@ class Trie {
         var currentNode: Node? = root
         for (symbol in element) {
             currentNode?.run { howManyStartWithPrefix++ }
-            val nextNode = currentNode?.children?.find { it.first == symbol }?.second
+            val nextNode = currentNode?.children?.get(symbol)
             currentNode = nextNode ?: run {
                 val newNode = Node()
-                currentNode?.children?.add(Pair(symbol, newNode))
+                currentNode?.children?.put(symbol, newNode)
                 newNode
             }
         }
@@ -54,16 +54,16 @@ class Trie {
         var currentNode: Node? = root
         for (symbol in element) {
             currentNode?.run { howManyStartWithPrefix-- }
-            currentNode = currentNode?.children?.find { it.first == symbol }?.second
+            currentNode = currentNode?.children?.get(symbol)
         }
         currentNode?.isTerminal = false
         currentNode?.run { howManyStartWithPrefix-- }
 
         currentNode = root
         for (symbol in element) {
-            val nextNode = currentNode?.children?.find { it.first == symbol }?.second
+            val nextNode = currentNode?.children?.get(symbol)
             if (nextNode?.howManyStartWithPrefix == 0) {
-                currentNode?.children?.remove(Pair(symbol, nextNode))
+                currentNode?.children?.remove(symbol)
                 break
             } else {
                 currentNode = nextNode
@@ -77,7 +77,7 @@ class Trie {
     fun howManyStartWithPrefix(element: String): Int {
         var currentNode: Node? = root
         for (symbol in element) {
-            currentNode = currentNode?.children?.find { it.first == symbol }?.second
+            currentNode = currentNode?.children?.get(symbol)
         }
 
         return currentNode?.howManyStartWithPrefix ?: 0
@@ -90,11 +90,11 @@ class Trie {
 
         for (pair in root.children) {
             if (prefix.length <= position) {
-                prefix.append(pair.first)
+                prefix.append(pair.key)
             } else {
-                prefix[position] = pair.first
+                prefix[position] = pair.key
             }
-            getAllWords(pair.second, words, prefix, position + 1)
+            getAllWords(pair.value, words, prefix, position + 1)
         }
     }
 
@@ -116,28 +116,49 @@ class Trie {
     }
 
     fun deserialise(input: InputStream) {
-        val inputString = input.bufferedReader().readLine()
+        val inputString = input.bufferedReader().readLine() ?: ""
         val scan = Scanner(inputString)
         var currentWord: String
         root = Node()
-        try {
-            while (scan.hasNext()) {
-                currentWord = scan.next()
-                currentWord = currentWord.substring(1, currentWord.length - 1)
-                if (currentWord.isWord()) {
-                    add(currentWord)
-                } else {
-                    throw IOException("Expected word")
-                }
+        while (scan.hasNext()) {
+            currentWord = scan.next()
+            if (currentWord.length < 2 ||
+                currentWord[0].toString() != "'" ||
+                currentWord[currentWord.length - 1].toString() != "'"
+            ) {
+                throw IOException("The word must begin and end with single quotes")
             }
-        } catch (exception: IOException) {
-            println(exception.message)
+            currentWord = currentWord.substring(1, currentWord.length - 1)
+            if (currentWord.isWord()) {
+                add(currentWord)
+            } else {
+                throw IOException("Expected word")
+            }
         }
+        input.close()
     }
 
-    private data class Node(
-        var isTerminal: Boolean = false,
-        var howManyStartWithPrefix: Int = 0,
-        val children: MutableList<Pair<Char, Node>> = mutableListOf()
-    )
+    fun equalToTrie(trieForCompare: Trie) = root.equalToNode(trieForCompare.root)
+
+    private class Node {
+        var isTerminal: Boolean = false
+        var howManyStartWithPrefix: Int = 0
+        val children: MutableMap<Char, Node> = mutableMapOf()
+
+        fun equalToNode(nodeForCompare: Node): Boolean {
+            var areEquals = true
+            if (nodeForCompare.isTerminal == this.isTerminal && nodeForCompare.children.size == this.children.size) {
+                for (pair in nodeForCompare.children) {
+                    if (!(this.children[pair.key]?.equalToNode(pair.value) ?: return false)) {
+                        areEquals = false
+                        break
+                    }
+                }
+            } else {
+                areEquals = false
+            }
+
+            return areEquals
+        }
+    }
 }
