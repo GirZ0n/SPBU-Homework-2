@@ -1,9 +1,9 @@
 package homeworks.homework4.task2
 
+import java.io.ByteArrayInputStream
 import java.io.IOException
 import java.io.InputStream
 import java.util.Scanner
-import java.util.regex.Pattern
 import kotlin.IllegalStateException
 
 class ParsingTree {
@@ -11,46 +11,59 @@ class ParsingTree {
 
     private fun getNode(input: String): Node {
         var scan = Scanner(input)
-        val result: Node
-        when {
-            input.matches(Regex("[-+*/] \\(.*?\\) \\(.*?\\)")) -> { // Example: "+ (...) (...)"
-                result = Operator(input[0])
-                val brackets = Pattern.compile("\\(.*?\\)")
-                result.leftChild = getNode(brackets.matcher(input).group().trim { it == '(' || it == ')' })
-                result.rightChild = getNode(brackets.matcher(input).group().trim { it == '(' || it == ')' })
-            }
-            input.matches(Regex("[-+*/] \\(.*?\\) (\\d)+")) -> { // Example: "* (...) 3341"
-                result = Operator(input[0])
-                val brackets = Pattern.compile("\\(.*?\\)")
-                val indexOfEnd = brackets.matcher(input).end()
-                result.leftChild = getNode(brackets.matcher(input).group().trim { it == '(' || it == ')' })
-                scan = Scanner(input.substring(indexOfEnd + 1))
+        val result: Node = Operator(scan.next()[0])
+        if (scan.hasNextInt()) {
+            result.leftChild = Argument(scan.nextInt())
+            if (scan.hasNextInt()) {
                 result.rightChild = Argument(scan.nextInt())
+            } else {
+                val operandStartIndex = input.indexOf('(')
+                val operandEndIndex = input.lastIndexOf(')')
+                result.rightChild = getNode(input.substring(operandStartIndex + 1 until operandEndIndex))
             }
-            input.matches(Regex("[-+*/] (\\d)+ \\(.*?\\)")) -> { // Example: "- 2213 (...)"
-                val node = Operator(input[0])
-                scan.next()
-                node.leftChild = Argument(scan.nextInt())
-                val brackets = Pattern.compile("\\(.*?\\)")
-                node.rightChild = getNode(brackets.matcher(input).group().trim { it == '(' || it == ')' })
-                result = node
+        } else {
+            scan = Scanner(input.reversed())
+            if (scan.hasNextInt()) {
+                val operandStartIndex = input.indexOf('(')
+                val operandEndIndex = input.lastIndexOf(')')
+                result.leftChild = getNode(input.substring(operandStartIndex + 1 until operandEndIndex))
+                scan = Scanner(input.substring(operandEndIndex + 1))
+                result.rightChild = Argument(scan.nextInt())
+            } else {
+                var operandStartIndex = input.indexOf('(')
+                var operandEndIndex = input.lastIndexOf(')')
+                var balance = 0
+                for (i in operandStartIndex until input.lastIndex - operandStartIndex) {
+                    if (input[i] == '(') {
+                        balance++
+                    } else if (input[i] == ')') {
+                        balance--
+                    }
+                    if (balance == 0) {
+                        operandEndIndex = i
+                        result.leftChild = getNode(input.substring(operandStartIndex + 1 until operandEndIndex))
+                        break
+                    }
+                }
+                operandStartIndex = input.substring(operandEndIndex + 1).indexOf('(') + operandEndIndex + 1
+                operandEndIndex += input.substring(operandEndIndex + 1).lastIndexOf(')') + 1
+                result.rightChild = getNode(input.substring(operandStartIndex + 1 until operandEndIndex))
             }
-            input.matches(Regex("[-+*/]] (\\d)* (\\d)*")) -> { // Example: "/ 12235 32235"
-                val node = Operator(input[0])
-                scan.next()
-                node.leftChild = Argument(scan.nextInt())
-                node.rightChild = Argument(scan.nextInt())
-                result = node
-            }
-            else -> throw IOException("Invalid input")
         }
         return result
     }
 
     fun parseFile(input: InputStream) {
         val inputString = input.bufferedReader().readLine() ?: throw IOException("Expression not found")
-        root = getNode(inputString.trim { it == '(' || it == ')' })
+        root = getNode(inputString.substring(1, inputString.lastIndex))
     }
 
     fun calculate() = root?.calculate() ?: throw IllegalStateException("Tree is empty")
+}
+
+fun main() {
+    val input = ByteArrayInputStream("(/ (* 3 2) (+ 1 2))".toByteArray())
+    val parsingTree = ParsingTree()
+    parsingTree.parseFile(input)
+    println(parsingTree.calculate())
 }
