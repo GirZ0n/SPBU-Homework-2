@@ -72,4 +72,37 @@ class ParsingTree {
         operandEndIndex += input.substring(operandEndIndex + 1).lastIndexOf(')') + 1
         result.rightChild = getNode(input.substring(operandStartIndex + 1 until operandEndIndex))
     }
+
+    private abstract class Node {
+        var leftChild: Node? = null
+        var rightChild: Node? = null
+        abstract fun calculate(): Int
+        abstract override fun toString(): String
+    }
+
+    private class Operator(private val sign: Char) : Node() {
+        override fun toString(): String {
+            val leftChildAsString = leftChild?.toString() ?: throw IllegalStateException("The left operand is missing")
+            val rightChildAsString =
+                rightChild?.toString() ?: throw IllegalStateException("The right operand is missing")
+            return "($sign $leftChildAsString $rightChildAsString)"
+        }
+
+        override fun calculate(): Int {
+            val leftResult = leftChild?.calculate() ?: throw IllegalStateException("The left operand is missing")
+            val rightResult = rightChild?.calculate() ?: throw IllegalStateException("The right operand is missing")
+            return when (sign) {
+                '+' -> leftResult + rightResult
+                '-' -> leftResult - rightResult
+                '*' -> leftResult * rightResult
+                '/' -> leftResult / rightResult
+                else -> throw IllegalStateException("Operator sign cannot be recognized")
+            }
+        }
+    }
+
+    private class Argument(private val value: Int) : Node() {
+        override fun toString() = value.toString()
+        override fun calculate() = value
+    }
 }
