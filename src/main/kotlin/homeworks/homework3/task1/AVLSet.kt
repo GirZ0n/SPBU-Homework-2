@@ -1,41 +1,27 @@
 package homeworks.homework3.task1
 
-private const val BALANCE_FACTOR_NEEDED_FOR_LEFT_TURN = 2
-private const val BALANCE_FACTOR_NEEDED_FOR_RIGHT_TURN = -2
-
 class AVLSet<K, V> where K : Comparable<K> {
     private var root: Node<K, V>? = null
     var size = 0
         private set
 
-    fun print() {
-        root?.print() ?: print("Null")
-        println()
-    }
+    override fun toString() = root.toString()
 
-    fun containsKey(key: K): Boolean {
+    private fun getElement(key: K): Node<K, V>? {
         var current = root
         while (current != null) {
             current = when {
-                current.key == key -> return true
-                current.key > key -> current.leftChild
-                else -> current.rightChild
-            }
-        }
-        return false
-    }
-
-    fun getValue(key: K): V? {
-        var current = root
-        while (current != null) {
-            current = when {
-                current.key == key -> return current.value
+                current.key == key -> return current
                 current.key > key -> current.leftChild
                 else -> current.rightChild
             }
         }
         return null
     }
+
+    fun containsKey(key: K) = getElement(key) != null
+
+    fun getValue(key: K) = getElement(key)?.value
 
     fun add(key: K, value: V) {
         val root = this.root
@@ -152,6 +138,7 @@ class AVLSet<K, V> where K : Comparable<K> {
             return pivot
         }
 
+        private val balanceFactorNeededForTurn = 2
         fun balance(): Node<K, V>? {
             updateHeight()
             val rightChildBalanceFactor = rightChild?.getBalanceFactor() ?: -1
@@ -159,14 +146,14 @@ class AVLSet<K, V> where K : Comparable<K> {
             val balanceFactor = getBalanceFactor()
             var result: Node<K, V>? = this
 
-            if (balanceFactor == BALANCE_FACTOR_NEEDED_FOR_LEFT_TURN) {
+            if (balanceFactor == balanceFactorNeededForTurn) {
                 if (rightChildBalanceFactor < 0) {
                     rightChild = rightChild?.rotateRight()
                 }
                 result = rotateLeft()
             }
 
-            if (balanceFactor == BALANCE_FACTOR_NEEDED_FOR_RIGHT_TURN) {
+            if (balanceFactor == -balanceFactorNeededForTurn) {
                 if (leftChildBalanceFactor > 0) {
                     leftChild = leftChild?.rotateLeft()
                 }
@@ -176,13 +163,8 @@ class AVLSet<K, V> where K : Comparable<K> {
             return result
         }
 
-        fun print() {
-            print("{[$key: $value] (")
-            leftChild?.print() ?: print("Null")
-            print(") ")
-            print("(")
-            rightChild?.print() ?: print("Null")
-            print(")}")
+        override fun toString(): String {
+            return "{[$key: $value] (${leftChild?.toString()}) (${rightChild?.toString()})}"
         }
 
         fun getMinimumNode(): Node<K, V> {
