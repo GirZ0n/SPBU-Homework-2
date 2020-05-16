@@ -10,7 +10,7 @@ fun <T> quickSort(array: Array<T>, indexBegin: Int, indexEnd: Int) where T : Com
         val middle = array[(indexBegin + indexEnd) / 2]
         var i = indexBegin
         var j = indexEnd
-        while (i < j) {
+        while (i <= j) {
             while (array[i] < middle) {
                 i++
             }
@@ -36,7 +36,7 @@ suspend fun <T> asyncQuickSort(array: Array<T>, indexBegin: Int, indexEnd: Int) 
         val middle = array[(indexBegin + indexEnd) / 2]
         var i = indexBegin
         var j = indexEnd
-        while (i < j) {
+        while (i <= j) {
             while (array[i] < middle) {
                 i++
             }
