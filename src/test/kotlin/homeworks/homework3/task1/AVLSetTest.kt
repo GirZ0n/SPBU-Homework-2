@@ -58,13 +58,13 @@ internal class AVLSetTest {
     }
 
     @Test
-    fun getValue_EmptyArray_MustWork() {
+    fun get_EmptyArray_MustWork() {
         val testTree = AVLSet<Int, Char>()
         assertNull(testTree[1])
     }
 
     @Test
-    fun getValue_NonEmptyArray_KeyIsInTree_MustWork() {
+    fun get_NonEmptyArray_KeyIsInTree_MustWork() {
         val testTree = AVLSet<Int, Char>()
         for (i in 1..1000) {
             testTree.add(i, i.toChar())
@@ -73,7 +73,7 @@ internal class AVLSetTest {
     }
 
     @Test
-    fun getValue_NonEmptyArray_KeyIsNotInTree_MustWork() {
+    fun get_NonEmptyArray_KeyIsNotInTree_MustWork() {
         val testTree = AVLSet<Int, Char>()
         for (i in 1..1000) {
             testTree.add(i, i.toChar())
@@ -108,5 +108,20 @@ internal class AVLSetTest {
         actual.remove(235)
 
         assert(expected.equalsTo(actual))
+    }
+
+    @Test
+    fun isEmpty_EmptyTree_MustWork() {
+        val testTree = AVLSet<Int, Char>()
+        assert(testTree.isEmpty())
+    }
+
+    @Test
+    fun isEmpty_NonEmptyTree_ContainsKey_MustWork() {
+        val testTree = AVLSet<Int, Char>()
+        for (i in 1..100) {
+            testTree.add(i, i.toChar())
+        }
+        assertFalse(testTree.isEmpty())
     }
 }
