@@ -60,7 +60,7 @@ internal class AVLSetTest {
     @Test
     fun getValue_EmptyArray_MustWork() {
         val testTree = AVLSet<Int, Char>()
-        assertNull(testTree.getValue(1))
+        assertNull(testTree[1])
     }
 
     @Test
@@ -69,7 +69,7 @@ internal class AVLSetTest {
         for (i in 1..1000) {
             testTree.add(i, i.toChar())
         }
-        assertEquals(245.toChar(), testTree.getValue(245))
+        assertEquals(245.toChar(), testTree[245])
     }
 
     @Test
@@ -78,7 +78,7 @@ internal class AVLSetTest {
         for (i in 1..1000) {
             testTree.add(i, i.toChar())
         }
-        assertNull(testTree.getValue(1001))
+        assertNull(testTree[1001])
     }
 
     @Test
