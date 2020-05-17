@@ -33,11 +33,11 @@ class AVLSet<K, V> : Map<K, V> where K : Comparable<K> {
 
     override val values: Collection<V>
         get() {
-            val keys = emptyList<V>().toMutableList()
+            val values = emptyList<V>().toMutableList()
             for (entry in entries) {
-                keys.add(entry.value)
+                values.add(entry.value)
             }
-            return keys.toList()
+            return values.toList()
         }
 
     override var size = 0
