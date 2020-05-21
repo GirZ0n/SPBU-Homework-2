@@ -1,4 +1,4 @@
-package homeworks.homework7.task2
+package homeworks.homework7.task2.styles
 
 import javafx.geometry.Pos
 import javafx.scene.text.Font
@@ -22,13 +22,13 @@ class MenuStyle : Stylesheet() {
         private const val COMBOBOX_FONT_SIZE = 15.0
 
         val mainVbox by cssclass()
-        private val MAIN_VBOX_SPACING_VALUE = 5.mm
+        private const val MAIN_VBOX_SPACING = 5
 
         val vboxForCombobox by cssclass()
-        private val VBOX_FOR_COMBOBOX_SPACING_VALUE = 1.mm
+        private const val VBOX_FOR_COMBOBOX_SPACING = 1
 
         val hboxForCombobox by cssclass()
-        private val HBOX_FOX_COMBOBOX_SAPCING_VALUE = 5.mm
+        private const val HBOX_FOX_COMBOBOX_SAPCING = 5
     }
 
     init {
@@ -43,7 +43,7 @@ class MenuStyle : Stylesheet() {
 
         descriptionLabel {
             font = Font.font(DESCRIPTION_LABEL_FONT_SIZE)
-            spacing = MAIN_VBOX_SPACING_VALUE
+            spacing = MAIN_VBOX_SPACING.mm
         }
 
         combobox {
@@ -51,17 +51,17 @@ class MenuStyle : Stylesheet() {
         }
 
         mainVbox {
-            spacing = MAIN_VBOX_SPACING_VALUE
+            spacing = MAIN_VBOX_SPACING.mm
             alignment = Pos.CENTER
         }
 
         vboxForCombobox {
-            spacing = VBOX_FOR_COMBOBOX_SPACING_VALUE
+            spacing = VBOX_FOR_COMBOBOX_SPACING.mm
             alignment = Pos.CENTER
         }
 
         hboxForCombobox {
-            spacing = HBOX_FOX_COMBOBOX_SAPCING_VALUE
+            spacing = HBOX_FOX_COMBOBOX_SAPCING.mm
             alignment = Pos.CENTER
         }
     }
