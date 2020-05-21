@@ -3,50 +3,56 @@ package homeworks.homework7.task2
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
-import javafx.geometry.Pos
-import javafx.scene.text.Font
 import tornadofx.View
 import tornadofx.vbox
-import tornadofx.hbox
 import tornadofx.label
+import tornadofx.addClass
+import tornadofx.hbox
 import tornadofx.combobox
 import tornadofx.button
 import tornadofx.action
 
-private const val SPACING = 10
-private const val FONT_SIZE = 30.0
-
 class Menu : View() {
     val difficultyList: ObservableList<String> = FXCollections.observableArrayList("Easy", "Medium", "Hard")
-    val playerSignList: ObservableList<String> = FXCollections.observableArrayList("X", "0")
     val selectedDifficulty = SimpleStringProperty()
+
+    val playerSignList: ObservableList<String> = FXCollections.observableArrayList("X", "0")
     val selectedSign = SimpleStringProperty()
 
-    override val root = vbox(SPACING, Pos.CENTER) {
-        label("Tic-tac-toe (v2)") {
-            font = Font.font(FONT_SIZE)
-        }
+    override val root = vbox {
+        addClass(MenuStyle.mainVbox)
 
-        hbox(SPACING, Pos.CENTER) {
-            vbox(SPACING) {
-                label("Difficulty:")
+        label("Tic-tac-toe (v2)") { addClass(MenuStyle.gameName) }
+
+        hbox {
+            addClass(MenuStyle.hboxForCombobox)
+
+            vbox {
+                addClass(MenuStyle.vboxForCombobox)
+
+                label("Difficulty:").addClass(MenuStyle.descriptionLabel)
+
                 combobox(selectedDifficulty, difficultyList) {
+                    addClass(MenuStyle.combobox)
                     selectionModel.selectFirst()
                 }
             }
 
-            vbox(SPACING) {
-                label("Your sign:")
+            vbox {
+                addClass(MenuStyle.vboxForCombobox)
+
+                label("Your sign:").addClass(MenuStyle.descriptionLabel)
+
                 combobox(selectedSign, playerSignList) {
+                    addClass(MenuStyle.combobox)
                     selectionModel.selectFirst()
                 }
             }
         }
 
         button("Play") {
-            action {
-                replaceWith<GameField>()
-            }
+            addClass(MenuStyle.playButton)
+            action { replaceWith<GameField>() }
         }
     }
 }
