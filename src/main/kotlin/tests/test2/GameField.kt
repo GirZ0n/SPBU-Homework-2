@@ -6,9 +6,9 @@ import javafx.scene.text.FontWeight
 import tornadofx.*
 
 class GameField : View() {
-    val fieldSize = find<GameFieldController>().fieldSize
     override val root = VBox()
     private val controller: GameFieldController by inject()
+    val fieldSize = find<GameFieldController>().fieldSize
 
     init {
         for (i in 0 until fieldSize) {
