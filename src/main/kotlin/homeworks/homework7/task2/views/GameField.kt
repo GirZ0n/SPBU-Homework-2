@@ -1,5 +1,6 @@
 package homeworks.homework7.task2.views
 
+import homeworks.homework7.task2.controllers.GameFieldController
 import homeworks.homework7.task2.styles.GameFieldStyle
 import tornadofx.View
 import tornadofx.vbox
@@ -10,10 +11,12 @@ import tornadofx.button
 import tornadofx.action
 
 class GameField : View() {
+    val controller: GameFieldController by inject()
+
     override val root = vbox {
         addClass(GameFieldStyle.mainVbox)
 
-        label("Status: draw") { addClass(GameFieldStyle.statusBar) }
+        label("Status: ${controller.gameStatus}") { addClass(GameFieldStyle.statusBar) }
 
         hbox {
             addClass(GameFieldStyle.column)

@@ -1,6 +1,7 @@
 package homeworks.homework7.task2.views
 
 import homeworks.homework7.task2.styles.MenuStyle
+import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
@@ -14,14 +15,14 @@ import tornadofx.button
 import tornadofx.action
 
 class Menu : View("Tic-tac-toe (v2)") {
-    val difficultyList: ObservableList<String> = FXCollections.observableArrayList("Easy", "Medium", "Hard")
+    private val difficultyList: ObservableList<String> = FXCollections.observableArrayList("Easy", "Medium", "Hard")
     val selectedDifficulty = SimpleStringProperty()
 
-    val playerSignList: ObservableList<String> = FXCollections.observableArrayList("X", "0")
-    val selectedSign = SimpleStringProperty()
+    private val playerSignList: ObservableList<Char> = FXCollections.observableArrayList('X', '0')
+    val selectedSign = SimpleObjectProperty<Char>()
 
     override fun onDock() {
-        selectedSign.value = "X"
+        selectedSign.value = 'X'
         selectedDifficulty.value = "Easy"
         super.onDock()
     }
