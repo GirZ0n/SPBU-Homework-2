@@ -11,12 +11,13 @@ fun getArray(): List<Int> {
 
     try {
         println("Enter the array:")
-        array = readLine()!!.split(' ').map { it.toInt() }
+        array = readLine()?.split(' ')?.map { it.toInt() }
+            ?: throw KotlinNullPointerException("You need to enter an array of integers")
     } catch (exception: NumberFormatException) {
         println("You need to enter an array of integers")
         exitProcess(0)
     } catch (exception: KotlinNullPointerException) {
-        println("You need to enter an array of integers")
+        println(exception.message)
         exitProcess(0)
     }
 
