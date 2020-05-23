@@ -16,9 +16,6 @@ fun getArray(): List<Int> {
     } catch (exception: NumberFormatException) {
         println("You need to enter an array of integers")
         exitProcess(0)
-    } catch (exception: KotlinNullPointerException) {
-        println(exception.message)
-        exitProcess(0)
     }
 
     return array
