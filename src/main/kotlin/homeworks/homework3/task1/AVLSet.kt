@@ -8,7 +8,7 @@ class AVLSet<K, V> : Map<K, V> where K : Comparable<K> {
 
     override val entries: Set<Map.Entry<K, V>>
         get() {
-            val entries = emptySet<Entry<K, V>>().toMutableSet()
+            val entries = mutableSetOf<Map.Entry<K, V>>()
             val queue = LinkedList<Node<K, V>?>()
             queue.add(root)
             while (!queue.isEmpty()) {
@@ -24,7 +24,7 @@ class AVLSet<K, V> : Map<K, V> where K : Comparable<K> {
 
     override val keys: Set<K>
         get() {
-            val keys = emptySet<K>().toMutableSet()
+            val keys = mutableSetOf<K>()
             for (entry in entries) {
                 keys.add(entry.key)
             }
@@ -33,7 +33,7 @@ class AVLSet<K, V> : Map<K, V> where K : Comparable<K> {
 
     override val values: Collection<V>
         get() {
-            val values = emptyList<V>().toMutableList()
+            val values = mutableListOf<V>()
             for (entry in entries) {
                 values.add(entry.value)
             }
@@ -49,7 +49,7 @@ class AVLSet<K, V> : Map<K, V> where K : Comparable<K> {
 
     fun equalsTo(tree: AVLSet<K, V>) = subtreeOperations.equals(this.root, tree.root)
 
-    override fun containsKey(key: K) = getElement(key) != null
+    override fun containsKey(key: K) = get(key) != null
 
     override fun containsValue(value: V) = values.contains(value)
 
@@ -79,18 +79,6 @@ class AVLSet<K, V> : Map<K, V> where K : Comparable<K> {
             this.root = root?.let { subtreeOperations.remove(key, it) }
             size--
         }
-    }
-
-    private fun getElement(key: K): Node<K, V>? {
-        var current = root
-        while (current != null) {
-            current = when {
-                current.key == key -> return current
-                current.key > key -> current.leftChild
-                else -> current.rightChild
-            }
-        }
-        return null
     }
 
     private inner class SubtreeOperations {
