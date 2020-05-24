@@ -78,4 +78,8 @@ class Node<K, V>(val key: K, val value: V) {
     }
 
     fun toEntry() = Entry(key, value)
+
+    fun equalsTo(node: Node<K, V>?): Boolean {
+        return this.toString() == node.toString()
+    }
 }

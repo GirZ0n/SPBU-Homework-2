@@ -47,7 +47,7 @@ class AVLSet<K, V> : Map<K, V> where K : Comparable<K> {
 
     override fun isEmpty() = size == 0
 
-    fun equalsTo(tree: AVLSet<K, V>) = subtreeOperations.equals(this.root, tree.root)
+    fun equalsTo(tree: AVLSet<K, V>) = this.toString() == tree.toString()
 
     override fun containsKey(key: K) = get(key) != null
 
@@ -120,26 +120,6 @@ class AVLSet<K, V> : Map<K, V> where K : Comparable<K> {
             }
 
             return node.balance()
-        }
-
-        fun equals(firstRoot: Node<K, V>?, secondRoot: Node<K, V>?): Boolean {
-            if (firstRoot == null) {
-                return secondRoot == null
-            } else {
-                if (secondRoot == null) {
-                    return false
-                } else {
-                    if (firstRoot.key != secondRoot.key || firstRoot.value != secondRoot.value) {
-                        return false
-                    }
-                    if (!equals(firstRoot.leftChild, secondRoot.leftChild) ||
-                        !equals(firstRoot.rightChild, secondRoot.rightChild)
-                    ) {
-                        return false
-                    }
-                    return true
-                }
-            }
         }
     }
 }
