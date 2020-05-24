@@ -13,10 +13,15 @@ import tornadofx.action
 class GameField : View() {
     val controller: GameFieldController by inject()
 
+    override fun onDock() {
+        controller.newGameHandling()
+        super.onDock()
+    }
+
     override val root = vbox {
         addClass(GameFieldStyle.mainVbox)
 
-        label("Status: ${controller.gameStatus}") { addClass(GameFieldStyle.statusBar) }
+        label(controller.gameStatus) { addClass(GameFieldStyle.statusBar) }
 
         hbox {
             addClass(GameFieldStyle.column)
@@ -28,21 +33,21 @@ class GameField : View() {
                     addClass(GameFieldStyle.gameButton)
                     id = "0-0"
 
-                    action { TODO() }
+                    action { controller.humanMoveHandling(id) }
                 }
 
                 button {
                     addClass(GameFieldStyle.gameButton)
                     id = "0-1"
 
-                    action { TODO() }
+                    action { controller.humanMoveHandling(id) }
                 }
 
                 button {
                     addClass(GameFieldStyle.gameButton)
                     id = "0-2"
 
-                    action { TODO() }
+                    action { controller.humanMoveHandling(id) }
                 }
             }
 
@@ -53,21 +58,21 @@ class GameField : View() {
                     addClass(GameFieldStyle.gameButton)
                     id = "1-0"
 
-                    action { TODO() }
+                    action { controller.humanMoveHandling(id) }
                 }
 
                 button {
                     addClass(GameFieldStyle.gameButton)
                     id = "1-1"
 
-                    action { TODO() }
+                    action { controller.humanMoveHandling(id) }
                 }
 
                 button {
                     addClass(GameFieldStyle.gameButton)
                     id = "1-2"
 
-                    action { TODO() }
+                    action { controller.humanMoveHandling(id) }
                 }
             }
 
@@ -78,21 +83,21 @@ class GameField : View() {
                     addClass(GameFieldStyle.gameButton)
                     id = "2-0"
 
-                    action { TODO() }
+                    action { controller.humanMoveHandling(id) }
                 }
 
                 button {
                     addClass(GameFieldStyle.gameButton)
                     id = "2-1"
 
-                    action { TODO() }
+                    action { controller.humanMoveHandling(id) }
                 }
 
                 button {
                     addClass(GameFieldStyle.gameButton)
                     id = "2-2"
 
-                    action { TODO() }
+                    action { controller.humanMoveHandling(id) }
                 }
             }
         }
