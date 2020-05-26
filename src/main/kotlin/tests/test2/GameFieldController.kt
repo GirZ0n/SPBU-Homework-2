@@ -1,6 +1,7 @@
 package tests.test2
 
-import tornadofx.*
+import tornadofx.Controller
+import tornadofx.text
 
 class GameFieldController : Controller() {
     val fieldCreator = FieldCreator

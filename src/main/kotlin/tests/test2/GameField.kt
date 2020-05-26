@@ -1,9 +1,13 @@
 package tests.test2
 
 import javafx.geometry.Pos
+import javafx.scene.control.Button
+import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
-import javafx.scene.text.FontWeight
-import tornadofx.*
+import tornadofx.View
+import tornadofx.plusAssign
+import tornadofx.action
+import tornadofx.addClass
 
 class GameField : View() {
     override val root = VBox()
@@ -13,21 +17,16 @@ class GameField : View() {
     init {
         for (i in 0 until fieldSize) {
             with(root) {
-                this += hbox(alignment = Pos.CENTER)
+                this += HBox().apply { alignment = Pos.CENTER }
             }
         }
 
         for (i in 0 until fieldSize) {
             for (j in 0 until fieldSize) {
-                root.children[i] += button {
+                root.children[i] += Button().apply {
                     id = "$i$j"
 
-                    style {
-                        setPrefHeight(55.0)
-                        setPrefWidth(55.0)
-                        fontWeight = FontWeight.BOLD
-                        fontSize = 5.mm
-                    }
+                    addClass(Styles.gameFieldButton)
 
                     action { controller.buttonHandling(id) }
                 }
