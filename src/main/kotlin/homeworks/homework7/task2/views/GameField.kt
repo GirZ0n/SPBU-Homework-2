@@ -24,81 +24,20 @@ class GameField : View() {
 
         label(controller.gameStatus) { addClass(GameFieldStyle.statusBar) }
 
-        hbox {
+        vbox {
             addClass(GameFieldStyle.column)
 
-            vbox {
-                addClass(GameFieldStyle.row)
-
-                button {
-                    addClass(GameFieldStyle.gameButton)
-                    id = "0-0"
-
-                    action { controller.humanMoveHandling(id) }
-                }
-
-                button {
-                    addClass(GameFieldStyle.gameButton)
-                    id = "0-1"
-
-                    action { controller.humanMoveHandling(id) }
-                }
-
-                button {
-                    addClass(GameFieldStyle.gameButton)
-                    id = "0-2"
-
-                    action { controller.humanMoveHandling(id) }
-                }
+            for (i in 0..2) {
+                this += hbox { addClass(GameFieldStyle.row) }
             }
 
-            vbox {
-                addClass(GameFieldStyle.row)
-
-                button {
-                    addClass(GameFieldStyle.gameButton)
-                    id = "1-0"
-
-                    action { controller.humanMoveHandling(id) }
-                }
-
-                button {
-                    addClass(GameFieldStyle.gameButton)
-                    id = "1-1"
-
-                    action { controller.humanMoveHandling(id) }
-                }
-
-                button {
-                    addClass(GameFieldStyle.gameButton)
-                    id = "1-2"
-
-                    action { controller.humanMoveHandling(id) }
-                }
-            }
-
-            vbox {
-                addClass(GameFieldStyle.row)
-
-                button {
-                    addClass(GameFieldStyle.gameButton)
-                    id = "2-0"
-
-                    action { controller.humanMoveHandling(id) }
-                }
-
-                button {
-                    addClass(GameFieldStyle.gameButton)
-                    id = "2-1"
-
-                    action { controller.humanMoveHandling(id) }
-                }
-
-                button {
-                    addClass(GameFieldStyle.gameButton)
-                    id = "2-2"
-
-                    action { controller.humanMoveHandling(id) }
+            for (i in 0..2) {
+                for (j in 0..2) {
+                    this.children[i] += button {
+                        addClass(GameFieldStyle.gameButton)
+                        id = "$i-$j"
+                        action { controller.humanMoveHandling(id) }
+                    }
                 }
             }
         }
