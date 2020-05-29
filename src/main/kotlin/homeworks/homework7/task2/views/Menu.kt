@@ -1,5 +1,6 @@
 package homeworks.homework7.task2.views
 
+import homeworks.homework7.task2.model.GameModel
 import homeworks.homework7.task2.styles.MenuStyle
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
@@ -20,12 +21,6 @@ class Menu : View("Tic-tac-toe (v2)") {
 
     private val playerSignList: ObservableList<Char> = FXCollections.observableArrayList('X', '0')
     val selectedSign = SimpleObjectProperty<Char>()
-
-    override fun onDock() {
-        selectedSign.value = 'X'
-        selectedDifficulty.value = "Easy"
-        super.onDock()
-    }
 
     override val root = vbox {
         addClass(MenuStyle.mainVbox)
@@ -60,7 +55,11 @@ class Menu : View("Tic-tac-toe (v2)") {
 
         button("Play") {
             addClass(MenuStyle.playButton)
-            action { replaceWith<GameField>() }
+            action {
+                GameModel.difficulty = selectedDifficulty.value
+                GameModel.humanSign = selectedSign.value
+                replaceWith<GameField>()
+            }
         }
     }
 }
