@@ -1,7 +1,7 @@
 package homeworks.homework7.task2.controllers
 
 import homeworks.homework7.task2.model.AI
-import homeworks.homework7.task2.views.Menu
+import homeworks.homework7.task2.model.GameModel
 import homeworks.homework7.task2.model.WinChecker
 import homeworks.homework7.task2.views.GameField
 import javafx.beans.property.SimpleStringProperty
@@ -9,15 +9,11 @@ import tornadofx.Controller
 import tornadofx.text
 
 class GameFieldController : Controller() {
-    private val board = arrayOf(
-        arrayOf(' ', ' ', ' ').toCharArray(),
-        arrayOf(' ', ' ', ' ').toCharArray(),
-        arrayOf(' ', ' ', ' ').toCharArray()
-    )
+    private val board = GameModel.board
     var gameStatus = SimpleStringProperty("Status: draw")
-    private var humanSign = find<Menu>().selectedSign.value ?: 'X'
-    private var aiSign = if (humanSign == 'X') '0' else 'X'
-    private var difficulty = find<Menu>().selectedDifficulty.value
+    private var humanSign = GameModel.humanSign
+    private var aiSign = GameModel.aiSign
+    private var difficulty = GameModel.difficulty
 
     private fun idToInt(buttonID: String): Pair<Int, Int> {
         val splitID = buttonID.split("-").map { it.toInt() }
@@ -73,9 +69,9 @@ class GameFieldController : Controller() {
 
     fun newGameHandling() {
         gameStatus.value = "Status: draw"
-        humanSign = find<Menu>().selectedSign.value ?: 'X'
-        aiSign = if (humanSign == 'X') '0' else 'X'
-        difficulty = find<Menu>().selectedDifficulty.value
+        humanSign = GameModel.humanSign
+        aiSign = GameModel.aiSign
+        difficulty = GameModel.difficulty
 
         for (i in 0..2) {
             for (j in 0..2) {
