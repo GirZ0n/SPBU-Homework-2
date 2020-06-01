@@ -4,11 +4,11 @@ import kotlin.math.abs
 import kotlin.math.max
 
 class HashTable<K, V>(
-    private var size: Int,
+    private var numberOfBuckets: Int,
     private var hashFunction: (K) -> Int,
     private var maxLoadFactor: Double = 0.7
 ) {
-    private var arrayOfBuckets = Array(size) { Bucket<K, V>() }
+    private var arrayOfBuckets = Array(numberOfBuckets) { Bucket<K, V>() }
     private var numberOfFilledBuckets = 0
 
     var numberOfEntries = 0
@@ -16,14 +16,14 @@ class HashTable<K, V>(
 
     var loadFactor = 0.0
         private set
-        get() = numberOfEntries.toDouble() / size.toDouble()
+        get() = numberOfEntries.toDouble() / numberOfBuckets.toDouble()
 
     fun add(key: K?, value: V?) {
         if (key == null || value == null) {
             return
         }
 
-        val hash = abs(hashFunction(key)) % size
+        val hash = abs(hashFunction(key)) % numberOfBuckets
         val bucket = arrayOfBuckets[hash]
 
         if (bucket.isContains(key)) {
@@ -46,7 +46,7 @@ class HashTable<K, V>(
             return
         }
 
-        val hash = abs(hashFunction(key)) % size
+        val hash = abs(hashFunction(key)) % numberOfBuckets
         val bucket = arrayOfBuckets[hash]
 
         if (bucket.isEmpty()) {
@@ -64,26 +64,26 @@ class HashTable<K, V>(
             return null
         }
 
-        val hash = abs(hashFunction(key)) % size
+        val hash = abs(hashFunction(key)) % numberOfBuckets
         val bucket = arrayOfBuckets[hash]
         return bucket.find(key)
     }
 
     fun printStatistics() {
-        var numberOfConflicts = 0
+        var numberOfConflictingBuckets = 0
         var maximumListLengthInConflictingBuckets = 0
         for (bucket in arrayOfBuckets) {
             if (bucket.size > 1) {
-                numberOfConflicts++
+                numberOfConflictingBuckets++
                 maximumListLengthInConflictingBuckets = max(maximumListLengthInConflictingBuckets, bucket.size)
             }
         }
 
         println("Number of entries: $numberOfEntries")
         println("Number of filled buckets: $numberOfFilledBuckets")
-        println("Size: $size")
+        println("Size: $numberOfBuckets")
         println("Load factor: $loadFactor")
-        println("Number of conflicts: $numberOfConflicts")
+        println("Number of conflicting buckets: $numberOfConflictingBuckets")
         println("Maximum list length in conflicting buckets: $maximumListLengthInConflictingBuckets")
     }
 
@@ -93,13 +93,13 @@ class HashTable<K, V>(
     }
 
     private fun expandHashTable() {
-        size *= 2
+        numberOfBuckets *= 2
         restructureHashTable()
     }
 
     private fun restructureHashTable() {
         val oldArrayOfBuckets = arrayOfBuckets
-        arrayOfBuckets = Array(size) { Bucket<K, V>() }
+        arrayOfBuckets = Array(numberOfBuckets) { Bucket<K, V>() }
         numberOfFilledBuckets = 0
         numberOfEntries = 0
         for (bucket in oldArrayOfBuckets) {
@@ -107,22 +107,5 @@ class HashTable<K, V>(
                 add(entry.first, entry.second)
             }
         }
-    }
-
-    private class Bucket<K, V> {
-        val listOfEntries = mutableListOf<Pair<K, V>>()
-        var size = 0
-            private set
-            get() = listOfEntries.size
-
-        fun add(key: K, value: V) = listOfEntries.add(Pair(key, value))
-
-        fun remove(key: K) = listOfEntries.removeIf { it.first == key }
-
-        fun find(key: K) = listOfEntries.find { it.first == key }?.second
-
-        fun isContains(key: K) = key in listOfEntries.map { it.first }
-
-        fun isEmpty() = size == 0
     }
 }
