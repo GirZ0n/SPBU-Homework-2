@@ -36,8 +36,8 @@ class GameFieldController : Controller() {
         button.opacity = 1.0
     }
 
-    private fun winHandling(winnerSign: Char) {
-        gameModel.winner = "$winnerSign won"
+    fun endGameHandling(gameStatus: String) {
+        gameModel.winner = gameStatus
         find<GameField>().replaceWith<WinnerScreen>()
     }
 
@@ -51,9 +51,9 @@ class GameFieldController : Controller() {
         updateButton(buttonID, true)
 
         if (winChecker.isPlayerWinning(gameModel.opponentSign, gameModel.board)) {
-            winHandling(gameModel.opponentSign)
+            endGameHandling("${gameModel.opponentSign} won")
         } else if (!checkFreeMoves()) {
-            find<GameField>().replaceWith<WinnerScreen>()
+            endGameHandling("Draw")
         }
     }
 
@@ -64,11 +64,11 @@ class GameFieldController : Controller() {
         updateButton(buttonID, true)
 
         if (winChecker.isPlayerWinning(gameModel.playerSign, gameModel.board)) {
-            winHandling(gameModel.playerSign)
+            endGameHandling("${gameModel.playerSign} won")
         } else if (checkFreeMoves()) {
             aiMoveHandling()
         } else {
-            find<GameField>().replaceWith<WinnerScreen>()
+            endGameHandling("Draw")
         }
     }
 
