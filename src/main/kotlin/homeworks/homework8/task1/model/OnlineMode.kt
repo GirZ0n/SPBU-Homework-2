@@ -8,8 +8,10 @@ import io.ktor.http.cio.websocket.Frame
 import io.ktor.http.cio.websocket.WebSocketSession
 import io.ktor.http.cio.websocket.close
 import io.ktor.http.cio.websocket.readText
+import io.ktor.http.websocket.websocketServerAccept
 import io.ktor.util.KtorExperimentalAPI
 import javafx.application.Platform
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.runBlocking
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -30,6 +32,7 @@ class OnlineMode(private val controller: GameFieldController) : Thread() {
         if (isNeedToSend.getAndSet(false)) {
             println("Send: $moveToSend") // TODO: remove
             socket.send(Frame.Text(moveToSend))
+            isNeedToReceive.set(true)
         }
     }
 
@@ -50,7 +53,7 @@ class OnlineMode(private val controller: GameFieldController) : Thread() {
             is Frame.Text -> {
                 val receivedMessage = frame.readText()
                 println("Received: $receivedMessage") // TODO: remove
-                // Platform.runLater { controller.opponentMoveHandling(receivedMessage) }
+                Platform.runLater { controller.opponentMoveHandling(receivedMessage) }
             }
         }
     }
@@ -66,13 +69,13 @@ class OnlineMode(private val controller: GameFieldController) : Thread() {
                 val secondGameStatus = receiveGameStatus(socket)
                 if (secondGameStatus != "No one won") {
                     // if the opponent won
-
+                    println("close1") // TODO: remove
                     Platform.runLater { controller.endGameHandling(secondGameStatus) }
                     socket.close()
                 }
             } else {
                 // if the player won
-
+                println("close2") // TODO: remove
                 Platform.runLater { controller.endGameHandling(firstGameStatus) }
                 socket.close()
             }
@@ -86,7 +89,6 @@ class OnlineMode(private val controller: GameFieldController) : Thread() {
         runBlocking {
             val client = HttpClient { install(WebSockets) }
             client.ws(method = io.ktor.http.HttpMethod.Get, port = 8080, host = "127.0.0.1", path = "/") {
-                // TODO: need to add actions with controller (new game)
 
                 // We send the sign selected by the player (X or 0)
                 send(Frame.Text("${GameModel.playerSign}"))
@@ -98,11 +100,13 @@ class OnlineMode(private val controller: GameFieldController) : Thread() {
                         gameModel.playerSign = sign
                         if (sign == '0') {
                             isNeedToReceive.set(true)
+                        } else {
+                            Platform.runLater { controller.updateAllButtons(false) }
                         }
                     }
                 }
 
-                while (true) {
+                while (isActive) {
                     sendMoveHandling(this)
 
                     receivedMessagesHandling(this)
@@ -111,6 +115,7 @@ class OnlineMode(private val controller: GameFieldController) : Thread() {
                     waitForPlayerMove()
                 }
             }
+            println("123")
         }
     }
 }

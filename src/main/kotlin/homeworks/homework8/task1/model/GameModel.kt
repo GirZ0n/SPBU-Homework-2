@@ -17,4 +17,6 @@ object GameModel {
     var gameMode = "Single-player"
 
     var winner = "Draw"
+
+    var isFirstOnlineGame = true
 }

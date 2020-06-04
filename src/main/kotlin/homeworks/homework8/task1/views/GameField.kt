@@ -2,6 +2,7 @@ package homeworks.homework8.task1.views
 
 import homeworks.homework8.task1.controllers.GameFieldController
 import homeworks.homework8.task1.styles.GameFieldStyle
+import io.ktor.util.KtorExperimentalAPI
 import tornadofx.View
 import tornadofx.vbox
 import tornadofx.addClass
@@ -13,9 +14,10 @@ import tornadofx.plusAssign
 class GameField : View() {
     private val controller: GameFieldController by inject()
 
+    @KtorExperimentalAPI
     override fun onDock() {
-        controller.newGameHandling()
         super.onDock()
+        controller.newGameHandling()
     }
 
     override val root = vbox {
@@ -35,7 +37,7 @@ class GameField : View() {
                     this.children[i] += button {
                         addClass(GameFieldStyle.gameButton)
                         id = "$i-$j"
-                        action { controller.humanMoveHandling(id) }
+                        action { controller.playerMoveHandling(id) }
                     }
                 }
             }
