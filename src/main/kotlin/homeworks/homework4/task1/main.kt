@@ -3,15 +3,13 @@ package homeworks.homework4.task1
 import java.io.File
 import java.io.FileNotFoundException
 import java.util.Scanner
-import kotlin.math.pow
 
 const val INIT_SIZE = 1024
-const val PRIME_NUMBER = 1073676287.0
 const val FILE_PATH = "./src/main/kotlin/homeworks/homework4/task1/input.txt"
 
 fun main() {
     printHelp()
-    val hashTable = HashTable<String, Int>(INIT_SIZE, ::polynomialHashFunction)
+    val hashTable = HashTable<String, Int>(INIT_SIZE, SimpleHashFunctionForString())
     interactWithTable(hashTable)
 }
 
@@ -83,11 +81,11 @@ fun changeHashFunctionCodeProcessing(hashTable: HashTable<String, Int>) {
     print("hash function > ")
     when (readLine()?.toInt()) {
         0 -> {
-            hashTable.changeHashFunction(::simpleHashFunction)
+            hashTable.changeHashFunction(SimpleHashFunctionForString())
             println("You have selected a simple hash function")
         }
         1 -> {
-            hashTable.changeHashFunction(::polynomialHashFunction)
+            hashTable.changeHashFunction(PolynomialHashFunctionForString())
             println("You have selected a polynomial hash function")
         }
         else -> return
@@ -106,22 +104,4 @@ fun importCodeProcessing(hashTable: HashTable<String, Int>, input: File) {
         val value = scan.nextInt()
         hashTable.add(key, value)
     }
-}
-
-fun simpleHashFunction(inputString: String): Int {
-    var hash = 0
-    for (symbol in inputString) {
-        hash += symbol.toInt()
-    }
-    return hash
-}
-
-fun polynomialHashFunction(inputString: String): Int {
-    var hash = 0
-    var index = 0
-    for (symbol in inputString) {
-        hash += (symbol.toInt() * PRIME_NUMBER.pow(index)).toInt()
-        index++
-    }
-    return hash
 }

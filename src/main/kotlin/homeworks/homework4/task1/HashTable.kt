@@ -5,7 +5,7 @@ import kotlin.math.max
 
 class HashTable<K, V>(
     private var numberOfBuckets: Int,
-    private var hashFunction: (K) -> Int,
+    private var hashFunction: HashFunction<K>,
     private var maxLoadFactor: Double = 0.7
 ) {
     private var arrayOfBuckets = Array(numberOfBuckets) { Bucket<K, V>() }
@@ -23,7 +23,7 @@ class HashTable<K, V>(
             return
         }
 
-        val hash = abs(hashFunction(key)) % numberOfBuckets
+        val hash = abs(hashFunction.getHash(key)) % numberOfBuckets
         val bucket = arrayOfBuckets[hash]
 
         if (bucket.isContains(key)) {
@@ -46,7 +46,7 @@ class HashTable<K, V>(
             return
         }
 
-        val hash = abs(hashFunction(key)) % numberOfBuckets
+        val hash = abs(hashFunction.getHash(key)) % numberOfBuckets
         val bucket = arrayOfBuckets[hash]
 
         if (bucket.isEmpty()) {
@@ -64,7 +64,7 @@ class HashTable<K, V>(
             return null
         }
 
-        val hash = abs(hashFunction(key)) % numberOfBuckets
+        val hash = abs(hashFunction.getHash(key)) % numberOfBuckets
         val bucket = arrayOfBuckets[hash]
         return bucket.find(key)
     }
@@ -87,7 +87,7 @@ class HashTable<K, V>(
         println("Maximum list length in conflicting buckets: $maximumListLengthInConflictingBuckets")
     }
 
-    fun changeHashFunction(newHashFunction: (K) -> Int) {
+    fun changeHashFunction(newHashFunction: HashFunction<K>) {
         hashFunction = newHashFunction
         restructureHashTable()
     }
