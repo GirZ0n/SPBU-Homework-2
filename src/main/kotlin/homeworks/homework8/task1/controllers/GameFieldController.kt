@@ -7,6 +7,7 @@ import homeworks.homework8.task1.model.WinChecker
 import homeworks.homework8.task1.views.GameField
 import homeworks.homework8.task1.views.WinnerScreen
 import io.ktor.util.KtorExperimentalAPI
+import javafx.application.Platform
 import tornadofx.Controller
 import tornadofx.text
 
@@ -115,13 +116,8 @@ class GameFieldController : Controller() {
                 }
             }
             "Multiplayer" -> {
-                if (gameModel.isFirstOnlineGame) {
-                    onlineMode = OnlineMode(this)
-                    onlineMode.start()
-                } else {
-                    onlineMode = OnlineMode(this)
-                    onlineMode.start()
-                }
+                onlineMode = OnlineMode(this)
+                onlineMode.start()
             }
         }
     }

@@ -16,8 +16,8 @@ class GameField : View() {
 
     @KtorExperimentalAPI
     override fun onDock() {
-        super.onDock()
         controller.newGameHandling()
+        super.onDock()
     }
 
     override val root = vbox {
