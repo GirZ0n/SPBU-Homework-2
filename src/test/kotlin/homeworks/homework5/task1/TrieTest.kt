@@ -104,7 +104,7 @@ internal class TrieTest {
         val actual = Trie()
         actual.add("qwerty")
         actual.remove("qwerty")
-        assert(actual.equalToTrie(expected))
+        assertEquals(expected, actual)
     }
 
     @Test
@@ -123,7 +123,7 @@ internal class TrieTest {
         actual.remove("qwertyqwerty")
         actual.remove("1234")
 
-        assert(expected.equalToTrie(actual))
+        assertEquals(expected, actual)
     }
 
     @Test
@@ -161,7 +161,7 @@ internal class TrieTest {
         actual.add("qwerty")
         val input = FileInputStream("./src/test/kotlin/homeworks/homework5/task1/testFiles/emptyTrie.txt")
         actual.readObject(input)
-        assert(actual.equalToTrie(expected))
+        assertEquals(expected, actual)
     }
 
     @Test
@@ -178,7 +178,7 @@ internal class TrieTest {
         actual.add("123")
         val input = FileInputStream("./src/test/kotlin/homeworks/homework5/task1/testFiles/nonEmptyTrie.txt")
         actual.readObject(input)
-        assert(actual.equalToTrie(expected))
+        assertEquals(expected, actual)
     }
 
     @Test

@@ -111,18 +111,27 @@ class Trie : Serializable {
         input.close()
     }
 
-    fun equalToTrie(trieForCompare: Trie) = root.equalToNode(trieForCompare.root)
+    override fun equals(other: Any?): Boolean {
+        return (other is Trie) && (other.root == this.root)
+    }
+
+    override fun hashCode(): Int {
+        val primeNumber = 31
+        var result = root.hashCode()
+        result = primeNumber * result + wordCount
+        return result
+    }
 
     private class Node {
         var isTerminal: Boolean = false
         var howManyStartWithPrefix: Int = 0
         val children: MutableMap<Char, Node> = mutableMapOf()
 
-        fun equalToNode(nodeForCompare: Node): Boolean {
+        override fun equals(other: Any?): Boolean {
             var areEquals = true
-            if (nodeForCompare.isTerminal == this.isTerminal && nodeForCompare.children.size == this.children.size) {
-                for (pair in nodeForCompare.children) {
-                    if (!(this.children[pair.key]?.equalToNode(pair.value) ?: return false)) {
+            if (other is Node && other.isTerminal == this.isTerminal && other.children.size == this.children.size) {
+                for (pair in other.children) {
+                    if (this.children[pair.key] != pair.value) {
                         areEquals = false
                         break
                     }
@@ -130,7 +139,6 @@ class Trie : Serializable {
             } else {
                 areEquals = false
             }
-
             return areEquals
         }
 
@@ -144,6 +152,14 @@ class Trie : Serializable {
                     result.push("${it.key}$word")
                 }
             }
+            return result
+        }
+
+        override fun hashCode(): Int {
+            val primeNumber = 31
+            var result = isTerminal.hashCode()
+            result = primeNumber * result + howManyStartWithPrefix
+            result = primeNumber * result + children.hashCode()
             return result
         }
     }
