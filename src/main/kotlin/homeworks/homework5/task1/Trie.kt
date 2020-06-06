@@ -3,10 +3,11 @@ package homeworks.homework5.task1
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
+import java.io.Serializable
 import java.lang.StringBuilder
-import java.util.Scanner
+import java.util.*
 
-class Trie {
+class Trie : Serializable {
     private var root = Node()
     var wordCount = 0
         private set
@@ -82,39 +83,16 @@ class Trie {
         return currentNode?.howManyStartWithPrefix ?: 0
     }
 
-    private fun getAllWords(root: Node, words: MutableList<String>, prefix: StringBuilder, position: Int) {
+    fun writeObject(output: OutputStream) {
+        val words = root.getWords()
         if (root.isTerminal) {
-            words.add(prefix.substring(0, position))
+            words.push("")
         }
-
-        for (pair in root.children) {
-            if (prefix.length <= position) {
-                prefix.append(pair.key)
-            } else {
-                prefix[position] = pair.key
-            }
-            getAllWords(pair.value, words, prefix, position + 1)
-        }
-    }
-
-    fun serialise(output: OutputStream) {
-        val words = emptyList<String>().toMutableList()
-        val prefix = StringBuilder()
-        getAllWords(root, words, prefix, 0)
         output.write((words.joinToString(" ") { "'$it'" }).toByteArray())
         output.close()
     }
 
-    private fun String.isWord(): Boolean {
-        for (symbol in this) {
-            if (!symbol.isLetterOrDigit()) {
-                return false
-            }
-        }
-        return true
-    }
-
-    fun deserialise(input: InputStream) {
+    fun readObject(input: InputStream) {
         val inputString = input.bufferedReader().readLine() ?: ""
         val scan = Scanner(inputString)
         var currentWord: String
@@ -128,11 +106,7 @@ class Trie {
                 throw IOException("The word must begin and end with single quotes")
             }
             currentWord = currentWord.substring(1, currentWord.length - 1)
-            if (currentWord.isWord()) {
-                add(currentWord)
-            } else {
-                throw IOException("Expected word")
-            }
+            add(currentWord)
         }
         input.close()
     }
@@ -158,6 +132,19 @@ class Trie {
             }
 
             return areEquals
+        }
+
+        fun getWords(): Stack<String> {
+            val result = Stack<String>()
+            children.forEach {
+                if (it.value.isTerminal) {
+                    result.push("${it.key}")
+                }
+                for (word in it.value.getWords()) {
+                    result.push("${it.key}$word")
+                }
+            }
+            return result
         }
     }
 }

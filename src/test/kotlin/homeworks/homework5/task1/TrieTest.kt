@@ -130,7 +130,7 @@ internal class TrieTest {
     fun serialize_EmptyTrie_MustWork() {
         val trieForSerialize = Trie()
         val out = FileOutputStream("./src/test/kotlin/homeworks/homework5/task1/testFiles/actualEmptyTrie.txt")
-        trieForSerialize.serialise(out)
+        trieForSerialize.writeObject(out)
 
         val expected = File("./src/test/kotlin/homeworks/homework5/task1/testFiles/emptyTrie.txt").readText()
         val actual = File("./src/test/kotlin/homeworks/homework5/task1/testFiles/actualEmptyTrie.txt").readText()
@@ -147,7 +147,7 @@ internal class TrieTest {
         trieForSerialize.add("yriydliudlikudmjuyfloifjuynytdmliuffooi7o97")
         trieForSerialize.add("qwerty")
         val out = FileOutputStream("./src/test/kotlin/homeworks/homework5/task1/testFiles/actualNonEmptyTrie.txt")
-        trieForSerialize.serialise(out)
+        trieForSerialize.writeObject(out)
 
         val expected = File("./src/test/kotlin/homeworks/homework5/task1/testFiles/nonEmptyTrie.txt").readText()
         val actual = File("./src/test/kotlin/homeworks/homework5/task1/testFiles/actualNonEmptyTrie.txt").readText()
@@ -160,7 +160,7 @@ internal class TrieTest {
         val actual = Trie()
         actual.add("qwerty")
         val input = FileInputStream("./src/test/kotlin/homeworks/homework5/task1/testFiles/emptyTrie.txt")
-        actual.deserialise(input)
+        actual.readObject(input)
         assert(actual.equalToTrie(expected))
     }
 
@@ -177,7 +177,7 @@ internal class TrieTest {
         val actual = Trie()
         actual.add("123")
         val input = FileInputStream("./src/test/kotlin/homeworks/homework5/task1/testFiles/nonEmptyTrie.txt")
-        actual.deserialise(input)
+        actual.readObject(input)
         assert(actual.equalToTrie(expected))
     }
 
@@ -186,7 +186,7 @@ internal class TrieTest {
         val trie = Trie()
         val input = FileInputStream("./src/test/kotlin/homeworks/homework5/task1/testFiles/invalidInput.txt")
         assertThrows(IOException::class.java) {
-            trie.deserialise(input)
+            trie.readObject(input)
         }
     }
 }
