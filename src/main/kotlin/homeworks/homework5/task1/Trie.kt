@@ -4,8 +4,8 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.io.Serializable
-import java.lang.StringBuilder
-import java.util.*
+import java.util.Stack
+import java.util.Scanner
 
 class Trie : Serializable {
     private var root = Node()
