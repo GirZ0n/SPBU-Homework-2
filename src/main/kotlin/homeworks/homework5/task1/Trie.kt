@@ -8,7 +8,7 @@ import java.util.Scanner
 
 class Trie {
     private var root = Node()
-    var size = 0
+    var wordCount = 0
         private set
 
     fun contains(element: String): Boolean {
@@ -32,15 +32,14 @@ class Trie {
         var currentNode: Node? = root
         for (symbol in element) {
             currentNode?.run { howManyStartWithPrefix++ }
-            val nextNode = currentNode?.children?.get(symbol)
-            currentNode = nextNode ?: run {
+            currentNode = currentNode?.children?.get(symbol) ?: run {
                 val newNode = Node()
                 currentNode?.children?.put(symbol, newNode)
                 newNode
             }
         }
 
-        size++
+        wordCount++
         currentNode?.isTerminal = true
         currentNode?.run { howManyStartWithPrefix++ }
         return true
@@ -70,7 +69,7 @@ class Trie {
             }
         }
 
-        size--
+        wordCount--
         return true
     }
 
