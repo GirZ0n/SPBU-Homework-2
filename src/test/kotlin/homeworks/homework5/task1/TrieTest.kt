@@ -13,7 +13,7 @@ internal class TrieTest {
     @Test
     fun getSize_EmptyTrie_MustWork() {
         val trie = Trie()
-        assertEquals(0, trie.size)
+        assertEquals(0, trie.wordCount)
     }
 
     @Test
@@ -26,7 +26,7 @@ internal class TrieTest {
         trie.remove("sfkn")
         trie.add("dsbg98bhgji g39u4g1g")
         trie.add("")
-        assertEquals(4, trie.size)
+        assertEquals(4, trie.wordCount)
     }
 
     @Test
@@ -37,7 +37,7 @@ internal class TrieTest {
         trie.add("qwerty")
         trie.add("qwerty")
         trie.add("qwerty")
-        assertEquals(1, trie.size)
+        assertEquals(1, trie.wordCount)
     }
 
     @Test
@@ -129,11 +129,11 @@ internal class TrieTest {
     @Test
     fun serialize_EmptyTrie_MustWork() {
         val trieForSerialize = Trie()
-        val out = FileOutputStream("./src/test/kotlin/homeworks/homework5/task1/actualEmptyTrie.txt")
+        val out = FileOutputStream("./src/test/kotlin/homeworks/homework5/task1/testFiles/actualEmptyTrie.txt")
         trieForSerialize.serialise(out)
 
-        val expected = File("./src/test/kotlin/homeworks/homework5/task1/emptyTrie.txt").readText()
-        val actual = File("./src/test/kotlin/homeworks/homework5/task1/actualEmptyTrie.txt").readText()
+        val expected = File("./src/test/kotlin/homeworks/homework5/task1/testFiles/emptyTrie.txt").readText()
+        val actual = File("./src/test/kotlin/homeworks/homework5/task1/testFiles/actualEmptyTrie.txt").readText()
         assertEquals(expected, actual)
     }
 
@@ -146,11 +146,11 @@ internal class TrieTest {
         trieForSerialize.add("tedjfcycouykiuyljfiuitlufy")
         trieForSerialize.add("yriydliudlikudmjuyfloifjuynytdmliuffooi7o97")
         trieForSerialize.add("qwerty")
-        val out = FileOutputStream("./src/test/kotlin/homeworks/homework5/task1/actualNonEmptyTrie.txt")
+        val out = FileOutputStream("./src/test/kotlin/homeworks/homework5/task1/testFiles/actualNonEmptyTrie.txt")
         trieForSerialize.serialise(out)
 
-        val expected = File("./src/test/kotlin/homeworks/homework5/task1/nonEmptyTrie.txt").readText()
-        val actual = File("./src/test/kotlin/homeworks/homework5/task1/actualNonEmptyTrie.txt").readText()
+        val expected = File("./src/test/kotlin/homeworks/homework5/task1/testFiles/nonEmptyTrie.txt").readText()
+        val actual = File("./src/test/kotlin/homeworks/homework5/task1/testFiles/actualNonEmptyTrie.txt").readText()
         assertEquals(expected, actual)
     }
 
@@ -159,7 +159,7 @@ internal class TrieTest {
         val expected = Trie()
         val actual = Trie()
         actual.add("qwerty")
-        val input = FileInputStream("./src/test/kotlin/homeworks/homework5/task1/emptyTrie.txt")
+        val input = FileInputStream("./src/test/kotlin/homeworks/homework5/task1/testFiles/emptyTrie.txt")
         actual.deserialise(input)
         assert(actual.equalToTrie(expected))
     }
@@ -176,7 +176,7 @@ internal class TrieTest {
 
         val actual = Trie()
         actual.add("123")
-        val input = FileInputStream("./src/test/kotlin/homeworks/homework5/task1/nonEmptyTrie.txt")
+        val input = FileInputStream("./src/test/kotlin/homeworks/homework5/task1/testFiles/nonEmptyTrie.txt")
         actual.deserialise(input)
         assert(actual.equalToTrie(expected))
     }
@@ -184,7 +184,7 @@ internal class TrieTest {
     @Test
     fun deserialize_InvalidInputStream_ExceptionThrown() {
         val trie = Trie()
-        val input = FileInputStream("./src/test/kotlin/homeworks/homework5/task1/invalidInput.txt")
+        val input = FileInputStream("./src/test/kotlin/homeworks/homework5/task1/testFiles/invalidInput.txt")
         assertThrows(IOException::class.java) {
             trie.deserialise(input)
         }
