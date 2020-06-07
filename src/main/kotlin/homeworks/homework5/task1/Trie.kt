@@ -30,19 +30,18 @@ class Trie : Serializable {
             return false
         }
 
-        var currentNode: Node? = root
+        var currentNode: Node = root
         for (symbol in element) {
-            currentNode?.run { howManyStartWithPrefix++ }
-            currentNode = currentNode?.children?.get(symbol) ?: run {
+            currentNode = currentNode.children[symbol] ?: run {
                 val newNode = Node()
-                currentNode?.children?.put(symbol, newNode)
+                currentNode.children[symbol] = newNode
                 newNode
             }
+            currentNode.howManyStartWithPrefix++
         }
 
         wordCount++
-        currentNode?.isTerminal = true
-        currentNode?.run { howManyStartWithPrefix++ }
+        currentNode.isTerminal = true
         return true
     }
 
@@ -51,26 +50,20 @@ class Trie : Serializable {
             return false
         }
 
-        var currentNode: Node? = root
+        var currentNode = root
+        var nextNode: Node? = root
         for (symbol in element) {
-            currentNode?.run { howManyStartWithPrefix-- }
-            currentNode = currentNode?.children?.get(symbol)
-        }
-        currentNode?.isTerminal = false
-        currentNode?.run { howManyStartWithPrefix-- }
-
-        currentNode = root
-        for (symbol in element) {
-            val nextNode = currentNode?.children?.get(symbol)
+            nextNode = currentNode.children[symbol]
+            nextNode?.run { howManyStartWithPrefix-- }
             if (nextNode?.howManyStartWithPrefix == 0) {
-                nextNode.removeAllChildren()
-                currentNode?.children?.remove(symbol)
+                currentNode.children[symbol]?.removeAllChildren()
+                currentNode.children.remove(symbol)
                 break
             } else {
-                currentNode = nextNode
+                nextNode?.let { currentNode = it }
             }
         }
-
+        nextNode?.let { it.isTerminal = false }
         wordCount--
         return true
     }
