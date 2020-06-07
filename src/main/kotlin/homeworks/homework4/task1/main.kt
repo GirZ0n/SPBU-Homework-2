@@ -13,26 +13,21 @@ fun main() {
     interactWithTable(hashTable)
 }
 
-enum class Commands(val code: String) {
-    HELP("help"),
-    ADD("add"),
-    REMOVE("remove"),
-    FIND("find"),
-    CHANGE_HASH_FUNCTION("change"),
-    PRINT_STATISTICS("stats"),
-    IMPORT("import"),
-    EXIT("exit");
+enum class Commands(val code: String, val description: String) {
+    HELP("help", "see this list"),
+    ADD("add", "add a new pair"),
+    REMOVE("remove", "remove a key"),
+    FIND("find", "find the value by key"),
+    CHANGE_HASH_FUNCTION("change", "change the hash function"),
+    PRINT_STATISTICS("stats", "write statistics"),
+    IMPORT("import", "import a hash table from a file"),
+    EXIT("exit", "complete the program");
 }
 
 fun printHelp() {
-    println("Type `${Commands.HELP.code}` to see this list;")
-    println("Type `${Commands.ADD.code}` to add a new pair;")
-    println("Type `${Commands.REMOVE.code}` to remove a key;")
-    println("Type `${Commands.FIND.code}` to find the value by key;")
-    println("Type `${Commands.CHANGE_HASH_FUNCTION.code}` to change the hash function;")
-    println("Type `${Commands.PRINT_STATISTICS.code}` to write statistics;")
-    println("Type `${Commands.IMPORT.code}` to import a hash table from a file;")
-    println("Type `${Commands.EXIT.code}` to complete the program.")
+    Commands.values().forEach {
+        println("Type '${it.code}' to ${it.description}")
+    }
 }
 
 fun interactWithTable(hashTable: HashTable<String, Int>) {
