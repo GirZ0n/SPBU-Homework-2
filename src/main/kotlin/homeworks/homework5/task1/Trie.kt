@@ -8,7 +8,7 @@ import java.util.Stack
 import java.util.Scanner
 
 class Trie : Serializable {
-    private var root = Node()
+    private val root = Node()
     var wordCount = 0
         private set
 
@@ -63,6 +63,7 @@ class Trie : Serializable {
         for (symbol in element) {
             val nextNode = currentNode?.children?.get(symbol)
             if (nextNode?.howManyStartWithPrefix == 0) {
+                currentNode?.children?.get(symbol)?.removeAllChildren()
                 currentNode?.children?.remove(symbol)
                 break
             } else {
@@ -96,7 +97,7 @@ class Trie : Serializable {
         val inputString = input.bufferedReader().readLine() ?: ""
         val scan = Scanner(inputString)
         var currentWord: String
-        root = Node()
+        root.removeAllChildren()
         while (scan.hasNext()) {
             currentWord = scan.next()
             if (currentWord.length < 2 ||
@@ -153,6 +154,18 @@ class Trie : Serializable {
                 }
             }
             return result
+        }
+
+        fun removeAllChildren() {
+            if (children.isEmpty()) {
+                return
+            }
+
+            for (child in children) {
+                child.value.removeAllChildren()
+            }
+
+            children.clear()
         }
 
         override fun hashCode(): Int {
