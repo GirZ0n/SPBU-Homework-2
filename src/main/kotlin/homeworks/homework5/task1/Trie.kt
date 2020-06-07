@@ -63,7 +63,7 @@ class Trie : Serializable {
         for (symbol in element) {
             val nextNode = currentNode?.children?.get(symbol)
             if (nextNode?.howManyStartWithPrefix == 0) {
-                currentNode?.children?.get(symbol)?.removeAllChildren()
+                nextNode.removeAllChildren()
                 currentNode?.children?.remove(symbol)
                 break
             } else {
