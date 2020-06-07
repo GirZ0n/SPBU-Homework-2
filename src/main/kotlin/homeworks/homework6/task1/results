@@ -1,0 +1,35 @@
+SIZE_OF_ARRAY = 100_000_000
+MAX_NUMBER = 10_000
+
+Attempt: 1
+Usual quicksort time: 95217
+Async quicksort time: 101058
+
+Attempt: 2
+Usual quicksort time: 66394
+Async quicksort time: 69378
+
+Attempt: 3
+Usual quicksort time: 72054
+Async quicksort time: 71507
+
+Attempt: 4
+Usual quicksort time: 69329
+Async quicksort time: 66916
+Built-in sort time: 55989
+
+Attempt: 5
+Usual quicksort time: 66897
+Async quicksort time: 69979
+Built-in sort time: 47790
+
+Attempt: 6
+Usual quicksort time: 65295
+Async quicksort time: 67682
+Built-in sort time: 57695
+
+-------------------------------
+SIZE_OF_ARRAY = 1_000_000
+MAX_NUMBER = 10_000
+
+Async quicksort time < usual quicksort time: 52 / 1000
