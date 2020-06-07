@@ -7,7 +7,6 @@ import homeworks.homework8.task1.model.WinChecker
 import homeworks.homework8.task1.views.GameField
 import homeworks.homework8.task1.views.WinnerScreen
 import io.ktor.util.KtorExperimentalAPI
-import javafx.application.Platform
 import tornadofx.Controller
 import tornadofx.text
 
@@ -107,13 +106,14 @@ class GameFieldController : Controller() {
                 gameModel.board[i][j] = ' '
             }
         }
+        updateAllButtons(true)
 
         when (GameModel.gameMode) {
             "Single-player" -> {
-                updateAllButtons(false)
                 if (gameModel.opponentSign == 'X') {
                     aiMoveHandling()
                 }
+                updateAllButtons(false)
             }
             "Multiplayer" -> {
                 onlineMode = OnlineMode(this)

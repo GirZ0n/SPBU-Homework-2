@@ -32,7 +32,6 @@ private fun Application.mainModule() {
         arrayOf(' ', ' ', ' ').toCharArray()
     )
     var firstPlayerSign = ' '
-    val winChecker = WinChecker
 
     install(WebSockets)
     routing {
@@ -44,16 +43,13 @@ private fun Application.mainModule() {
             // Если игрок получил знак '0', то он ходит вторым, поэтому для корректной работы я отправляю ему сообщение
             // "No one won"
             val player = Player(this)
-            println(player.name) // TODO: remove
             when (val frame = incoming.receive()) {
                 is Frame.Text -> {
                     val receivedSign = frame.readText()
-                    println("${player.name}: res.sign - $receivedSign") // TODO: remove
                     if (players.isEmpty()) {
                         firstPlayerSign = receivedSign[0] // Convert String to Char
                         player.session.outgoing.send(Frame.Text(receivedSign))
                         player.sign = firstPlayerSign
-                        println("${player.name}: sign:${player.sign}") // TODO: remove
                         if (receivedSign == "0") {
                             player.session.outgoing.send(Frame.Text("No one won"))
                         }
@@ -61,7 +57,6 @@ private fun Application.mainModule() {
                         val opponentSign = if (firstPlayerSign == 'X') '0' else 'X'
                         player.session.outgoing.send(Frame.Text(opponentSign.toString()))
                         player.sign = opponentSign
-                        println("${player.name}: sign:${player.sign}") // TODO: remove
                         if (opponentSign == '0') {
                             player.session.outgoing.send(Frame.Text("No one won"))
                         }
@@ -80,58 +75,15 @@ private fun Application.mainModule() {
                             playerMove = frame.readText() // "i-j"
                         }
                     }
-                    println("${player.name}: move:$playerMove") // TODO: remove
 
-                    // Обновляю доску
-                    val splitID = playerMove.split("-").map { it.toInt() }
-                    gameBoard[splitID[0]][splitID[1]] = player.sign
+                    updateBoard(player, playerMove, gameBoard)
 
-                    // TODO: remove
-                    for (row in gameBoard) {
-                        println(row.joinToString(" "))
-                    }
+                    val gameStatus = getGameStatus(player, gameBoard)
 
-                    // Проверяю выигрыш
-                    if (winChecker.isPlayerWinning(player.sign, gameBoard)) {
-                        println("${player.name}: Win segment") // // TODO: remove
-                        // Отправляю знак текущего игрока (так как он победитель)
-                        player.session.outgoing.send(Frame.Text(player.sign.toString()))
-                        for (other in players) {
-                            if (other != player) {
-                                // Отправляю ход оппоненту
-                                other.session.outgoing.send(Frame.Text(playerMove))
-                                // Сообщаю знак текущего игрока оппоненту, так как текущий игрок выиграл
-                                other.session.outgoing.send(Frame.Text(player.sign.toString()))
-                            }
-                        }
-                    } else if (isFreeMoves(gameBoard)) {
-                        println("${player.name}: Free segment") // // TODO: remove
-                        // Отправляю текущему игроку "No one won", так как он не выиграл
-                        player.session.outgoing.send(Frame.Text("No one won"))
-                        for (other in players) {
-                            if (other != player) {
-                                // Отправляю ход оппоненту
-                                other.session.outgoing.send(Frame.Text(playerMove))
-                                // Отправляю оппоненту "No one won", так как текущий игрок не выиграл
-                                other.session.outgoing.send(Frame.Text("No one won"))
-                            }
-                        }
-                    } else {
-                        println("${player.name}: Draw segment") // // TODO: remove
-                        // Отправляю текущему игроку "Draw", так как ходы закончились, но никто не выиграл
-                        player.session.outgoing.send(Frame.Text("Draw"))
-                        for (other in players) {
-                            if (other != player) {
-                                // Отправляю ход оппоненту
-                                other.session.outgoing.send(Frame.Text(playerMove))
-                                // Отправляю оппоненту "Draw", так как ходы закончились, но никто не выиграл
-                                other.session.outgoing.send(Frame.Text("Draw"))
-                            }
-                        }
-                    }
+                    // Отправляю cтатус игры и ход оппоненту
+                    sendMoveAndGameStatus(player, playerMove, gameStatus, players)
                 }
             } finally {
-                println("${player.name} log out") // TODO: remove
                 players -= player
                 firstPlayerSign = ' '
                 clearBoard(gameBoard)
@@ -169,4 +121,38 @@ private class Player(val session: WebSocketSession) {
     val name = "user$id"
 
     var sign = ' '
+}
+
+@KtorExperimentalAPI
+private fun getGameStatus(player: Player, gameBoard: Array<CharArray>): String {
+    val winChecker = WinChecker
+    return when {
+        winChecker.isPlayerWinning(player.sign, gameBoard) -> "${player.sign} won"
+        isFreeMoves(gameBoard) -> "No one won"
+        else -> "Draw"
+    }
+}
+
+@KtorExperimentalAPI
+private fun updateBoard(player: Player, playerMove: String, gameBoard: Array<CharArray>) {
+    val splitID = playerMove.split("-").map { it.toInt() }
+    gameBoard[splitID[0]][splitID[1]] = player.sign
+}
+
+@KtorExperimentalAPI
+private suspend fun sendMoveAndGameStatus(
+    currentPlayer: Player,
+    playerMove: String,
+    gameStatus: String,
+    players: MutableSet<Player>
+) {
+    currentPlayer.session.outgoing.send(Frame.Text(gameStatus))
+    for (other in players) {
+        if (other != currentPlayer) {
+            // Отправляю ход оппоненту
+            other.session.outgoing.send(Frame.Text(playerMove))
+            // Отправляю оппоненту статус игры
+            other.session.outgoing.send(Frame.Text(gameStatus))
+        }
+    }
 }

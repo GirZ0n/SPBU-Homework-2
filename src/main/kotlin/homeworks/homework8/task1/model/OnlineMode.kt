@@ -8,7 +8,6 @@ import io.ktor.http.cio.websocket.Frame
 import io.ktor.http.cio.websocket.WebSocketSession
 import io.ktor.http.cio.websocket.close
 import io.ktor.http.cio.websocket.readText
-import io.ktor.http.websocket.websocketServerAccept
 import io.ktor.util.KtorExperimentalAPI
 import javafx.application.Platform
 import kotlinx.coroutines.isActive
@@ -30,7 +29,6 @@ class OnlineMode(private val controller: GameFieldController) : Thread() {
 
     private suspend fun sendMoveHandling(socket: WebSocketSession) {
         if (isNeedToSend.getAndSet(false)) {
-            println("Send: $moveToSend") // TODO: remove
             socket.send(Frame.Text(moveToSend))
             isNeedToReceive.set(true)
         }
@@ -40,9 +38,7 @@ class OnlineMode(private val controller: GameFieldController) : Thread() {
     private suspend fun receiveGameStatus(socket: WebSocketSession): String {
         when (val frame = socket.incoming.receive()) {
             is Frame.Text -> {
-                val gameStatus = frame.readText()
-                println("Received: $gameStatus") // TODO: remove
-                return gameStatus
+                return frame.readText()
             }
         }
         return ""
@@ -52,7 +48,6 @@ class OnlineMode(private val controller: GameFieldController) : Thread() {
         when (val frame = socket.incoming.receive()) {
             is Frame.Text -> {
                 val receivedMessage = frame.readText()
-                println("Received: $receivedMessage") // TODO: remove
                 Platform.runLater { controller.opponentMoveHandling(receivedMessage) }
             }
         }
@@ -69,20 +64,18 @@ class OnlineMode(private val controller: GameFieldController) : Thread() {
                 val secondGameStatus = receiveGameStatus(socket)
                 if (secondGameStatus != "No one won") {
                     // if the opponent won
-                    println("close1") // TODO: remove
                     Platform.runLater { controller.endGameHandling(secondGameStatus) }
                     socket.close()
                 }
             } else {
                 // if the player won
-                println("close2") // TODO: remove
                 Platform.runLater { controller.endGameHandling(firstGameStatus) }
                 socket.close()
             }
         }
     }
 
-    private fun waitForPlayerMove() = Thread.sleep(SLEEP_TIME)
+    private fun waitForPlayerMove() = sleep(SLEEP_TIME)
 
     @KtorExperimentalAPI
     override fun run() {
@@ -115,7 +108,6 @@ class OnlineMode(private val controller: GameFieldController) : Thread() {
                     waitForPlayerMove()
                 }
             }
-            println("123")
         }
     }
 }
