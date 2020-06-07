@@ -21,7 +21,7 @@ class GameModeChoiceMenu : View() {
     override val root = vbox {
         addClass(MenuStyle.mainVbox)
 
-        label("Tic-tac-toe (v2)") { addClass(MenuStyle.gameName) }
+        label("Tic-tac-toe (v3)") { addClass(MenuStyle.gameName) }
 
         label("Game mode:").addClass(MenuStyle.descriptionLabel)
 
