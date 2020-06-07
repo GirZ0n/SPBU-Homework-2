@@ -5,8 +5,8 @@ import kotlin.math.abs
 import kotlin.math.max
 
 class HashTable<K, V>(
-    private var numberOfBuckets: Int,
     private var hashFunction: HashFunction<K>,
+    private var numberOfBuckets: Int = 1024,
     private var maxLoadFactor: Double = 0.7
 ) {
     private var arrayOfBuckets = Array(numberOfBuckets) { Bucket<K, V>() }

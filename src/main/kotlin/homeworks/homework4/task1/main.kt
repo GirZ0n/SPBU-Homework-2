@@ -4,12 +4,9 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.util.Scanner
 
-const val INIT_SIZE = 1024
-const val FILE_PATH = "./src/main/resources/homeworks/homework4/task1/input.txt"
-
 fun main() {
     printHelp()
-    val hashTable = HashTable<String, Int>(INIT_SIZE, SimpleHashFunctionForString())
+    val hashTable = HashTable<String, Int>(SimpleHashFunctionForString())
     try {
         interactWithTable(hashTable)
     } catch (exception: FileNotFoundException) {
@@ -36,8 +33,9 @@ fun printHelp() {
 }
 
 fun interactWithTable(hashTable: HashTable<String, Int>) {
+    val filePath = "./src/main/resources/homeworks/homework4/task1/input.txt"
     var input: String
-    val inputFile = File(FILE_PATH)
+    val inputFile = File(filePath)
     while (true) {
         print("> ")
         input = readLine() ?: "exit"
