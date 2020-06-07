@@ -107,7 +107,7 @@ class HashTable<K, V>(
         numberOfEntries = 0
         for (bucket in oldArrayOfBuckets) {
             for (entry in bucket.listOfEntries) {
-                add(entry.first, entry.second)
+                add(entry.key, entry.value)
             }
         }
     }
