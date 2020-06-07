@@ -5,7 +5,7 @@ import java.io.FileNotFoundException
 import java.util.Scanner
 
 const val INIT_SIZE = 1024
-const val FILE_PATH = "./src/main/kotlin/homeworks/homework4/task1/input.txt"
+const val FILE_PATH = "./src/main/resources/homeworks/homework4/task1/input.txt"
 
 fun main() {
     printHelp()
@@ -20,7 +20,7 @@ enum class Commands(val code: String, val description: String) {
     FIND("find", "find the value by key"),
     CHANGE_HASH_FUNCTION("change", "change the hash function"),
     PRINT_STATISTICS("stats", "write statistics"),
-    IMPORT("import", "import a hash table from a file"),
+    IMPORT("import", "import a hash table from a file (./src/main/resources/homeworks/homework4/task1/input.txt)"),
     EXIT("exit", "complete the program");
 }
 

@@ -1,5 +1,6 @@
 package homeworks.homework4.task1
 
+import java.lang.NullPointerException
 import kotlin.math.abs
 import kotlin.math.max
 
@@ -16,18 +17,18 @@ class HashTable<K, V>(
 
     var loadFactor = 0.0
         private set
-        get() = numberOfEntries.toDouble() / numberOfBuckets.toDouble()
+        get() = numberOfEntries.toDouble() / numberOfBuckets
 
-    fun add(key: K?, value: V?) {
+    fun add(key: K?, value: V?): Boolean {
         if (key == null || value == null) {
-            return
+            throw NullPointerException("Key and value must not be null")
         }
 
         val hash = abs(hashFunction.getHash(key)) % numberOfBuckets
         val bucket = arrayOfBuckets[hash]
 
         if (bucket.isContains(key)) {
-            return
+            return false
         }
         if (bucket.size == 0) {
             numberOfFilledBuckets++
@@ -39,24 +40,26 @@ class HashTable<K, V>(
         if (loadFactor > maxLoadFactor) {
             expandHashTable()
         }
+
+        return true
     }
 
-    fun remove(key: K?) {
+    fun remove(key: K?): Boolean {
         if (key == null) {
-            return
+            throw NullPointerException("Key must not be null")
         }
 
         val hash = abs(hashFunction.getHash(key)) % numberOfBuckets
         val bucket = arrayOfBuckets[hash]
 
-        if (bucket.isEmpty()) {
-            return
-        }
-        bucket.remove(key)
+        val isRemoved = bucket.remove(key)
         if (bucket.isEmpty()) {
             numberOfFilledBuckets--
         }
-        numberOfEntries--
+        if (isRemoved) {
+            numberOfEntries--
+        }
+        return isRemoved
     }
 
     fun find(key: K?): V? {
