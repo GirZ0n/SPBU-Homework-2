@@ -10,7 +10,12 @@ const val FILE_PATH = "./src/main/resources/homeworks/homework4/task1/input.txt"
 fun main() {
     printHelp()
     val hashTable = HashTable<String, Int>(INIT_SIZE, SimpleHashFunctionForString())
-    interactWithTable(hashTable)
+    try {
+        interactWithTable(hashTable)
+    } catch (exception: FileNotFoundException) {
+        println(exception.message)
+        interactWithTable(hashTable)
+    }
 }
 
 enum class Commands(val code: String, val description: String) {
@@ -52,21 +57,52 @@ fun interactWithTable(hashTable: HashTable<String, Int>) {
 
 fun addCodeProcessing(hashTable: HashTable<String, Int>) {
     println("Enter the key (string):")
-    val key = readLine()
+    var key = readLine()
+    while (key.isNullOrBlank()) {
+        println("Please enter a valid key")
+        key = readLine()
+    }
     println("Enter the value (integer):")
-    val value = readLine()?.toInt()
-    hashTable.add(key, value)
+    var value = readLine()
+    while (value.isNullOrBlank()) {
+        println("Please enter a valid value")
+        value = readLine()
+    }
+
+    try {
+        if (hashTable.add(key, value.toInt())) {
+            println("$key: $value - successfully added")
+        } else {
+            println("The pair is already on the table.")
+        }
+    } catch (exception: NumberFormatException) {
+        println("Failed to add. Value must be number")
+        addCodeProcessing(hashTable)
+    }
 }
 
 fun removeCodeProcessing(hashTable: HashTable<String, Int>) {
     println("Enter the key (string):")
-    val key = readLine()
-    hashTable.remove(key)
+    var key = readLine()
+    while (key.isNullOrBlank()) {
+        println("Please enter a valid key")
+        key = readLine()
+    }
+
+    if (hashTable.remove(key)) {
+        println("key:$key - successfully removed")
+    } else {
+        println("The pair is no longer in the table")
+    }
 }
 
 fun findCodeProcessing(hashTable: HashTable<String, Int>) {
     println("Enter the key (string):")
-    val key = readLine()
+    var key = readLine()
+    while (key.isNullOrBlank()) {
+        println("Please enter a valid key")
+        key = readLine()
+    }
     println("$key: ${hashTable.find(key)}")
 }
 
@@ -74,16 +110,24 @@ fun changeHashFunctionCodeProcessing(hashTable: HashTable<String, Int>) {
     println("What hash function do you want to use?")
     println("0: simple hash function, 1: polynomial hash function")
     print("hash function > ")
-    when (readLine()?.toInt()) {
-        0 -> {
-            hashTable.changeHashFunction(SimpleHashFunctionForString())
-            println("You have selected a simple hash function")
+    try {
+        when (readLine()?.toInt()) {
+            0 -> {
+                hashTable.changeHashFunction(SimpleHashFunctionForString())
+                println("You have selected a simple hash function")
+            }
+            1 -> {
+                hashTable.changeHashFunction(PolynomialHashFunctionForString())
+                println("You have selected a polynomial hash function")
+            }
+            else -> {
+                println("Something went wrong")
+                changeHashFunctionCodeProcessing(hashTable)
+            }
         }
-        1 -> {
-            hashTable.changeHashFunction(PolynomialHashFunctionForString())
-            println("You have selected a polynomial hash function")
-        }
-        else -> return
+    } catch (exception: NumberFormatException) {
+        println("Failed to change. Input must be number")
+        addCodeProcessing(hashTable)
     }
 }
 
@@ -93,10 +137,14 @@ fun importCodeProcessing(hashTable: HashTable<String, Int>, input: File) {
     }
 
     val scan = Scanner(input)
-    while (scan.hasNext()) {
-        val key = scan.next()
-        scan.next()
-        val value = scan.nextInt()
-        hashTable.add(key, value)
+    while (scan.hasNextLine()) {
+        val line = scan.nextLine()
+        if (line.matches(Regex("\\w* - \\w*"))) {
+            val words = line.split(" - ")
+            hashTable.add(words[0], words[1].toInt())
+        } else {
+            println("String does not match regex")
+        }
     }
+    println("File successfully imported")
 }
