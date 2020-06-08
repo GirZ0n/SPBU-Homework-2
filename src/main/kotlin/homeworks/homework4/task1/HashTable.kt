@@ -27,21 +27,19 @@ class HashTable<K, V>(
         val hash = abs(hashFunction.getHash(key)) % numberOfBuckets
         val bucket = arrayOfBuckets[hash]
 
-        if (bucket.isContains(key)) {
-            return false
-        }
-        if (bucket.size == 0) {
-            numberOfFilledBuckets++
-        }
+        val isAdded = bucket.add(key, value)
 
-        bucket.add(key, value)
-        numberOfEntries++
-
-        if (loadFactor > maxLoadFactor) {
-            expandHashTable()
+        if (isAdded) {
+            if (bucket.size == 1) {
+                numberOfFilledBuckets++
+            }
+            numberOfEntries++
+            if (loadFactor > maxLoadFactor) {
+                expandHashTable()
+            }
         }
 
-        return true
+        return isAdded
     }
 
     fun remove(key: K?): Boolean {
