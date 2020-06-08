@@ -25,12 +25,6 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.70")
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.6.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5")
-    implementation("io.ktor:ktor-client-websockets:$ktorVersion")
-    implementation("io.ktor:ktor-client-cio:$ktorVersion")
-    implementation("io.ktor:ktor-client-js:$ktorVersion")
-    implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
-    implementation("io.ktor:ktor-websockets:$ktorVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.9.1")
 }
 
 javafx {
