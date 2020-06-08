@@ -142,6 +142,7 @@ fun importCodeProcessing(hashTable: HashTable<String, Int>, input: File) {
             hashTable.add(words[0], words[1].toInt())
         } else {
             println("String does not match regex")
+            return
         }
     }
     println("File successfully imported")
