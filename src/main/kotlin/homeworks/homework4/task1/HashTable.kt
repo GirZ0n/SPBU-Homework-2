@@ -24,7 +24,7 @@ class HashTable<K, V>(
             throw NullPointerException("Key and value must not be null")
         }
 
-        val hash = abs(hashFunction.getHash(key)) % numberOfBuckets
+        val hash = abs(hashFunction.calculateHash(key)) % numberOfBuckets
         val bucket = arrayOfBuckets[hash]
 
         val isAdded = bucket.add(key, value)
@@ -47,7 +47,7 @@ class HashTable<K, V>(
             throw NullPointerException("Key must not be null")
         }
 
-        val hash = abs(hashFunction.getHash(key)) % numberOfBuckets
+        val hash = abs(hashFunction.calculateHash(key)) % numberOfBuckets
         val bucket = arrayOfBuckets[hash]
 
         val isRemoved = bucket.remove(key)
@@ -65,7 +65,7 @@ class HashTable<K, V>(
             return null
         }
 
-        val hash = abs(hashFunction.getHash(key)) % numberOfBuckets
+        val hash = abs(hashFunction.calculateHash(key)) % numberOfBuckets
         val bucket = arrayOfBuckets[hash]
         return bucket.find(key)
     }
