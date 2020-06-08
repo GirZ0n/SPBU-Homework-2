@@ -31,9 +31,7 @@ class QuickSort {
             if (i >= j) {
                 break
             }
-            val temporary = array[i]
-            array[i] = array[j]
-            array[j] = temporary
+            array[i] = array[j].also { array[j] = array[i] }
             i++
             j--
         }
