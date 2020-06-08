@@ -146,6 +146,7 @@ private suspend fun sendMoveAndGameStatus(
     gameStatus: String,
     players: MutableSet<Player>
 ) {
+    // Отправляю статус игры текущему игроку
     currentPlayer.session.outgoing.send(Frame.Text(gameStatus))
     for (other in players) {
         if (other != currentPlayer) {
