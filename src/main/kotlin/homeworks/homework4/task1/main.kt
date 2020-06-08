@@ -137,11 +137,20 @@ fun importCodeProcessing(hashTable: HashTable<String, Int>, input: File) {
     val scan = Scanner(input)
     while (scan.hasNextLine()) {
         val line = scan.nextLine()
-        if (line.matches(Regex("\\w* - \\w*"))) {
-            val words = line.split(" - ")
-            hashTable.add(words[0], words[1].toInt())
-        } else {
-            println("String does not match regex")
+        try {
+            if (line.matches(Regex("\\w* - \\w*"))) {
+                val words = line.split(" - ")
+                hashTable.add(words[0], words[1].toInt())
+            } else {
+                println("String does not match regex (\\w* - \\w)")
+                println("Problem line:")
+                println(line)
+                return
+            }
+        } catch (exception: NumberFormatException) {
+            println("Failed to add. Value must be number")
+            println("Problem line:")
+            println(line)
             return
         }
     }
