@@ -24,6 +24,7 @@ dependencies {
     implementation("no.tornado:tornadofx:1.7.20")
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.70")
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.6.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5")
     implementation("io.ktor:ktor-client-websockets:$ktorVersion")
     implementation("io.ktor:ktor-client-cio:$ktorVersion")
     implementation("io.ktor:ktor-client-js:$ktorVersion")
