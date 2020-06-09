@@ -12,8 +12,8 @@ Here you can find the conditions and solutions for the tasks
 [Homework №7](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-7-arrow_up) | [Homework №7](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-7-arrow_up-1)
 [Homework №8](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-8-arrow_up) | [Homework №8](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-8-arrow_up-1)
 [Homework №9](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-9-arrow_up) | [Homework №9](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-9-arrow_up-1)
-[Test №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#test-1-arrow_up) |
-[Test №2](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#test-2-arrow_up) |
+[Test №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#test-1-arrow_up) | [Test №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#test-1-arrow_up-1)
+[Test №2](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#test-2-arrow_up) | [Test №2](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#test-2-arrow_up-1)
 [Test №3](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#test-3-arrow_up) |
 
 ## Semester №1 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
@@ -204,3 +204,13 @@ Result: +1.5029691162109375384*2^13
 ### Homework №9 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
 1. Необходимо выбрать в таблице тему и записать себя. Каждый доклад должен быть на 10-15 минут, вместе с презентацией.
 Необходимо включить, как теоритическую информацию, так и практическую с примером использования. (Сериализация)
+
+### Test №1 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
+1. Реализовать очередь с приоритетами в виде шаблонного класса. <br/> <br/>
+Очередь должна иметь методы: <br/>
+`enqueue()` -- принимающий на вход значение и численный приоритет <br/>
+`dequeue()` -- возвращающий значение с наивысшим приоритетом и удаляющий его из очереди. <br/> <br/>
+Если очередь пуста, `dequeue()` должен бросать исключение. Юнит-тесты обязательны.
+
+### Test №2 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
+2. Реализовать игру "Найди пару". При запуске отображается поле с кнопками размера `N` x `N`, где `N` чётное, кнопки без надписей. `N` принимается как параметр командной строки. Каждой кнопке ставится в соответствие число от `0` до `N2 / 2`, каждое число из этого диапазона должно встречаться на поле ровно дважды. Игрок нажимает на две произвольные (разные) кнопки, на них показывается соответствующие им числа. Если числа совпали, кнопки делаются неактивными. Если числа не совпали, кнопки возвращаются в изначальное положение. Игра заканчивается, когда игрок открыл все пары чисел.
