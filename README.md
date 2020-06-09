@@ -191,15 +191,15 @@ Result: +1.5029691162109375384*2^13
 Стандартный сериализатор использовать нельзя. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/src/main/kotlin/homeworks/homework5/task1/Trie.kt)
 
 ### Homework №6 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
-1. Реализуйте асинхронную быструю сортировки с помощью сопрограмм. Проведите замеры времени, сравните с обычной реализацией.
+1. Реализуйте асинхронную быструю сортировки с помощью сопрограмм. Проведите замеры времени, сравните с обычной реализацией. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/src/main/kotlin/homeworks/homework6/task1)
 
 ### Homework №7 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
-1. Крестики-нолики для игры с самим собой (inclass задание)
+1. Крестики-нолики для игры с самим собой (inclass задание) [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/src/main/kotlin/homeworks/homework7/task1)
 
-2. Добавить в крестики-нолики меню и бота. В меню должна быть кнопка со стартом игры, а так же выбором сложности и играющей стороны. Бот с разными уровнями сложности и для игры за разные стороны. По окончанию игры, пишется победитель и по кнопке возврат в меню.
+2. Добавить в крестики-нолики меню и бота. В меню должна быть кнопка со стартом игры, а так же выбором сложности и играющей стороны. Бот с разными уровнями сложности и для игры за разные стороны. По окончанию игры, пишется победитель и по кнопке возврат в меню. [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/src/main/kotlin/homeworks/homework7/task2)
 
 ### Homework №8 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
-1. Добавить поддержку мультиплеера в крестики-нолики
+1. Добавить поддержку мультиплеера в крестики-нолики [[Solution]](https://github.com/GirZ0n/SPBU-Homework/blob/master/src/main/kotlin/homeworks/homework8/task1)
 
 ### Homework №9 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
 1. Необходимо выбрать в таблице тему и записать себя. Каждый доклад должен быть на 10-15 минут, вместе с презентацией.
