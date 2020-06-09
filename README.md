@@ -5,13 +5,13 @@ Here you can find the conditions and solutions for the tasks
 ----------- | ----------- |
 [Homework №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-1-arrow_up) | [Homework №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-1-arrow_up-1)
 [Homework №2](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-2-arrow_up) | [Homework №2](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-2-arrow_up-1)
-[Homework №3](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-3-arrow_up) |
-[Homework №4](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-4-arrow_up) |
-[Homework №5](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-5-arrow_up) |
-[Homework №6](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-6-arrow_up) |
-[Homework №7](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-7-arrow_up) |
-[Homework №8](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-8-arrow_up) |
-[Homework №9](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-9-arrow_up) |
+[Homework №3](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-3-arrow_up) | [Homework №3](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-3-arrow_up-1)
+[Homework №4](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-4-arrow_up) | [Homework №4](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-4-arrow_up-1)
+[Homework №5](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-5-arrow_up) | [Homework №5](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-5-arrow_up-1)
+[Homework №6](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-6-arrow_up) | [Homework №6](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-6-arrow_up-1)
+[Homework №7](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-7-arrow_up) | [Homework №7](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-7-arrow_up-1)
+[Homework №8](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-8-arrow_up) | [Homework №8](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-8-arrow_up-1)
+[Homework №9](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-9-arrow_up) | [Homework №9](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#homework-9-arrow_up-1)
 [Test №1](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#test-1-arrow_up) |
 [Test №2](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#test-2-arrow_up) |
 [Test №3](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#test-3-arrow_up) |
@@ -168,3 +168,39 @@ Result: +1.5029691162109375384*2^13
 1. Определите минимальное количество символов, которые нужно удалить из строки так, чтобы она не содержала `«xxx»` в качестве подстроки. Выведите `0`, если строка изначально не содержит запрещенной подстроки `«xxx»`. Удалять символы можно в произвольных позициях (не обязательно подряд).
 
 2. Удалите из массива все повторяющиеся элементы. Необходимо оставить только правое вхождение, относительный порядок оставшихся элементов не должен быть изменён.
+
+### Homework №3 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
+1. Реализуйте класс AVL дерева, который реализует интерфейс Map. В каждой вершине хранится ключ – по нему строится дерево и значение – некий хранимый тип. Ключ и значение должны задаваться через generic.
+
+### Homework №4 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
+1. Реализовать класс для работы с хеш-таблицей (на списках). Общение с пользователем должно происходит в интерактивном режиме: добавить значение в хеш-таблицу, удалить значение из хеш-таблицы, поиск значения в хеш-таблице, показать статистику по хеш-таблице (общее число ячеек, load factor, число конфликтов, максимальная длина списка в конфликтных ячейках и т.п.), заполнить хеш-таблицу содержимым файла, выбрать хеш-функцию для подсчета хеша (из заранее заданных в коде). Смена хэш-функции должна происходить во время работы программы, в класс используемая хеш-функция должна передаваться из клиентского кода.
+
+2. Разработать и реализовать иерархию классов, описывающих дерево разбора арифметического выражения. Используя их, реализовать класс, вычисляющий значение выражения по дереву. Классы, представляющие операнды и операторы, должны сами уметь себя вычислять и печатать. Дерево разбора хранится в файле в виде (`<операция> <операнд1> <операнд2>`), где `<операнд1>` и `<операнд2>` сами могут быть деревьями, либо числами. Например, выражение `(1 + 1) * 2` представляется в виде `(* (+ 1 1) 2)`. Должны поддерживаться операции `{+, -, , /}` и целые числа в качестве аргументов. Требуется построить дерево в явном виде, распечатать его (не обязательно так же, как во входном файле) и посчитать значение выражения обходом дерева. Можно считать, что входной файл корректен.
+
+### Homework №5 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
+1. Реализовать бор (http://neerc.ifmo.ru/wiki/index.php?title=%D0%91%D0%BE%D1%80) <br/> <br/>
+Должны быть поддержаны следующие методы: <br/>
+`boolean add(String element)` (возвращает true, если такой строки ещё не было, работает за O(|element|)) <br/>
+`boolean contains(String element)` (работает за O(|element|)) <br/>
+`boolean remove(String element)` (возвращает true, если элемент реально был в дереве, работает за O(|element|)) <br/>
+`int size()` (работает за O(1)) <br/>
+`int howManyStartWithPrefix(String prefix)` (работает за O(|prefix|)) <br/> <br/>
+Также бор должен реализовывать интерфейс с методами: <br/>
+`void serialize(OutputStream out) throws IOException` <br/>
+`void deserialize(InputStream in) throws IOException` (заменяет старое дерево данными из стрима) <br/>
+Стандартный сериализатор использовать нельзя.
+
+### Homework №6 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
+1. Реализуйте асинхронную быструю сортировки с помощью сопрограмм. Проведите замеры времени, сравните с обычной реализацией.
+
+### Homework №7 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
+1. Крестики-нолики для игры с самим собой (inclass задание)
+
+2. Добавить в крестики-нолики меню и бота. В меню должна быть кнопка со стартом игры, а так же выбором сложности и играющей стороны. Бот с разными уровнями сложности и для игры за разные стороны. По окончанию игры, пишется победитель и по кнопке возврат в меню.
+
+### Homework №8 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
+1. Добавить поддержку мультиплеера в крестики-нолики
+
+### Homework №9 [:arrow_up:](https://github.com/GirZ0n/SPBU-Homework/blob/master/README.md#navigation-menu)
+1. Необходимо выбрать в таблице тему и записать себя. Каждый доклад должен быть на 10-15 минут, вместе с презентацией.
+Необходимо включить, как теоритическую информацию, так и практическую с примером использования. (Сериализация)
