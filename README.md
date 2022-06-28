@@ -1,5 +1,5 @@
 # SPBU-Homework-2
-Here you can find conditions and solutions to problems for the second semester
+Here you can find conditions and solutions to problems for the second semester.
 
 ## Navigation menu
 * [Semester №1](https://github.com/GirZ0n/SPBU-Homework-1) 
